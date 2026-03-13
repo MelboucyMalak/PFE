@@ -1,33 +1,53 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Routes> 
+        <Route path="/admin">
+          <Route index element={<Navigate to="/admin/login" />} />
+          <Route path="/dashboard" element={<AdminDashboard />} />
+          <Route path="/crops-management">
+            <Route index element={<CropsManagement />} />
+            <Route path=":cropId" element={<CropDetail />} />
+          </Route>
+
+          <Route path="/users-management"> 
+            <Route index element={<UsersManagement />} />
+            <Route path=":userId-history" element={<UserHistory />} />
+            <Route path=":userId" element={<UserDetail />} />
+          </Route>
+          
+          <Route path="/recommendations-management">
+            <Route index element={<RecommendationsManagement />} />
+            <Route path=":recommendationId" element={<RecommendationDetail />} />
+          </Route>
+
+          <Route path="/profile" element={<AdminProfile />} />
+          <Route path="/forgot-password" element={<AdminForgotPassword />} />
+          <Route path="/reset-password" element={<AdminResetPassword />} /> 
+          <Route path="/login" element={<AdminLogin />} />
+        </Route>
+
+        <Route path="/farmer">
+          <Route index element={<Navigate to="/farmer/login" />} />
+          <Route path="/dashboard" element={<FarmerDashboard />} />
+          <Route path="/crop-consulting">
+              <Route index element={<CropConsulting />} />
+              <Route path=":cropId" element={<CropDetail />} />
+          </Route>
+          <Route path="/recommendations-history" element={<RecommendationsHistory />} />
+          <Route path="/profile" element={<FarmerProfile />} />
+          <Route path="/login" element={<FarmerLogin />} />
+          <Route path="/forgot-password" element={<FarmerForgotPassword />} />
+          <Route path="/reset-password" element={<FarmerResetPassword />} /> 
+        </Route>
+        
+        <Route path="*" element={<NotFound/>} />
+        <Route path="/" element={<Navigate to="/Home" />} />
+      </Routes>
     </>
   )
 }
