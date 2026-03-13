@@ -34,8 +34,8 @@ function App() {
         <Route path="/farmer">
           <Route index element={<Navigate to="/farmer/login" />} />
           <Route path="/dashboard" element={<FarmerDashboard />} />
-          <Route path="/crop-consulting">
-              <Route index element={<CropConsulting />} />
+          <Route path="/crops-consulting">
+              <Route index element={<CropsConsulting />} />
               <Route path=":cropId" element={<CropDetail />} />
           </Route>
           <Route path="/recommendations-history" element={<RecommendationsHistory />} />
