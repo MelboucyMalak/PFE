@@ -19,9 +19,9 @@ export function MarkerComponent({ position, draggable, setPosition, visible }) {
   const eventHandlers = useMemo(() => ({
     dragend() {
       const marker = markerRef.current;
-      if (marker) {
-        setPosition([marker.getLatLng().lat, marker.getLatLng().lng]);
-      }
+      if (marker != null) {
+          setPosition(marker.getLatLng())
+        }
     }
   }), [setPosition]);
 

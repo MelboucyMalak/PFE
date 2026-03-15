@@ -1,8 +1,8 @@
 import { useMapEvent } from 'react-leaflet'
 
-export function SetViewOnClick({ setPosition, ignoreMapClick }) {
+export function SetViewOnClick({ setPosition, ignoreMapClickRef }) {
   const map = useMapEvent('click', (e) => {
-     if (ignoreMapClick) return;
+     if (ignoreMapClickRef.current) return;
     setPosition(e.latlng)
     map.setView(e.latlng, map.getZoom(), )
   })

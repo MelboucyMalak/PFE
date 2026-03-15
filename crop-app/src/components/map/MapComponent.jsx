@@ -1,9 +1,11 @@
 import { MapContainer, TileLayer } from 'react-leaflet' 
-import { ShowLocation } from './ShowLocation.jsx' 
-import { Draggable } from './Draggable.jsx'
-import { ShowMarker } from './ShowMarker.jsx'
+import { ShowLocation } from './buttons/ShowLocation.jsx' 
+import { Draggable } from './buttons/Draggable.jsx'
+import { ShowMarker } from './buttons/ShowMarker.jsx'
+import { SetViewOnClick } from './SetViewOnClick.jsx'
 import {  MarkerComponent } from './MarkerComponent.jsx'
-import {  useState } from 'react'
+import {  useEffect, useState } from 'react'
+import { useRef } from 'react'
 
 
 
@@ -12,7 +14,11 @@ export default function MapComponent() {
   const [position, setPosition] = useState(center) 
   const [draggable, setDraggable] = useState(false)
   const [visible, setVisible] = useState(true)
-   const [ignoreMapClick, setIgnoreMapClick] = useState(false);
+  const ignoreMapClickRef = useRef(false);
+
+  useEffect(() => {
+    console.log('Position updated:', position)
+  }, [position])
  
  
   return (
@@ -35,11 +41,17 @@ export default function MapComponent() {
       /> 
 
       
-      <MarkerComponent position={position} draggable={draggable} visible={visible} /> 
-      <ShowLocation setPosition={setPosition} /> 
+      <MarkerComponent position={position} draggable={draggable} visible={visible} setPosition={setPosition} /> 
+
+      <ShowLocation setPosition={setPosition}
+      ignoreMapClickRef={ignoreMapClickRef} /> 
       
-      <Draggable draggable={draggable} setDraggable={setDraggable} />
-      <ShowMarker visible={visible} setVisble={setVisible} ignoreMapClick={ignoreMapClick} setIgnoreMapClick={setIgnoreMapClick} />
+      <Draggable draggable={draggable} setDraggable={setDraggable}
+      ignoreMapClickRef={ignoreMapClickRef} />
+
+      <ShowMarker visible={visible} setVisble={setVisible} ignoreMapClickRef={ignoreMapClickRef}  />
+
+      <SetViewOnClick setPosition={setPosition} ignoreMapClickRef={ignoreMapClickRef} /> 
   
     </MapContainer>
   )

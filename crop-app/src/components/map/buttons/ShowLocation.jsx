@@ -2,7 +2,8 @@
  
 import { useMap } from 'react-leaflet'
 import './ShowLocation.css'
-export function ShowLocation({ setPosition }) { 
+import { blockMapEvents } from '../utils/blockMapEvents'
+export function ShowLocation({ setPosition, ignoreMapClickRef }) { 
   const map = useMap()
 
   function handleLocate() {
@@ -11,12 +12,20 @@ export function ShowLocation({ setPosition }) {
         setPosition(e.latlng)
         console.log('Location found:', e.latlng)
         map.flyTo(e.latlng, map.getZoom())
+        
       })
   }
  
 
   return (
     <button className='locate-button'
-      onClick={handleLocate}>Locate me</button>
+      onMouseDown={() => (ignoreMapClickRef.current = true)}
+      onClick={(e) => {
+        blockMapEvents(e, ignoreMapClickRef)
+        ignoreMapClickRef.current = false
+        handleLocate() 
+      }}>
+      Locate me
+    </button>
   )
 }
