@@ -1,0 +1,11 @@
+.locate-button {
+  position: absolute;
+  bottom: 60px;
+  left: 10px;
+  z-index: 1000;
+  background-color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}

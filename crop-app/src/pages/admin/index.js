@@ -1,0 +1,13 @@
+// pages/admin/index.js
+export { default as AdminDashboard } from './AdminDashboard'
+export { default as CropsManagement } from './crops-management/CropsManagement'
+export { default as CropDetail } from './crops-management/CropDetail'
+export { default as UsersManagement } from './users-management/UserManagement'
+export { default as UserHistory } from './users-management/UserHistory'
+export { default as UserDetail } from './users-management/UserDetails'
+export { default as RecommendationsManagement } from './recommendations-management/RecommendationsManagement'
+export { default as RecommendationDetail } from './recommendations-management/RecommendationDetail'
+export { default as AdminProfile } from './profile/AdminProfile'
+export { default as AdminForgotPassword } from './login/AdminForgotPassword'
+export { default as AdminResetPassword } from './login/AminResetPassword'
+export { default as AdminLogin } from './login/AdminLogin'
