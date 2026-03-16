@@ -1,7 +1,7 @@
 import { Marker, Popup } from 'react-leaflet'
 import { useRef, useMemo, useEffect } from 'react'
 
-export function MarkerComponent({ position, draggable, setPosition, visible }) {
+export function MarkerComponent({ position, draggable, setPosition, markerIsVisible }) {
   const markerRef = useRef(null);
 
   useEffect(() => {
@@ -30,7 +30,7 @@ export function MarkerComponent({ position, draggable, setPosition, visible }) {
     <Marker position={position} draggable={draggable}
         eventHandlers={eventHandlers}
         ref={markerRef}
-        opacity={visible ? 1 : 0}>
+        opacity={markerIsVisible ? 1 : 0}>
         <Popup>
           A popup. <br />
         </Popup>

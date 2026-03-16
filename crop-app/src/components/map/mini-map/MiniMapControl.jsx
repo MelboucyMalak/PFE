@@ -15,7 +15,7 @@ export function MiniMapControl({ position, zoom }) {
  
   const minimap = useMemo(
     () => (
-      <MapContainer
+      <MapContainer 
         style={{ height: 80, width: 80 }}
         center={parentMap.getCenter()}
         zoom={mapZoom}

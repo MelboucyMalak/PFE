@@ -7,14 +7,18 @@ import {  MarkerComponent } from './MarkerComponent.jsx'
 import { MiniMapControl } from './mini-map/MiniMapControl.jsx'
 import {  useEffect, useState } from 'react'
 import { useRef } from 'react'
-
+import { ShowMiniMap } from './buttons/ShowMiniMap.jsx'
+ 
 
 
 export default function MapComponent() {  
   const center = [36.7, 3.2]
   const [position, setPosition] = useState(center) 
   const [draggable, setDraggable] = useState(false)
-  const [visible, setVisible] = useState(true)
+  const [markerIsVisible, setMarkerVisible] = useState(true)
+  
+   const [miniMapIsVisible, setMiniMapVisible] = useState(true)
+
   const ignoreMapClickRef = useRef(false);
 
   useEffect(() => {
@@ -42,7 +46,7 @@ export default function MapComponent() {
       /> 
 
       
-      <MarkerComponent position={position} draggable={draggable} visible={visible} setPosition={setPosition} /> 
+      <MarkerComponent position={position} draggable={draggable} markerIsVisible={markerIsVisible} setPosition={setPosition} /> 
 
       <ShowLocation setPosition={setPosition}
       ignoreMapClickRef={ignoreMapClickRef} /> 
@@ -50,12 +54,15 @@ export default function MapComponent() {
       <Draggable draggable={draggable} setDraggable={setDraggable}
       ignoreMapClickRef={ignoreMapClickRef} />
 
-      <ShowMarker visible={visible} setVisble={setVisible} ignoreMapClickRef={ignoreMapClickRef}  />
+      <ShowMarker markerIsVisible={markerIsVisible} setMarkerVisible={setMarkerVisible} ignoreMapClickRef={ignoreMapClickRef}  />
 
       <SetViewOnClick setPosition={setPosition} ignoreMapClickRef={ignoreMapClickRef} /> 
 
-      <MiniMapControl position={"topright"}/> 
-  
+      {miniMapIsVisible && <MiniMapControl  position={"topright"} miniMapIsVisible={miniMapIsVisible} /> }
+
+      <ShowMiniMap miniMapIsVisible={miniMapIsVisible}
+      setMiniMapVisible={setMiniMapVisible} ignoreMapClickRef={ignoreMapClickRef}/> 
+
     </MapContainer>
   )
 }

@@ -1,5 +1,3 @@
-
- 
 import { useMap } from 'react-leaflet'
 import './ShowLocation.css'
 import { blockMapEvents } from '../utils/blockMapEvents'
