@@ -4,6 +4,7 @@ import { Draggable } from './buttons/Draggable.jsx'
 import { ShowMarker } from './buttons/ShowMarker.jsx'
 import { SetViewOnClick } from './SetViewOnClick.jsx'
 import {  MarkerComponent } from './MarkerComponent.jsx'
+import { MiniMapControl } from './mini-map/MiniMapControl.jsx'
 import {  useEffect, useState } from 'react'
 import { useRef } from 'react'
 
@@ -52,6 +53,8 @@ export default function MapComponent() {
       <ShowMarker visible={visible} setVisble={setVisible} ignoreMapClickRef={ignoreMapClickRef}  />
 
       <SetViewOnClick setPosition={setPosition} ignoreMapClickRef={ignoreMapClickRef} /> 
+
+      <MiniMapControl position={"topright"}/> 
   
     </MapContainer>
   )
