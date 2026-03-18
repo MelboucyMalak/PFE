@@ -3,17 +3,21 @@ import { ShowLocation } from './buttons/ShowLocation.jsx'
 import { Draggable } from './buttons/Draggable.jsx'
 import { ShowMarker } from './buttons/ShowMarker.jsx'
 import { SetViewOnClick } from './SetViewOnClick.jsx'
+import { SetPositionOnMove } from './SetPositionOnMove.jsx'
 import {  MarkerComponent } from './MarkerComponent.jsx'
 import { MiniMapControl } from './mini-map/MiniMapControl.jsx'
-import {  useEffect, useState } from 'react'
+import { ExternalState } from './ExternalState.jsx'
+import {  useEffect, useMemo, useState } from 'react'
 import { useRef } from 'react'
 import { ShowMiniMap } from './buttons/ShowMiniMap.jsx'
  
 
 
 export default function MapComponent() {  
-  const center = [36.7, 3.2]
+  const center = useMemo(() => ({lat: 36.7, lng: 3.2}), [])
   const [position, setPosition] = useState(center) 
+
+    const [displayPosition, setDisplayPosition] = useState(center)
   const [draggable, setDraggable] = useState(false)
   const [markerIsVisible, setMarkerVisible] = useState(true)
   
@@ -24,9 +28,10 @@ export default function MapComponent() {
   useEffect(() => {
     console.log('Position updated:', position)
   }, [position])
+
+  const [map, setMap] = useState(null)
  
- 
-  return (
+  const displayMap = useMemo(() => (
     <MapContainer
       center={center} zoom={13}
       scrollWheelZoom={true}
@@ -39,8 +44,7 @@ export default function MapComponent() {
       }}
     >
       <TileLayer
-        url='http://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}'
-        maxZoom={19}
+        url='http://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}' 
         minZoom={5}
         subdomains={['mt0', 'mt1', 'mt2', 'mt3']}
       /> 
@@ -58,11 +62,27 @@ export default function MapComponent() {
 
       <SetViewOnClick setPosition={setPosition} ignoreMapClickRef={ignoreMapClickRef} /> 
 
+<<<<<<< HEAD
+=======
+      <SetPositionOnMove setDisplayPosition={setDisplayPosition} /> 
+
+>>>>>>> 7a54b12 (Add show mini-map button)
       {miniMapIsVisible && <MiniMapControl  position={"topright"} miniMapIsVisible={miniMapIsVisible} /> }
 
       <ShowMiniMap miniMapIsVisible={miniMapIsVisible}
       setMiniMapVisible={setMiniMapVisible} ignoreMapClickRef={ignoreMapClickRef}/> 
 
+<<<<<<< HEAD
+=======
+      <ExternalState displayPosition={displayPosition} setDisplayPosition={setDisplayPosition} ignoreMapClickRef={ignoreMapClickRef} />
+>>>>>>> 7a54b12 (Add show mini-map button)
     </MapContainer>
+  ),[center, position, draggable, markerIsVisible, miniMapIsVisible, ignoreMapClickRef, setPosition, setDisplayPosition, setDraggable, setMarkerVisible,displayPosition,])
+ 
+  return (
+    <div>
+      {map ? <DisplayPosition map={map} /> : null}
+      {displayMap}
+    </div>
   )
 }

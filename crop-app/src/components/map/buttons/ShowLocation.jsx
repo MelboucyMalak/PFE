@@ -9,7 +9,7 @@ export function ShowLocation({ setPosition, ignoreMapClickRef }) {
       map.on('locationfound', (e) => {
         setPosition(e.latlng)
         console.log('Location found:', e.latlng)
-        map.flyTo(e.latlng, map.getZoom())
+        map.flyTo(e.latlng, 18)
         
       })
   }
