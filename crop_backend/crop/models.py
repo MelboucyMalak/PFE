@@ -10,6 +10,7 @@ class Crop(models.Model):
     p= models.FloatField()
     k= models.FloatField()
     n= models.FloatField()
+    description= models.TextField(null=True,blank=True) #the blabla of crop
     def __str__(self):
         return self.name
     class Meta:
