@@ -25,9 +25,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'crop_backend.core',
-    'crop_backend.user',
-    'crop_backend.crop'
+    'core.apps.CoreConfig',
+    'user.apps.UserConfig',
+    'crop.apps.CropConfig'
 ]
 
 MIDDLEWARE = [
