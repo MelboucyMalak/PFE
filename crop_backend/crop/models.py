@@ -1,7 +1,6 @@
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-from django.db.models import Q , CheckConstraint
-
+from django.db.models import Q
 
 
 # Create your models here.
@@ -13,8 +12,8 @@ class Crop(models.Model):
     n= models.FloatField()
     def __str__(self):
         return self.name
-    '''class Meta:
+    class Meta:
         constraints = [
-            models.CheckConstraint(check=Q(ph__gte=0.0) & Q(ph__lte=14.0),
-                                   name='ph_between_0_and_14')
-        ] # gte: greater or =  //  lte: less or ='''
+            models.CheckConstraint(condition=Q(ph__gte=0.0) & Q(ph__lte=14.0),
+                                   name='ph_between_0_and_14'),
+        ] # gte: greater or =  //  lte: less or =
