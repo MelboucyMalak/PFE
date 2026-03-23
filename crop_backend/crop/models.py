@@ -5,7 +5,7 @@ from django.db.models import Q
 
 # Create your models here.
 class Crop(models.Model):
-    crop = models.CharField(max_length=50)
+    name = models.CharField(max_length=50)
     PH= models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(14.0)]) #PH BETWEEN 0-14
     P= models.FloatField()
     K= models.FloatField()
