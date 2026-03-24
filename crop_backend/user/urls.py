@@ -5,4 +5,4 @@ from crop import urls as crop_urls
 
 '''urlpatterns = [
     path('userLogin/', ),
-]
+]'''
