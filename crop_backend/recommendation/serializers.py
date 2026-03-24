@@ -1,3 +1,5 @@
+from rest_framework import serializers
+from recommendation.models import Recommendation, Plan
 
 
 class RecommendationSerializer(serializers.ModelSerializer):
