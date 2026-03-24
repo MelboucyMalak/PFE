@@ -7,5 +7,5 @@ from crop.models import Crop
 
 class CropSerializer(serializers.ModelSerializer):
     class Meta:
-        crops = Crop.objects.all()
+        model  = Crop
         fields = '__all__'
