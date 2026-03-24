@@ -25,9 +25,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    "rest_framework",
     'user.apps.UserConfig',
-    'crop.apps.CropConfig'
-    'recommendations.apps.RecommendationsConfig',
+    'crop.apps.CropConfig',
+    'recommendation.apps.RecommendationConfig',
 ]
 
 MIDDLEWARE = [
