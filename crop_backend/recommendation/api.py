@@ -1,3 +1,7 @@
+from rest_framework.response import Response
+from .models import Recommendation, Plan
+from .serializers import RecommendationSerializer,PlanSerializer
+from rest_framework.decorators import api_view
 
 @api_view(['GET'])
 def recommendation_list_api(request):
