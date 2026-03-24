@@ -3,9 +3,11 @@ from recommendation.models import Recommendation, Plan
 
 
 class RecommendationSerializer(serializers.ModelSerializer):
-    model=Recommendation
-    fields = '__all__'
+    class Meta:
+        model=Recommendation
+        fields = '__all__'
 
 class PlanSerializer(serializers.ModelSerializer):
-    model=Plan
-    fields = '__all__'
+    class Meta:
+        model=Plan
+        fields = '__all__'
