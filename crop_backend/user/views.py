@@ -4,9 +4,8 @@ from django.contrib.auth import  login, authenticate,logout
 
 
 # Create your views here.
-def log_in(request):
-    login(request)
-    return HttpResponse('log in page ')
+'''def log_in(request):
+
 
 def log_out(request):
     logout(request)
