@@ -16,7 +16,7 @@ class Recommendation(models.Model):
 #---------------------------------------------------------
 
 class Plan (models.Model):
-    pk = models.CompositePrimaryKey("recommendation_id", "crop_id")
+   # pk = models.CompositePrimaryKey("recommendation_id", "crop_id")
     recommendation_id=models.ForeignKey(Recommendation, on_delete=models.CASCADE)
     crop_id=models.ForeignKey(Crop, on_delete=models.CASCADE)
     Note=models.TextField(max_length=1000)
