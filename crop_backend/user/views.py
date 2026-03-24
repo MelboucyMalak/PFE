@@ -8,5 +8,4 @@ from django.contrib.auth import  login, authenticate,logout
 
 
 def log_out(request):
-    logout(request)
-    return redirect('home')
+    '''
