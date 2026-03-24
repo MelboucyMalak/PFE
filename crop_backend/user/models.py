@@ -8,5 +8,4 @@ class Profile(models.Model):
         return self.user.get_full_name() or self.user.username
 
 
-class recommendations(models.Model):
-    user=models.ForeignKey(User, on_delete=models.CASCADE)
+
