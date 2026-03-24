@@ -22,3 +22,5 @@ class Plan (models.Model):
     Note=models.TextField(max_length=1000)
     def __str__(self):
         return self.crop_id.crop_name
+    class Meta:
+        unique_together=("recommendation_id","crop_id")
