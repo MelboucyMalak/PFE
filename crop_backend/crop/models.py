@@ -5,14 +5,14 @@ from django.db.models import Q
 
 # Create your models here.
 class Crop(models.Model):
-    name = models.CharField(max_length=50)
+    crop_name = models.CharField(max_length=50)
     ph= models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(14.0)]) #PH BETWEEN 0-14
     p= models.FloatField()
     k= models.FloatField()
     n= models.FloatField()
     description= models.TextField(null=True,blank=True) #the blabla of crop
     def __str__(self):
-        return self.name
+        return self.crop_name
     class Meta:
         constraints = [
             models.CheckConstraint(condition=Q(ph__gte=0.0) & Q(ph__lte=14.0),
