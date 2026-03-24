@@ -20,6 +20,5 @@ class Plan (models.Model):
     recommendation_id=models.ForeignKey(Recommendation, on_delete=models.CASCADE)
     crop_id=models.ForeignKey(Crop, on_delete=models.CASCADE)
     Note=models.TextField(max_length=1000)
-    created_at=models.DateTimeField(auto_now=True)
     def __str__(self):
         return self.crop_id.crop_name
