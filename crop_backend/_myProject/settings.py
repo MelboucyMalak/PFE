@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'user.apps.UserConfig',
     'crop.apps.CropConfig'
+    'recommendations.apps.RecommendationsConfig',
 ]
 
 MIDDLEWARE = [
