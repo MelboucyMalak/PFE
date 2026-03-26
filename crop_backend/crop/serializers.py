@@ -1,5 +1,4 @@
 ## model data ---> json
-## model data ---> json
 from rest_framework import serializers
 from crop.models import Crop
 

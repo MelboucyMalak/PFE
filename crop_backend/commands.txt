@@ -3,10 +3,16 @@
  D:\PFE\crop_backend>  venv\Scripts\Activate.ps1
 (venv) PS D:\PFE\crop_backend>
 
-****
+
+****************GIT COMMANDS****************
 git branch
 git add .
 git commit -m "Your commit message describing the changes"
 git push origin backend
-*****
 git pull origin backend
+********************************************
+
+**************PYTHON COMMANDS**************
+py manage.py runserver
+
+*******************************************
