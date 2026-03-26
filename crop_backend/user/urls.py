@@ -2,7 +2,11 @@ from django.urls import path, include
 
 from user import views
 
+
 urlpatterns = [
-    path("api/user_list",views.user_list_api,name="user_list"),
+    path("admin/user-management",views.user_list,name="user_list"),
+    path("admin/user-management/<int:id>",views.user_details,name="user_details"),
+    path('',include('crop.urls'))
+
 ]
 
