@@ -1,8 +1,8 @@
 from django.urls import path, include
 
-from user import api
+from user import views
 
 urlpatterns = [
-    path("api/user_list",api.user_list_api,name="user_list"),
+    path("api/user_list",views.user_list_api,name="user_list"),
 ]
 

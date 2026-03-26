@@ -1,8 +1,7 @@
 from django.urls import path
 
-from crop import  api
+from crop import  views
 
 urlpatterns = [
-    path('api/crop_list',api.crop_list_api),
-    #path('a',views.crop_detail),
+    path('api/crop_list',views.crop_list_api),
 ]

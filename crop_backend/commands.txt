@@ -21,4 +21,4 @@ _________note__________
 GET : نجيب معلومات
 POST : creat a new object (kima f sing up **create a new account** )  /??
 PUT : we use it on update  /??
-DELETE : delete 
+DELETE : delete
