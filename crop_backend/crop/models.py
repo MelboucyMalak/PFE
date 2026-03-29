@@ -14,7 +14,7 @@ class Crop(models.Model):
     crop_name = models.CharField(max_length=50)
     PH_Min= models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(14.0)]) #PH BETWEEN 0-14
     PH_Max = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(14.0)])  # PH BETWEEN 0-14
-    Duration_Days=models.IntegerField()
+    Duration_Days=models.IntegerField(default=0)
     Temp_Min=models.FloatField()
     Temp_Max = models.FloatField()
     Water_Min_mm= models.FloatField()

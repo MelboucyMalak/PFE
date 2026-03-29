@@ -19,3 +19,8 @@ def user_details(request,id):
     user = User.objects.get(id=id)
     data = UserSerializer(user).data
     return Response({'user':data})
+
+'''def log_in(request):
+    username = request.POST['username']
+    password = request.POST['password']
+    Response'''
