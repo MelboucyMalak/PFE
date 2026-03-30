@@ -108,6 +108,9 @@ class CropSoilTexture(models.Model):
     soil_texture= models.ForeignKey(SoilTexture,on_delete=models.CASCADE)
     suitability_rank= models.IntegerField(choices=SUITABILITY_CHOICES)
     note= models.CharField(default='', max_length=100)
+
+    def __str__(self):
+        return self.crop
     class Meta:
         pass
 
