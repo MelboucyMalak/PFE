@@ -1,4 +1,4 @@
-# like view
+"""# like view
 from rest_framework.response import Response
 from .models import Recommendation, Plan
 from .serializers import RecommendationSerializer, PlanSerializer
@@ -16,5 +16,4 @@ def recommendation_list_api(request):
 def plan_list_api(request):
     plans = Plan.objects.all()
     data = PlanSerializer(plans, many=True).data
-    return Response({'plans': data})
-
+    return Response({'plans': data})"""
