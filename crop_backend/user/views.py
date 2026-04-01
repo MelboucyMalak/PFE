@@ -1,11 +1,11 @@
-# like view
+# user/views.py
 from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
-from .serializers import UserSerializer
+from .serializers import UserSerializer, ChangePasswordSerializer
 from rest_framework.decorators import api_view, permission_classes
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, update_session_auth_hash
 from rest_framework.authtoken.models import Token
 
 @api_view(['GET'])
@@ -23,31 +23,66 @@ def user_details(request,id):
     return Response({'user':data})
 
 
+from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
+from rest_framework import status
+
+
 @api_view(['POST'])
 def login(request):
-    user = authenticate(username=request.data['username'],password=request.data['password'])
+    EorU = request.data.get('username') or request.data.get('email') # email OR username
+    password = request.data.get('password')
+
+    # we try to find the user by email
+    user_obj = User.objects.filter(email=EorU).first()
+    if user_obj: # if not null
+        username = user_obj.username
+    else:# then it is username
+        username = EorU
+
+    user = authenticate(username=username, password=password) # we try to log in the user
+
     if user is not None:
-        token,created = Token.objects.get_or_create(user=user)
-        return Response({'massage':'Login Success','token':token.key},status=status.HTTP_200_OK)
+        token, created = Token.objects.get_or_create(user=user)
+        return Response({'message':'Login Success','token': token.key},status=status.HTTP_200_OK)
     else:
-        return Response({'massage':'Login Failed'})
+        return Response({'message':'Login Failed'}, status=status.HTTP_401_UNAUTHORIZED)
+
 
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def logout(request):
-    if request.method == 'POST':
         try:
             # Delete the user's token to logout
-            request.user.auth_token.delete()
+            token = Token.objects.get(user=request.user)
+            token.delete()
             return Response({'message': 'Successfully logged out.'}, status=status.HTTP_200_OK)
-        except Exception as e:
-            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        except Token.DoesNotExist:
+            return Response({'error': 'Token not found.'}, status=400)
+
 
 @api_view(['POST'])
 def register(request):
-    if request.method == 'POST':
         user = UserSerializer(data=request.data)
         if user.is_valid():
             user.save()
             return Response(user.data, status=status.HTTP_201_CREATED)
         return Response(user.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def change_password(request):
+    if request.method == 'POST':
+        serializer = ChangePasswordSerializer(data=request.data)
+        if serializer.is_valid():
+            user = request.user
+            if user.check_password(serializer.data.get('old_password')):
+                user.set_password(serializer.data.get('new_password'))
+                user.save()
+                update_session_auth_hash(request, user)  # To update session after password change
+                return Response({'message': 'Password changed successfully.'}, status=status.HTTP_200_OK)
+            return Response({'error': 'Incorrect old password.'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

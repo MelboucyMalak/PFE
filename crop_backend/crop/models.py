@@ -13,12 +13,14 @@ SUITABILITY_CHOICES = [
     (1, "Avoid"), (2, "Difficult"), (3, "Acceptable"),
     (4, "Good"), (5, "Ideal")
 ]
-# CLASS CROP
+
+
+# 𝗖𝗟𝗔𝗦𝗦 𝗖𝗥𝗢𝗣
 class Crop(models.Model):
-    crop_name = models.CharField(max_length=50)
+    crop_name = models.CharField(max_length=50,unique=True)
     ph_min= models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(14.0)])
     ph_max = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(14.0)])
-    duration_Days=models.IntegerField(default=0)
+    duration_days=models.IntegerField(default=0)
     temp_min=models.FloatField()
     temp_max = models.FloatField()
     water_min_mm= models.FloatField()
@@ -64,45 +66,81 @@ class Crop(models.Model):
             models.CheckConstraint(
                 condition=Q(ph_max__gte=0.0) & Q(ph_max__lte=14.0),
                 name='ph_max_between_0_and_14'
+            ),
+            models.CheckConstraint(
+                condition=Q(duration_days__gte=0),
+                name='duration_positive'
+            ),
+            models.CheckConstraint(
+                condition=Q(root_depth_min_cm__lte=F('root_depth_max_cm')),
+                name='root_depth_valid'
+            ),
+            models.CheckConstraint(
+                condition=Q(root_depth_min_cm__gte=0),
+                name='root_depth_positive'
+            ),
+            models.CheckConstraint(
+                condition=Q(sampling_depth_cm__gte=0),
+                name='sampling_depth_positive'
             )
         ] # gte: greater or =  //  lte: less or =
 
 
 
 
-#CLASS CLIMATE
+
+# 𝗖𝗟𝗔𝗦𝗦 𝗖𝗟𝗜𝗠𝗔𝗧𝗘
 class Climate(models.Model):
-    climate_zone= models.CharField(default='', max_length=50)
+    climate_zone = models.CharField(max_length=50, unique=True)
     mineralization_factor= models.FloatField(default=0.0)
     def __str__(self):
         return self.climate_zone
 
     class Meta:#no constraint for now
-        pass
+        models.CheckConstraint(
+            condition=Q(mineralization_factor__gte=0),
+            name='mineralization_positive'
+        ),
 
 
 
 
-#CLASS CROP-CLIMATE
+
+# 𝗖𝗟𝗔𝗦𝗦 𝗖𝗥𝗢𝗣 𝗖𝗟𝗜𝗠𝗔𝗧𝗘
 class CropClimate(models.Model):
     crop= models.ForeignKey(Crop,on_delete=models.CASCADE)
     climate= models.ForeignKey(Climate,on_delete=models.CASCADE)
-    rating= models.IntegerField(choices=SUITABILITY_CHOICES)# i will see later if i need to change
-    Note= models.CharField(default='', max_length=100)
+    rating= models.IntegerField(choices=SUITABILITY_CHOICES)# I will see later if I need to change
+    note= models.CharField(default='', max_length=100)
+
     def __str__(self):
         return f"{self.crop} - {self.climate}"
+
     class Meta:# no constraint ?
         constraints = [
-            models.UniqueConstraint(fields=['crop', 'climate'], name='unique_crop_climate')
+            models.UniqueConstraint(fields=['crop', 'climate'], name='unique_crop_climate'),
+            models.CheckConstraint(
+                condition=Q(rating__gte=1) & Q(rating__lte=5),
+                name='rating_between_1_and_5'
+            )
         ]
 
-# CLASS SOIL TEXTURE
+
+
+
+
+# 𝗖𝗟𝗔𝗦𝗦 𝗦𝗢𝗜𝗟 𝗧𝗘𝗫𝗧𝗨𝗥𝗘
 class SoilTexture(models.Model):
-    texture_class= models.CharField(default='', max_length=50)
+    texture_class= models.CharField(default='', max_length=50,unique=True)
+
     def __str__(self):
         return self.texture_class
 
-# CLASS CROP-SOIL-TEXTURE
+
+
+
+
+# 𝗖𝗟𝗔𝗦𝗦 𝗖𝗥𝗢𝗣 𝗦𝗢𝗜𝗟 𝗧𝗘𝗫𝗧𝗨𝗥𝗘
 class CropSoilTexture(models.Model):
     crop= models.ForeignKey(Crop,on_delete=models.CASCADE)
     soil_texture= models.ForeignKey(SoilTexture,on_delete=models.CASCADE)
@@ -110,11 +148,14 @@ class CropSoilTexture(models.Model):
     note= models.CharField(default='', max_length=100)
 
     def __str__(self):
-        return self.crop
-    class Meta:
-        pass
+        return self.crop.crop_name
 
-'''
- to send choice to frontend i use 
- get_<field_name>_display() django auto creat it :D
-'''
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['crop', 'soil_texture'],
+                name='unique_crop_soil'
+            )
+        ]
+
+

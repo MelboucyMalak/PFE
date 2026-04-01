@@ -17,3 +17,7 @@ def plan_list_api(request):
     plans = Plan.objects.all()
     data = PlanSerializer(plans, many=True).data
     return Response({'plans': data})"""
+'''
+ to send choice to frontend i use 
+ get_<field_name>_display() django auto creat it :D
+'''

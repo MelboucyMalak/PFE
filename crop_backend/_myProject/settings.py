@@ -28,6 +28,7 @@ INSTALLED_APPS = [
 
     "rest_framework",
     'rest_framework.authtoken',
+    'django_rest_passwordreset',
     'user.apps.UserConfig',
     'crop.apps.CropConfig',
     'recommendation.apps.RecommendationConfig',
@@ -48,9 +49,7 @@ ROOT_URLCONF = '_myProject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-
-        ],
+        'DIRS': [BASE_DIR, 'templates/',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,3 +126,12 @@ REST_FRAMEWORK = {
     'rest_framework.authentication.BasicAuthentication',
 )
 }
+
+# Email Backend Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'  # Replace with your preferred backend
+EMAIL_PORT = 587  # Replace with your email port
+EMAIL_USE_TLS = True  # Set to False if your email server doesn't use TLS
+EMAIL_HOST = 'smtp.gmail.com'  # Replace with your email host for gmail -> 'smtp.gmail.com'
+EMAIL_HOST_USER = 'berrachedizineb5@gmail.com'  # Replace with your email username
+EMAIL_HOST_PASSWORD = 'cftx zclc aqib dtdw'  # Replace with your email password
+DJANGO_REST_PASSWORDRESET_TOKEN_EXPIRY_TIME = 600 # 10 min
