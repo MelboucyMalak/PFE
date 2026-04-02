@@ -19,6 +19,7 @@ urlpatterns = [
     path('admin/forgot-password/', ResetPasswordRequestToken.as_view(), name="forgot-password"),
     path('admin/forgot-password/confirm-password/', ResetPasswordConfirm.as_view(), name="confirm-password"),
     path('farmer/forgot-password/', ResetPasswordRequestToken.as_view(), name="forgot-password"),
-    path('farmer/forgot-password/confirm-password/', ResetPasswordConfirm.as_view(), name="confirm-password"),
+    path('admin/test-code', views.testcode, name='test-code'),
+    path('farmer/reset-password', ResetPasswordConfirm.as_view(), name="confirm-password"),
 ]
 
