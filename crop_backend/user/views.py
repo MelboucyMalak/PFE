@@ -23,14 +23,6 @@ def user_details(request,id):
     return Response({'user':data})
 
 
-from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework.authtoken.models import Token
-from rest_framework import status
-
-
 @api_view(['POST'])
 def login(request):
     EorU = request.data.get('username') or request.data.get('email') # email OR username
