@@ -14,6 +14,7 @@ urlpatterns = [
     path("admin/logout",views.logout),
     path("farmer/login",views.login),
     path("farmer/logout",views.logout),
+    path("farmer/register",views.register),
     path("admin/Profile",views.change_password),
     path("farmer/Profile",views.change_password),
     path('admin/forgot-password/', ResetPasswordRequestToken.as_view(), name="forgot-password"),
