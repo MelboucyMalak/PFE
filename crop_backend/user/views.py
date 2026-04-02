@@ -86,3 +86,20 @@ def change_password(request):
                 return Response({'message': 'Password changed successfully.'}, status=status.HTTP_200_OK)
             return Response({'error': 'Incorrect old password.'}, status=status.HTTP_400_BAD_REQUEST)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
+def testcode(request):
+    token = request.data.get('token')
+
+    if token : # see if user really insert a token means token <> null
+        try:
+             token_obj = ResetPasswordToken.objects.get(key=token)
+             time = token_obj.created_at + timezone.timedelta(minutes=10) # the exact expiry time
+             if timezone.now() < time: # mazal ma l7a9na l time
+                 return Response({'message':'Token is valid'}, status=status.HTTP_200_OK)
+             else:
+                 return Response({'message':'Token is expired'}, status=status.HTTP_400_BAD_REQUEST)
+        except ResetPasswordToken.DoesNotExist:
+            return Response({'message':'Token not found.'}, status=404)
+    else:
+        return Response({'message':'Token must insert'}, status=status.HTTP_400_BAD_REQUEST)
