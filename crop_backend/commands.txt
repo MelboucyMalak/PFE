@@ -22,3 +22,12 @@ GET : نجيب معلومات
 POST : creat a new object (kima f sing up **create a new account** )  /??
 PUT : we use it on update  /??
 DELETE : delete
+
+
+| Situation     | Status |
+| ------------- | ------ |
+| Success       | 200    |
+| Created       | 201    |
+| Bad input     | 400    |
+| Not logged in | 401    |
+| Not found     | 404    |
