@@ -31,3 +31,13 @@ DELETE : delete
 | Bad input     | 400    |
 | Not logged in | 401    |
 | Not found     | 404    |
+
+
+Views should only handle HTTP (receiving the request, returning the response).
+Serializers should handle validation and converting data to JSON.
+Models should strictly handle database structure.
+Services should handle your business logic (fetching from external sites, merging data, calculating complex stuff).
+Urls is the urls bayna
+apps is like bach nzid l app bach tban f /dev l superstaff
+test.py is for test idk how to use it
+admin.py is bach nzid la table l /dev bach tban l supperstaff
