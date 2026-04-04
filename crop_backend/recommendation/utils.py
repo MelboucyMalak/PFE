@@ -70,11 +70,10 @@ def fetch_openlandmap_data(long,lat):
     class_number = info['b0']
     ph_value = info['b30'] / 10.0  # Divide by 10 as required
 
-    texture_name = texture_classes.get(class_number, "Unknown")
-    if texture_name is None and ph_value is None :
+    if class_number is None and ph_value is None :
         return None
 
-    return {"soil_texture": texture_name, "ph": round(ph_value, 2)}
+    return {"soil_texture": class_number, "ph": round(ph_value, 2)}
 
 
 def fetch_nasa_power_data(long, lat):
@@ -182,3 +181,13 @@ def fetch_environment_data(long, lat):
     }
 
 
+lat = 36.0846
+lon = 4.2887
+if is_inside_algeria(lon,lat):
+    nasa = fetch_nasa_power_data(lon,lat)
+    opn= fetch_openlandmap_data(lon,lat)
+    isda = fetch_isda_data(lon,lat)
+    env = fetch_environment_data(lon,lat)
+    print(nasa, opn, isda, env)
+else:
+    print("sorry")
