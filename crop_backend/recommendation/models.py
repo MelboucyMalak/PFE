@@ -29,20 +29,7 @@ class RecommendationSession(models.Model):
         return f"Session {self.id} ({self.user.username})"
 
     class Meta:
-        constraints = [
-            models.CheckConstraint(
-                condition=Q(n_total_raw_ppm__gte=0),
-                name='n_positive'
-            ),
-            models.CheckConstraint(
-                condition=Q(p_extractable_raw_ppm__gte=0),
-                name='p_positive'
-            ),
-            models.CheckConstraint(
-                condition=Q(k_extractable_raw_ppm__gte=0),
-                name='k_positive'
-            )
-        ]
+        pass
 
 
 # 𝗖𝗟𝗔𝗦𝗦 𝗖𝗥𝗢𝗣 𝗥𝗘𝗖𝗢𝗠𝗠𝗘𝗡𝗗𝗔𝗧𝗜𝗢𝗡

@@ -30,7 +30,7 @@ def fetch_isda_data(long,lat):
     combined = ee.Image.cat([N_final, P_final, K_final])
     sample = combined.sample(point, 30).first()
     if sample is None:
-        return None, None,None,None
+        return None
     def _get(name):
         try:
             return sample.get(name).getInfo()
@@ -39,6 +39,8 @@ def fetch_isda_data(long,lat):
     n_val =_get('Nitrogen_mg_kg')
     p_val = _get('Phosphorus_mg_kg')
     k_val = _get('Potassium_mg_kg')
+    if n_val is None and p_val is None and k_val is None:
+        return None
     return  {'n': n_val,'p': p_val,'k': k_val}
 
 def fetch_openlandmap_data(long,lat):
@@ -58,17 +60,21 @@ def fetch_openlandmap_data(long,lat):
     # Sample once
     sample = combined.sample(point, 30).first()
     if sample is None:
-        return {"texture": None, "ph": None}
+        return None
 
-    # Get all info at once
-    info = sample.getInfo()['properties']
+    try:
+        info = sample.getInfo()['properties']
+    except:
+        info = None
 
     class_number = info['b0']
     ph_value = info['b30'] / 10.0  # Divide by 10 as required
 
     texture_name = texture_classes.get(class_number, "Unknown")
+    if texture_name is None and ph_value is None :
+        return None
 
-    return {"texture": texture_name, "ph": round(ph_value, 2)}
+    return {"soil_texture": texture_name, "ph": round(ph_value, 2)}
 
 
 def fetch_nasa_power_data(long, lat):
@@ -85,13 +91,7 @@ def fetch_nasa_power_data(long, lat):
     try:
         response = requests.get(url, timeout=10)
         data = response.json()
-
-        if 'properties' not in data:
-            print("NASA API returned error:", data)
-            return {"temperature_avg": None,
-                    "humidity_avg": None}
         params = data['properties']['parameter']
-
         def avg_param(name):
             values_dict = params.get(name)
             if not values_dict:
@@ -101,15 +101,17 @@ def fetch_nasa_power_data(long, lat):
                 return None
             return round(sum(values) / len(values), 2)
 
+        if avg_param('RH2M') is None and  avg_param("T2M") is None :
+            return None
+
         return {
             "temperature_avg": avg_param("T2M"),
             "humidity_avg": avg_param("RH2M")
         }
+
     except Exception as e:
         print("NASA API Error:", e)
-        return {"temperature_avg": None,
-                "humidity_avg": None}
-
+        return None
 
 def fetch_environment_data(long, lat):
     point = ee.Geometry.Point(long, lat)
@@ -126,7 +128,7 @@ def fetch_environment_data(long, lat):
     # Sample at the point once
     sample = combined.sample(point, scale=30).first()
     if sample is None:
-        return {"land_cover": None, "slope": None, "rainfall": None, "koppen": None}
+        return None
 
     # Get all raster info in one go
     info = sample.getInfo()['properties']
