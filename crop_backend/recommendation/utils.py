@@ -1,17 +1,19 @@
 import ee
 import requests
 
-try:
-    ee.Initialize(project='alpha-earth-test-486217')
-except  Exception as e:
-    print(f"earth engine not available :{e}")
+def initEE():
+    try:
+        ee.Initialize(project='alpha-earth-test-486217')
+    except Exception as e:
+        print(f"Earth Engine not available: {e}")
 
-# define algeria
-countries = ee.FeatureCollection("USDOS/LSIB_SIMPLE/2017")
-algeria = countries.filter(ee.Filter.eq('country_na', 'Algeria'))
-algeria_geom = algeria.geometry()
+def get_algeria():
+    countries = ee.FeatureCollection("USDOS/LSIB_SIMPLE/2017")
+    algeria = countries.filter(ee.Filter.eq('country_na', 'Algeria'))
+    return algeria, algeria.geometry()
 
 def is_inside_algeria(long,lat):
+    algeria, x = get_algeria()
     point = ee.Geometry.Point(long, lat)
     # check if point is inside algeria
     is_inside = algeria.filterBounds(point).size().getInfo()
@@ -20,6 +22,7 @@ def is_inside_algeria(long,lat):
     return True
 
 def fetch_isda_data(long,lat):
+    algeria, x = get_algeria()
     point=ee.Geometry.Point(long, lat)
     n_total = ee.Image("ISDASOIL/Africa/v1/nitrogen_total").select('mean_0_20')
     p_ext = ee.Image("ISDASOIL/Africa/v1/phosphorus_extractable").select('mean_0_20')
@@ -44,6 +47,7 @@ def fetch_isda_data(long,lat):
     return  {'n': n_val,'p': p_val,'k': k_val}
 
 def fetch_openlandmap_data(long,lat):
+    algeria, x = get_algeria()
     point = ee.Geometry.Point(long, lat)
     texture_classes = {
         1: 'Sand', 2: 'Loamy Sand', 3: 'Sandy Loam', 4: 'Loam',
@@ -72,11 +76,12 @@ def fetch_openlandmap_data(long,lat):
 
     if class_number is None and ph_value is None :
         return None
+    soil_texture_name = texture_classes.get(class_number, "Unknown")
 
-    return {"soil_texture": class_number, "ph": round(ph_value, 2)}
-
+    return {"soil_texture": soil_texture_name, "ph": round(ph_value, 2)}
 
 def fetch_nasa_power_data(long, lat):
+    algeria, x = get_algeria()
     url = (
         f"https://power.larc.nasa.gov/api/temporal/monthly/point"
         f"?parameters=T2M,RH2M"
@@ -113,6 +118,7 @@ def fetch_nasa_power_data(long, lat):
         return None
 
 def fetch_environment_data(long, lat):
+    algeria, x = get_algeria()
     point = ee.Geometry.Point(long, lat)
 
     # ----- Load datasets -----
@@ -180,7 +186,7 @@ def fetch_environment_data(long, lat):
         "koppen": koppen
     }
 
-
+"""
 lat = 36.0846
 lon = 4.2887
 if is_inside_algeria(lon,lat):
@@ -191,3 +197,4 @@ if is_inside_algeria(lon,lat):
     print(nasa, opn, isda, env)
 else:
     print("sorry")
+"""

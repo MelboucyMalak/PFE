@@ -3,7 +3,7 @@ from django.db.models import Q
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django.db import models
-from crop.models import Crop, SoilTexture
+from crop.models import Crop
 
 
 
@@ -16,7 +16,7 @@ class RecommendationSession(models.Model):
     n_total_raw_ppm=models.FloatField()
     p_extractable_raw_ppm=models.FloatField()
     k_extractable_raw_ppm=models.FloatField()
-    soil_texture_initial = models.ForeignKey(SoilTexture, on_delete=models.CASCADE)
+    soil_texture_initial = models.CharField(max_length=20)
     soil_ph_initial = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(14.0)])
     slope_angle=models.FloatField()
     land_cover = models.CharField(max_length=50)

@@ -19,7 +19,7 @@ def recommendation_list_api(request):
 @permission_classes([IsAuthenticated])
 def recommendation_api_view(request):
    recommendations = creatRecomendation(request)
-   data = RecommendationSerializer(recommendations, many=True).data
+   data = RecommendationSerializer(recommendations, many=False).data
    return Response({'recommendations': data})
 
 
