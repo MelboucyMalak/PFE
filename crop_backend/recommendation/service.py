@@ -1,6 +1,8 @@
+from crop.cropSelect import Cropselect
+from .models import History
 from .errors import NotInsideALgeria, NotSuitableLand, InvalidData
 from .models import RecommendationSession,CropRecommendation
-from .utils import is_inside_algeria, fetch_openlandmap_data, fetch_isda_data, fetch_environment_data, \
+from .ExternalAPIs import is_inside_algeria, fetch_openlandmap_data, fetch_isda_data, fetch_environment_data, \
     fetch_nasa_power_data, initEE
 
 initEE()
@@ -17,14 +19,29 @@ def is_ok(long,lat):
             raise NotSuitableLand
     return env
 
+FEILDS=[
+        'soil_texture_initial',
+        'soil_ph_initial',
+        'rainfall_avg',
+        'temperature_avg',
+        'humidity_avg',
+        'koppen'
+]
 
+def is_session_useful(recommendation):
+    for f in FEILDS:
+        val=getattr(recommendation,f)
+        if val is "Unknown" or val is -1:
+            return False
+        return True
 
-def creatRecomendation(request):
+def createRecommendationSession(request):
     lon=float( request.data.get("lon"))
     lat=float( request.data.get("lat"))
     # maybe the object already exist why create again
     maybe_exist=RecommendationSession.objects.filter(lat=lat,lon=lon).first()
     if maybe_exist:
+        History.objects.create(user=request.user, recommendation=maybe_exist)
         return maybe_exist
     # fetch the data
     env=is_ok(lon,lat)
@@ -32,7 +49,6 @@ def creatRecomendation(request):
     nasa = fetch_nasa_power_data(lon,lat)
     opnl = fetch_openlandmap_data(lon,lat)
     recommendation=RecommendationSession.objects.create(
-        user= request.user,
         lat = float( request.data.get("lat")),
         lon = float( request.data.get("lon")),
         n_total_raw_ppm = isda["n"] if isda["n"] is not None else -1,
@@ -40,15 +56,34 @@ def creatRecomendation(request):
         k_extractable_raw_ppm = isda["k"] if isda["k"] is not None else -1,
         soil_texture_initial = opnl["soil_texture"]if opnl["soil_texture"] is not None else "Unknown",
         soil_ph_initial = opnl["ph"] if opnl["ph"] is not None else -1,
-        slope_angle =env["slope"],
-        land_cover = env["land_cover"],
+        slope_angle =env["slope"] , # verified
+        land_cover = env["land_cover"], #verified
         rainfall_avg = env["rainfall"] if env["rainfall"] is not None else -1,
         temperature_avg =nasa["temperature_avg"] if nasa["temperature_avg"] is not None else -1,
         humidity_avg = nasa ["humidity_avg"] if nasa["humidity_avg"] is not None else -1,
         koppen = env["koppen"] if  env["koppen"] is not None else "Unknown"
     )
+    recommendation.useful = is_session_useful(recommendation)
+    recommendation.save(update_fields=['useful'])
+    History.objects.create(user=request.user, recommendation=recommendation)
     return recommendation
 
+def CropListGenerate(request):
+    session_id=request.session.get("session_id")
+    recommendation = RecommendationSession.objects.get(pk=session_id)
+    if recommendation.useful==False:
+        raise InvalidData
+    maybe_exist = CropRecommendation.objects.filter(recommendation=recommendation)
+    if maybe_exist:
+        return maybe_exist
+                     #(ph, soil_texture, rainfall, temperature, humedity, koppen
+    crops = Cropselect(recommendation.soil_ph_initial,
+                       recommendation.soil_texture_initial,
+                       recommendation.rainfall_avg,
+                       recommendation.temperature_avg,
+                       recommendation.humidity_avg,
+                       recommendation.koppen)
+    return crops
 
 
 
