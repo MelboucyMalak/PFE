@@ -25,7 +25,7 @@ class RecommendationSession(models.Model):
     koppen = models.CharField(max_length=10)
 
     def __str__(self):
-        return f"Session {self.id} ({self.user.username})"
+        return f"Session {self.id} ({self.lat},{self.lon})"
 
     class Meta:
         pass
