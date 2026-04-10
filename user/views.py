@@ -5,6 +5,9 @@ from django_rest_passwordreset.models import ResetPasswordToken
 from rest_framework import status
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
+
+from recommendation.models import RecommendationSession
+from .models import History
 from .serializers import UserSerializer, ChangePasswordSerializer
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import authenticate, update_session_auth_hash
@@ -97,3 +100,25 @@ def testcode(request):
             return Response({'message':'Token not found.'}, status=404)
     else:
         return Response({'message':'Token must insert'}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def save_recommendation(request):
+    session_id= request.data.get('session_id')
+    if not session_id:
+        return Response({'message':'should send session_id!'}, status=status.HTTP_400_BAD_REQUEST)
+    try:
+        recommendation = RecommendationSession.objects.get(pk=session_id)
+    except RecommendationSession.DoesNotExist:
+        return Response({'message':'Recommendation not found.'}, status=status.HTTP_404_NOT_FOUND)
+
+    history = History.objects.filter(user=request.user,recommendation=recommendation).exists()
+    if history:
+        return Response({'message':'Recommendation already saved.'}, status=status.HTTP_200_OK)
+    History.objects.create(user=request.user, recommendation=recommendation)
+    return Response({'message':'Recommendation saved successfully'},status=status.HTTP_201_CREATED)
+
+
+

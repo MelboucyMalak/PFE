@@ -1,8 +1,7 @@
  every time we open the project we need to activate the environment by this command :
  venv\Scripts\Activate.ps1
   (this for PowerShell) it should give you somthing like this
- D:\PFE\crop_backend>  CLASSES:
-(venv) PS D:\PFE\crop_backend>
+(venv) PS D:\PFE\>
 
 ****************GIT COMMANDS****************
 git branch

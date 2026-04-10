@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+from recommendation.models import RecommendationSession
+
+
 # Create your models here.
 class Profile(models.Model):
     user=models.OneToOneField(User, on_delete=models.CASCADE) # relation User--Profile 1.1 on delete cascade
@@ -9,3 +12,8 @@ class Profile(models.Model):
 
 
 
+class History(models.Model):
+    user=models.OneToOneField(User, on_delete=models.CASCADE)
+    recommendation=models.OneToOneField(RecommendationSession, on_delete=models.CASCADE)
+    class Meta:
+        unique_together = (('user','recommendation'),)

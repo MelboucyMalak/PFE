@@ -23,5 +23,6 @@ urlpatterns = [
     path('farmer/forgot-password/', ResetPasswordRequestToken.as_view(), name="forgot-password"),
     path('admin/test-code', views.testcode, name='test-code'),
     path('farmer/reset-password', ResetPasswordConfirm.as_view(), name="confirm-password"),
+    path("api/map",views.save_recommendation,name="save_recommendation"),
 ]
 
