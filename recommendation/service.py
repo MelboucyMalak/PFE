@@ -32,7 +32,6 @@ def creatRecomendation(request):
     nasa = fetch_nasa_power_data(lon,lat)
     opnl = fetch_openlandmap_data(lon,lat)
     recommendation=RecommendationSession.objects.create(
-        user= request.user,
         lat = float( request.data.get("lat")),
         lon = float( request.data.get("lon")),
         n_total_raw_ppm = isda["n"] if isda["n"] is not None else -1,
