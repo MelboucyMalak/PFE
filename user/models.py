@@ -13,7 +13,7 @@ class Profile(models.Model):
 
 
 class History(models.Model):
-    user=models.OneToOneField(User, on_delete=models.CASCADE)
+    user=models.ForeignKey(User, on_delete=models.CASCADE)
     recommendation=models.OneToOneField(RecommendationSession, on_delete=models.CASCADE)
     class Meta:
         unique_together = (('user','recommendation'),)
