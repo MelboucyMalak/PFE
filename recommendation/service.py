@@ -1,3 +1,4 @@
+from crop.cropSelect import Cropselect
 from .errors import NotInsideALgeria, NotSuitableLand, InvalidData
 from .models import RecommendationSession,CropRecommendation
 from .utils import is_inside_algeria, fetch_openlandmap_data, fetch_isda_data, fetch_environment_data, \
@@ -19,9 +20,7 @@ def is_ok(long,lat):
 
 
 
-def creatRecomendation(request):
-    lon=float( request.data.get("lon"))
-    lat=float( request.data.get("lat"))
+def creatRecomendation(lat,lon):
     # maybe the object already exist why create again
     maybe_exist=RecommendationSession.objects.filter(lat=lat,lon=lon).first()
     if maybe_exist:
@@ -32,8 +31,8 @@ def creatRecomendation(request):
     nasa = fetch_nasa_power_data(lon,lat)
     opnl = fetch_openlandmap_data(lon,lat)
     recommendation=RecommendationSession.objects.create(
-        lat = float( request.data.get("lat")),
-        lon = float( request.data.get("lon")),
+        lat = float(lat),
+        lon = float(lon),
         n_total_raw_ppm = isda["n"] if isda["n"] is not None else -1,
         p_extractable_raw_ppm = isda["p"] if isda["p"] is not None else -1,
         k_extractable_raw_ppm = isda["k"] if isda["k"] is not None else -1,
@@ -48,7 +47,18 @@ def creatRecomendation(request):
     )
     return recommendation
 
+def generate_CropRecommendations(id):
+    recommendations=RecommendationSession.objects.get(pk=id)
+    #ph, soil_texture, rainfall, temperature, humedity, koppen
+    #
+    crops=Cropselect(recommendations.soil_ph_initial,
+               recommendations.soil_texture_initial,
+               recommendations.rainfall_avg,
+               recommendations.temperature_avg,
+               recommendations.humidity_avg,
+               recommendations.koppen)
 
+    return crops
 
 
 

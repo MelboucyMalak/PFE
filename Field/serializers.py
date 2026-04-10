@@ -12,3 +12,4 @@ class FieldAnalysisSerializer(serializers.ModelSerializer):
     class Meta:
         model = FieldAnalysis
         fields = '__all__'
+
