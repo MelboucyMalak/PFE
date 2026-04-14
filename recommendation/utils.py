@@ -187,8 +187,8 @@ def fetch_environment_data(long, lat):
     }
 
 """
-lat = 36.0846
-lon = 4.2887
+lat = 
+lon = 
 if is_inside_algeria(lon,lat):
     nasa = fetch_nasa_power_data(lon,lat)
     opn= fetch_openlandmap_data(lon,lat)

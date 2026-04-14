@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import RecommendationSession, CropRecommendation
-from .serializers import RecommendationSerializer
+from .serializers import RecommendationSerializer, CropRecommendationSerializer
 from rest_framework.decorators import api_view, permission_classes
 
 from .service import creatRecomendation, generate_CropRecommendations
@@ -39,7 +39,8 @@ def croplist_api_view(request):
     if not recommendations:
         return Response({'error':'session_id is invalid'},status=status.HTTP_400_BAD_REQUEST)
     crops=  generate_CropRecommendations(session_id)
-    return Response({'Crop List': list(crops)},status=status.HTTP_200_OK)
+    data=  CropRecommendationSerializer(crops, many=True).data
+    return Response({'Crop List': data},status=status.HTTP_200_OK)
 
 '''
  to send choice to frontend i use 

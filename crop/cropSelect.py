@@ -8,14 +8,14 @@ def Cropselect(ph, soil_texture, rainfall, temperature, humedity, koppen):
     return Crop.objects.filter(
         cropclimate__climate__climate_zone=koppen,
 
-        temp_min__lte=temperature,
-        temp_max__gte=temperature,
+        temp_min__lte=temperature,# <=
+        temp_max__gte=temperature,# >=
 
-        water_min_mm__lte=rainfall,
-        water_max_mm__gte=rainfall,
+        water_min_mm__lte=rainfall,# <=
+        water_max_mm__gte=rainfall,# >=
 
-        humidity_min__lte=humedity,
-        humidity_max__gte=humedity,
+        humidity_min__lte=humedity,# <=
+        humidity_max__gte=humedity,# >=
 
         cropsoiltexture__soil_texture__texture_class=soil_texture,
 
@@ -24,6 +24,6 @@ def Cropselect(ph, soil_texture, rainfall, temperature, humedity, koppen):
         Q(ph_min__gte=ph + 0.5)
     ).values(
         'crop_name',
-        'cropclimate__climate__climate_zone',
-        'cropsoiltexture__soil_texture__texture_class'
+        #'cropclimate__climate__climate_zone',
+        #'cropsoiltexture__soil_texture__texture_class'
     ).distinct()

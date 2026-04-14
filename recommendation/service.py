@@ -1,4 +1,5 @@
 from crop.cropSelect import Cropselect
+from crop.models import CropClimate, CropSoilTexture, Crop
 from .errors import NotInsideALgeria, NotSuitableLand, InvalidData
 from .models import RecommendationSession,CropRecommendation
 from .utils import is_inside_algeria, fetch_openlandmap_data, fetch_isda_data, fetch_environment_data, \
@@ -12,7 +13,7 @@ def is_ok(long,lat):
         env=fetch_environment_data(long,lat)
         if env is None or env["slope"] is None or env["land_cover"] is None:
             raise InvalidData
-        if env["slope"] > 15:
+        if env["slope"] > 23:
             raise NotSuitableLand
         if env["land_cover"] == "Build-up":
             raise NotSuitableLand
@@ -48,16 +49,34 @@ def creatRecomendation(lat,lon):
     return recommendation
 
 def generate_CropRecommendations(id):
-    recommendations=RecommendationSession.objects.get(pk=id)
+    recommendation=RecommendationSession.objects.get(pk=id)
     #ph, soil_texture, rainfall, temperature, humedity, koppen
     #
-    crops=Cropselect(recommendations.soil_ph_initial,
-               recommendations.soil_texture_initial,
-               recommendations.rainfall_avg,
-               recommendations.temperature_avg,
-               recommendations.humidity_avg,
-               recommendations.koppen)
-
+    crops=Cropselect(recommendation.soil_ph_initial,
+               recommendation.soil_texture_initial,
+               recommendation.rainfall_avg,
+               recommendation.temperature_avg,
+               recommendation.humidity_avg,
+               recommendation.koppen)
+    if not crops:
+        return {}
+    for data_crop in crops:
+        crop=Crop.objects.get(crop_name=data_crop["crop_name"])
+        if crop.ph_min <= recommendation.soil_ph_initial <= crop.ph_max:
+            ph_score=1
+        else:
+            ph_score=0.5
+        crop_climate = CropClimate.objects.get(crop=crop,climate__climate_zone=recommendation.koppen)
+        climate_score = crop_climate.rating
+        crop_soil = CropSoilTexture.objects.get(crop=crop,soil_texture__texture_class=recommendation.soil_texture_initial)
+        soil_score = crop_soil. suitability_rank
+        score= ph_score + climate_score + soil_score
+        CropRecommendation.objects.create(
+            recommendation=recommendation,
+            crop=crop,
+            compatibility_score=score,
+        )
+    crops=CropRecommendation.objects.filter(recommendation=recommendation)
     return crops
 
 
