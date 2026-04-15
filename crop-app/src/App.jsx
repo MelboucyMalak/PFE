@@ -2,9 +2,8 @@ import { Routes, Route, Navigate } from 'react-router'
 import { AdminDashboard, CropsManagement, CropDetail, UsersManagement, UserHistory, UserDetail, RecommendationsManagement, RecommendationDetail, AdminProfile, AdminForgotPassword, AdminResetPassword, AdminLogin } from './pages/admin' 
 import { FarmerDashboard, CropsConsulting, RecommendationsHistory, FarmerProfile, FarmerLogin, FarmerForgotPassword, FarmerResetPassword } from './pages/farmer'
 import Home from './pages/Home'
-import NotFound from './pages/NotFound'
-import 'leaflet/dist/leaflet.css'
-import './App.css'
+import NotFound from './pages/NotFound' 
+import './App.css' 
 
 function App() {
   return (

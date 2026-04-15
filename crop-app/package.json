@@ -10,11 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@geoman-io/leaflet-geoman-free": "^2.19.2",
     "axios": "^1.8.4",
     "leaflet": "^1.9.4",
+    "leaflet-control-geocoder": "^3.3.1",
+    "leaflet-draw": "^1.0.4",
     "react": "^19.0.0-rc.1",
     "react-dom": "^19.0.0-rc.1",
     "react-leaflet": "^5.0.0-rc.2",
+    "react-leaflet-draw": "^0.21.0",
+    "react-leaflet-geoman-v2": "^1.0.3",
     "react-router": "^7.13.1"
   },
   "devDependencies": {

@@ -7,7 +7,8 @@ export function ShowMarker({ markerIsVisible, setMarkerVisible, ignoreMapClickRe
     <button className="show-button"
       onMouseDown={() => (ignoreMapClickRef.current = true)}
       onClick={(e) => {
-        blockMapEvents(e, ignoreMapClickRef); setMarkerVisible(!markerIsVisible);
+        blockMapEvents(e, ignoreMapClickRef); 
+        setMarkerVisible(!markerIsVisible);
         ignoreMapClickRef.current = false
       }} >
       {markerIsVisible ? 'Hide Marker' : 'Show Marker'}

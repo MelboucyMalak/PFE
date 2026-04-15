@@ -21,7 +21,7 @@ export function MiniMapBounds({parentMap, zoom }) {
     minimap.setView(parentMap.getCenter(), zoom)
   }, [minimap, parentMap, zoom])
  
-  const handlers = useMemo(() => ({ move: onChange, zoom: onChange }), [])
+  const handlers = useMemo(() => ({ move: onChange, zoom: onChange }), [onChange ])
   useEventHandlers({ instance: parentMap }, handlers)
 
   const BOUNDS_STYLE = { weight: 1 }
