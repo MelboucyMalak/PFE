@@ -19,12 +19,8 @@ class FieldAnalyzerService:
         return max_dist
 
     @staticmethod
-    def generate_sampling_points(diagonal, step):
-        """
-        As seen in diagram: +generate_sampling_points(diagonal, step) List
-        """
-        # Logic to return a list of points based on the diagonal length and step
-        return []
+    def generate_sampling_points(diagonal, step=10):
+        return max(3, int(diagonal * 1000) // step)
 
     @staticmethod
     def calculate_homogeneity(texture_list):

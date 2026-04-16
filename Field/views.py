@@ -2,7 +2,7 @@ from rest_framework import viewsets, status
 from rest_framework.response import Response
 from .models import FieldAnalysis
 from .serializers import FieldAnalysisSerializer
-from .services import FieldAnalyzerService
+from .service import FieldAnalyzerService
 
 
 class FieldAnalysisViewSet(viewsets.ModelViewSet):
@@ -10,19 +10,33 @@ class FieldAnalysisViewSet(viewsets.ModelViewSet):
     serializer_class = FieldAnalysisSerializer
 
     def create(self, request, *args, **kwargs):
+        # 1. Get data from the UI
         coords = request.data.get('polygon_coords')
-        if not coords:
-            return Response({"error": "No coordinates provided"}, status=status.HTTP_400_BAD_REQUEST)
+        area_from_ui = request.data.get('surface_area_m2')  # Area sent by frontend
+        session_id = request.data.get('recommendation_session')
 
-        # Use our service to do the math
-        area = FieldAnalyzerService.calculate_surface_area(coords)
+        if not coords or not area_from_ui:
+            return Response(
+                {"error": "Missing coordinates or surface area from frontend"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
-        # Save to DB
+        # 2.  calculate diagonal and sampling points
+        diagonal = FieldAnalyzerService.calculate_diagonal(coords)
+        sampling_points_count = FieldAnalyzerService.generate_sampling_points(diagonal)
+
+        # 3. Save to DB
         analysis = FieldAnalysis.objects.create(
-            recommendation_session_id=request.data.get('recommendation_session'),
+            recommendation_session_id=session_id,
             polygon_coords=coords,
-            surface_area_m2=area
+            surface_area_m2=area_from_ui  # Using the value from frontend
         )
 
+        # 4. Response (Displaying textures, scores, and homogeneity index)
         serializer = self.get_serializer(analysis)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response({
+            "analysis": serializer.data,
+            "diagonal": diagonal,
+            "suggested_sampling_points": sampling_points_count,
+            "message": "Field analyzed successfully"
+        }, status=status.HTTP_201_CREATED)

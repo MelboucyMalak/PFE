@@ -8,4 +8,5 @@ urlpatterns = [
     path('', include('user.urls')),
     #path('crop_api/', include('crop.urls')),
     path('recommendation_api/', include('recommendation.urls')),
+    path('api/field/', include('Field.urls')),
 ]
