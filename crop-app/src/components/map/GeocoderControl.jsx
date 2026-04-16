@@ -23,7 +23,7 @@ import 'leaflet-control-geocoder';
 
     // Handle the geocoding result
     geocoder.on('markgeocode', (e) => {
-      const { center, name, bbox } = e.geocode;
+      const { center, name,} = e.geocode;
       console.log('Found:', name, center);
       
       // Center the map on the found location
