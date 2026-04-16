@@ -1,27 +1,27 @@
-import './Navbar.css';
+import styles from './Navbar.module.css';
 import logo from '../../../../assets/images/logo.png';
 
 export function Navbar() {
   return (
-    <header className="navbar">
-      <div className="nav-logo">
-        <img className='logo' src={logo} alt="Logo" />
-        <p className='logo-text'>Torbati</p>
+    <header className={styles.navbar}>
+      <div className={styles.navLogo}>
+        <img className={styles.logo} src={logo} alt="Logo" />
+        <p className={styles.logoText}>Torbati</p>
       </div>
-      <ul className="nav-sections">
+      <ul className={styles.navSections}>
         <li><a href="">Home</a></li>
         <li><a href="">About</a></li>
         <li><a href="">FAQ</a></li>
       </ul>
-      <div className="full-action-buttons">
-        <select className="language" defaultValue="en">
+      <div className={styles.fullActionButtons}>
+        <select className={styles.language} defaultValue="en">
           <option value="fr">FR</option>
           <option value="en">EN</option>
           <option value="ar">AR</option>
         </select>
-        <div className="signin-login-buttons">
-          <button className="signin-btn">Sign In</button>
-          <button className="login-btn">Login</button>
+        <div className={styles.signinLoginButtons}>
+          <button className={styles.signinBtn}>Sign In</button>
+          <button className={styles.loginBtn}>Login</button>
         </div>
       </div>
       

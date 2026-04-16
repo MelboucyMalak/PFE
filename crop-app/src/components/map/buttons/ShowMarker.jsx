@@ -1,10 +1,10 @@
-import './ShowMarker.css'
+import styles from './ShowMarker.module.css'
 import { blockMapEvents } from '../utils/blockMapEvents';
 
 export function ShowMarker({ markerIsVisible, setMarkerVisible, ignoreMapClickRef }) {
 
   return (
-    <button className="show-button"
+    <button className={styles.showButton}
       onMouseDown={() => (ignoreMapClickRef.current = true)}
       onClick={(e) => {
         blockMapEvents(e, ignoreMapClickRef); 

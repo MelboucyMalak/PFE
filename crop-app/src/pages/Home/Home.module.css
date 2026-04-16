@@ -4,16 +4,18 @@
   box-sizing: border-box;
 }
 
-body {
+.home {
+  padding-top: 200px;
   position: relative;
   width: 100%;
   height: 6378px; 
   display: flex;
   flex-direction: column; 
-  justify-content: center;
+  align-items: center; 
+  gap: 150px;
 }
 
-.topography-bck {
+.topographyBck {
   z-index: -1;
   position: absolute;
   background-image: url('./images/background.png');

@@ -14,7 +14,7 @@
   z-index: 2;
 }
 
-.nav-logo {
+.navLogo {
   display: flex; 
   align-items: center; 
   gap: 12px;  
@@ -27,14 +27,14 @@
   height: 75px;  
 }
 
-.logo-text { 
+.logoText { 
   font-size: 30px;  
   color: #ffffff;    
   margin-bottom: 8px;
 }
 
 
-.nav-sections {
+.navSections {
   display: flex; 
   justify-content: space-between;
   align-items: center;  
@@ -44,24 +44,24 @@
   margin-left: 30px;
 }
 
-.nav-sections li {
+.navSections li {
   list-style: none;  
   padding: 10px;
   gap: 10px;  
   text-decoration: none;    
 }
 
-.nav-sections a {
+.navSections a {
   text-decoration: none;
   color: white;  
 }
 
-.nav-sections a:hover{
+.navSections a:hover{
   color: #6aa32d; 
   transition: color 0.3s ;
 }
 
-.full-action-buttons { 
+.fullActionButtons { 
   display: flex; 
   align-items: center;  
   justify-content: flex-end;
@@ -88,7 +88,7 @@
 }
 
 
-.signin-login-buttons {
+.signinLoginButtons {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -102,7 +102,7 @@
   flex-grow: 1; 
 }
 
-.signin-btn { 
+.signinBtn { 
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -122,7 +122,7 @@
 
 }
 
-.login-btn { 
+.loginBtn { 
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -151,7 +151,7 @@ button:hover, select:hover, .logo:hover {
   cursor: pointer;
 }
 
-.logo-text:hover{
+.logoText:hover{
   text-shadow: 0px 0px 10px #8bb75c;  
   transition: color 0.2s ;
 }

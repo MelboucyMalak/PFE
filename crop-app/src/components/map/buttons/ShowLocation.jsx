@@ -1,5 +1,5 @@
 import { useMap } from 'react-leaflet'
-import './ShowLocation.css'
+import styles from './ShowLocation.module.css'
 import { blockMapEvents } from '../utils/blockMapEvents'
 export function ShowLocation({ setPosition, ignoreMapClickRef }) { 
   const map = useMap()
@@ -16,7 +16,7 @@ export function ShowLocation({ setPosition, ignoreMapClickRef }) {
  
 
   return (
-    <button className='locate-button'
+    <button className={styles.locateButton}
       onMouseDown={() => (ignoreMapClickRef.current = true)}
       onClick={(e) => {
         blockMapEvents(e, ignoreMapClickRef)

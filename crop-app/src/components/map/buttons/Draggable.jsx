@@ -1,10 +1,10 @@
 import { blockMapEvents } from '../utils/blockMapEvents'
-import './Draggable.css'
+import styles from './Draggable.module.css'
 
 export function Draggable({ draggable, setDraggable, ignoreMapClickRef }) {
    
   return (
-    <button className='drag-button'
+    <button className={styles.dragButton}
       onMouseDown={() => (ignoreMapClickRef.current = true)}
       onClick={(e) => {
        blockMapEvents(e, ignoreMapClickRef)

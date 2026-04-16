@@ -1,11 +1,11 @@
 import { blockMapEvents } from '../utils/blockMapEvents';
-import './ShowMiniMap.css'
+import styles from'./ShowMiniMap.module.css'
 
 export function ShowMiniMap({ ignoreMapClickRef, miniMapIsVisible, setMiniMapVisible }) {
 
   return (
     <button 
-    className='mini-map-button'
+    className={styles.miniMapButton}
     onMouseDown={() => (ignoreMapClickRef.current = true)}
       onClick={(e) => {
         blockMapEvents(e, ignoreMapClickRef); 

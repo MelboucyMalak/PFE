@@ -1,5 +1,5 @@
 import { blockMapEvents } from './utils/blockMapEvents';
-import './ExternalState.css'
+import styles from './ExternalState.module.css'
 
 
 export function ExternalState({ displayPosition, setDisplayPosition, ignoreMapClickRef }) {
@@ -10,7 +10,7 @@ export function ExternalState({ displayPosition, setDisplayPosition, ignoreMapCl
   };
 
   return(
-      <p className='external-state-paragraph' >
+      <p className={styles.externalStateParagraph}>
       latitude: {Number(displayPosition.lat).toFixed(4) }, longitude: {Number(displayPosition.lng).toFixed(4)}{' '}
       <button onClick={onClick}>reset</button>
     </p>

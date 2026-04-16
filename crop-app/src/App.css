@@ -1,4 +1,8 @@
-
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 .leaflet-control-geocoder {
   position: absolute;
     top: 10px; 

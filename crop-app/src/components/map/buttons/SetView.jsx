@@ -1,10 +1,10 @@
 import { blockMapEvents } from '../utils/blockMapEvents'; 
-import './SetView.css'
+import styles from './SetView.module.css'
 
 export function SetView({ ignoreMapClickRef, viewIsOn, setViewOn }) {
    
   return (
-    <button className='set-view-button'
+    <button className={styles.setViewButton}
       onMouseDown={() => (ignoreMapClickRef.current = true)}
       onClick={(e) => {
        blockMapEvents(e, ignoreMapClickRef) 
