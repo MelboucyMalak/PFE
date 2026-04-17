@@ -24,6 +24,4 @@ def Cropselect(ph, soil_texture, rainfall, temperature, humedity, koppen):
         Q(ph_min__gte=ph + 0.5)
     ).values(
         'crop_name',
-        #'cropclimate__climate__climate_zone',
-        #'cropsoiltexture__soil_texture__texture_class'
     ).distinct()
