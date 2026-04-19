@@ -19,8 +19,35 @@ class FieldAnalyzerService:
         return max_dist
 
     @staticmethod
-    def generate_sampling_points(diagonal, step=10):
-        return max(3, int(diagonal * 1000) // step)
+    def generate_sampling_points(coords, diagonal, step=10):
+        """
+        Generates actual coordinate pairs [lat, lon] for soil sampling.
+        """
+        if not coords or len(coords) < 3:
+            return []
+
+        # Get the boundaries of the polygon
+        lats = [c[0] for c in coords]
+        lons = [c[1] for c in coords]
+        min_lat, max_lat = min(lats), max(lats)
+        min_lon, max_lon = min(lons), max(lons)
+
+        # Calculate a simple 5-point distribution (Center + 4 Quadrants)
+        center_lat = (min_lat + max_lat) / 2
+        center_lon = (min_lon + max_lon) / 2
+
+        lat_dist = (max_lat - min_lat) * 0.25
+        lon_dist = (max_lon - min_lon) * 0.25
+
+        sampling_points = [
+            [round(center_lat, 6), round(center_lon, 6)],  # Center
+            [round(min_lat + lat_dist, 6), round(min_lon + lon_dist, 6)],  # Bottom Left
+            [round(max_lat - lat_dist, 6), round(min_lon + lon_dist, 6)],  # Top Left
+            [round(min_lat + lat_dist, 6), round(max_lon - lon_dist, 6)],  # Bottom Right
+            [round(max_lat - lat_dist, 6), round(max_lon - lon_dist, 6)],  # Top Right
+        ]
+
+        return sampling_points
 
     @staticmethod
     def calculate_homogeneity(texture_list):

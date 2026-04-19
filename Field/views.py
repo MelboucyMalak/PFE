@@ -23,7 +23,7 @@ class FieldAnalysisViewSet(viewsets.ModelViewSet):
 
         # 2.  calculate diagonal and sampling points
         diagonal = FieldAnalyzerService.calculate_diagonal(coords)
-        sampling_points_count = FieldAnalyzerService.generate_sampling_points(diagonal)
+        sampling_points = FieldAnalyzerService.generate_sampling_points(coords, diagonal)
 
         # 3. Save to DB
         analysis = FieldAnalysis.objects.create(
@@ -35,8 +35,9 @@ class FieldAnalysisViewSet(viewsets.ModelViewSet):
         # 4. Response (Displaying textures, scores, and homogeneity index)
         serializer = self.get_serializer(analysis)
         return Response({
-            "analysis": serializer.data,
+            "status": "success",
+            "surface_area_m2": area_from_ui,
             "diagonal": diagonal,
-            "suggested_sampling_points": sampling_points_count,
-            "message": "Field analyzed successfully"
+            "sampling_points": sampling_points,  # This is the list of [lat, lon] pairs
+            "points_count": len(sampling_points)
         }, status=status.HTTP_201_CREATED)
