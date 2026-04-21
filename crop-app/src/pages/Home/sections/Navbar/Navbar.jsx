@@ -20,7 +20,7 @@ export function Navbar() {
           <option value="ar">AR</option>
         </select>
         <div className={styles.signinLoginButtons}>
-          <button className={styles.signinBtn}>Sign In</button>
+          <button className={styles.signinBtn}><a href="/sign-up">Sign Up</a></button>
           <button className={styles.loginBtn}>Login</button>
         </div>
       </div>

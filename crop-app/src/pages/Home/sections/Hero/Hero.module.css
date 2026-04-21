@@ -6,6 +6,7 @@
   justify-content: center;
   gap: 70px; 
   flex-wrap: wrap;
+  transition: flex-wrap 1s;
   width: 100%;
 
 }
@@ -25,7 +26,14 @@
 }
 
 .heroDescription {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 300;
   font-size: 30px; 
+}
+
+.heroDescription span{
+  color: #8BAE66;
+  font-family: 'Roboto', sans-serif;
 }
 
 .heroButton {

@@ -15,12 +15,14 @@
 
 .featuresTitle { 
   position: relative;
-  width: 420px;    
+  width: 450px;    
   text-align: center;  
 }
 
 .featuresTitleText {
-  font-size: 48px;
+  font-family: DM Sans, sans-serif;
+  font-weight: 300;
+  font-size: 40px;
   position: absolute;
   top: 35px; 
    width: 100%; 
@@ -43,6 +45,8 @@
  
 
 .featuresContentText {
+  font-family: Roboto, sans-serif;
+  font-weight: 300;
   font-size: 30px;
   padding: 10px;
   min-width:  300px; 

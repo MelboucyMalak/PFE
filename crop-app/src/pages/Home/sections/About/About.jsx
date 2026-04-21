@@ -18,7 +18,7 @@ export function About() {
         <img className={styles.aboutDivider} src={divider} alt="" />
       </div>
       <p className={styles.aboutText}>
-        Built by 4 passionate USTHB students under the supervision of Mrs. Amira Karkad, Torbati was created with one goal in mind — to put real, data-driven guidance in the hands of every Algerian farmer, no matter where they are.
+        Built by 4 passionate USTHB students under the supervision of <span>Mrs. Amira Karkad</span>, Torbati was created with one goal in mind — to put real, data-driven guidance in the hands of every Algerian farmer, no matter where they are.
       </p>
       <div className={styles.cards}>
         <PersonCard image={noufel} 

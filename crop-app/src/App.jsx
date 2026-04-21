@@ -4,12 +4,15 @@ import { FarmerDashboard, CropsConsulting, RecommendationsHistory, FarmerProfile
 import Home from './pages/Home/Home'
 import NotFound from './pages/NotFound' 
 import './App.css' 
+import SignUp from './pages/Authentification/Sign-up/Sign-up'
 
 function App() {
   return (
     <>
       <Routes>
         <Route path="/" element={<Home/>} />
+        <Route path="/sign-up" element={<SignUp/>} />
+
         <Route path="/admin">
           <Route index element={<Navigate to="/admin/login" />} />
           <Route path="dashboard" element={<AdminDashboard />} />

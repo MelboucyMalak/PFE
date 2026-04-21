@@ -15,30 +15,37 @@
 }
 
 .aboutTitle { 
-  position: relative;
-  width: 420px;    
-  text-align: center;  
-  border: 1px solid red; 
+  position: relative; 
+  width: 450px;  
+  text-align: center;   
 }
 
-.aboutTitleText {
-  font-size: 48px;
+.aboutTitleText { 
+  font-size: 40px;
   position: absolute;
-  top: 0px; 
+  top: 35px; 
    width: 100%; 
+
+  font-family: DM Sans, sans-serif;
+  font-weight: 300;
 }
 
 .aboutDivider {
-  width: 100%;   
+  max-width: 400px;   
 }
  
 .aboutText {
-  font-size: 30px; 
-  min-width:  300px; 
-  max-width: 900px; 
-  flex: 1; 
-  text-align: center; 
+  font-size: 30px;  
+  text-align: center;  
+  font-family: DM Sans, sans-serif;
+  font-weight: 300;
 } 
+
+.aboutText span{
+  color: #4A7C59;
+  font-family: DM Sans, sans-serif;
+  font-weight: 300;
+}
 
 .cards {
   display: flex;
