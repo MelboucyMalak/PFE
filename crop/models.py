@@ -126,36 +126,18 @@ class CropClimate(models.Model):
         ]
 
 
-
-
-
-# 𝗖𝗟𝗔𝗦𝗦 𝗦𝗢𝗜𝗟 𝗧𝗘𝗫𝗧𝗨𝗥𝗘
-class SoilTexture(models.Model):
-    texture_class= models.CharField(default='', max_length=50,unique=True)
-
-    def __str__(self):
-        return self.texture_class
-
-
-
-
-
 # 𝗖𝗟𝗔𝗦𝗦 𝗖𝗥𝗢𝗣 𝗦𝗢𝗜𝗟 𝗧𝗘𝗫𝗧𝗨𝗥𝗘
 class CropSoilTexture(models.Model):
-    crop= models.ForeignKey(Crop,on_delete=models.CASCADE)
-    soil_texture= models.ForeignKey(SoilTexture,on_delete=models.CASCADE)
-    suitability_rank= models.IntegerField(choices=SUITABILITY_CHOICES)
-    note= models.CharField(default='', max_length=100)
-
-    def __str__(self):
-        return self.crop.crop_name
+    crop = models.ForeignKey(Crop, on_delete=models.CASCADE)
+    texture_name = models.CharField(max_length=50) 
+    suitability_rank = models.IntegerField(choices=SUITABILITY_CHOICES)
+    note = models.CharField(default='', max_length=100)
 
     class Meta:
         constraints = [
             models.UniqueConstraint(
-                fields=['crop', 'soil_texture'],
-                name='unique_crop_soil'
+                fields=['crop', 'texture_name'],
+                name='unique_crop_soil_name'
             )
         ]
-
 
