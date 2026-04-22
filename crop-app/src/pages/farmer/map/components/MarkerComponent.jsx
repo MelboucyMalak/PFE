@@ -30,10 +30,7 @@ export function MarkerComponent({ position, draggable, setPosition, markerIsVisi
     <Marker position={position} draggable={draggable}
         eventHandlers={eventHandlers}
         ref={markerRef}
-        opacity={markerIsVisible ? 1 : 0}>
-        <Popup>
-          A popup. <br />
-        </Popup>
+        opacity={markerIsVisible ? 1 : 0}> 
       </Marker> 
   );
 }

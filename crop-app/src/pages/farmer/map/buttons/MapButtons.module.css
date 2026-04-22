@@ -1,11 +1,14 @@
 .mapButtons{
   display: flex; 
   align-items: center;
+  justify-content:start;
+  
 }
 
 .mapButton{   
     z-index: 1000;
     background-color: #074505;
+    color: white;
     border: none;
     padding: 10px 20px; 
     cursor: pointer;
