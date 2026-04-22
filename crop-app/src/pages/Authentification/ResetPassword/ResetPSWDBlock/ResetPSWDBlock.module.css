@@ -1,0 +1,204 @@
+.resetPSWDBlock{  
+display: flex; 
+align-items: center; 
+justify-content: center;   
+z-index: 2;
+}
+
+.resetPSWDImg{
+  width: 300px;
+  height: 472px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.resetPSWDFormSide{
+  position: relative;
+  width: 300px;
+  height: 472px;  
+  padding: 30px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  display: flex; 
+  flex-direction: column;
+  justify-content: center; 
+  gap: 20px;
+  background-color: #FFFFFF; 
+}
+
+.resetPSWDFormBck{
+  position: absolute;
+  background: url(../../images/endless-clouds.png) ; 
+  background-repeat: repeat ; 
+  background-size: auto;
+  inset: 0;
+  opacity: 5%;  
+}
+
+.resetPSWDForm{ 
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
+  width: 240px;
+  margin-left: auto;
+  margin-right: auto;  
+}
+
+
+
+.resetPSWDField{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+  height: 100%;
+  z-index: 1000; 
+}
+
+.resetPSWDFieldBlock{
+  display: flex;
+  align-items: center; 
+  width: 100%;
+  border: 1px solid #B5B5B5; 
+  border-radius: 12px;
+  background-color: white;
+}
+
+.resetPSWDFieldBlock:focus-within{
+  border:1px solid #253E2D ;
+}
+
+.resetPSWDField input{
+  width: 100%;
+  border: 1px solid #B5B5B5;
+  color: #000000;
+  font-size: 18px;
+  border-radius: 12px;
+  padding:6px 10px; 
+}
+
+.resetPSWDField input:focus{
+  outline: none;
+  border: 1px solid #253E2D ;
+}
+ 
+.resetPSWDField input::placeholder{
+  color: #B5B5B5;;
+}
+
+.resetPSWDFieldBlock input{
+  width: 85%;
+  border: none;  
+  border-right: 1px solid #B5B5B5;  
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.resetPSWDFieldBlock input:focus{ 
+  border: none;   
+  border-right: 1px solid #B5B5B5; 
+}
+
+
+.PSWDEye{
+  height: auto;
+  width: 25px; 
+  margin-right: auto;
+  margin-left: auto; 
+  cursor: pointer;  
+}
+
+.resetPSWDLabel{
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  padding: 4px; 
+  color: #a49f9f;
+  transition: color 0.5s;
+}
+
+.resetPSWDFieldError .resetPSWDLabel {
+  color: red; 
+  transition: color 0.5s;
+}
+
+.resetPSWDFieldError input{  
+  border: 1px solid red; 
+  
+}
+
+.resetPSWDFieldBlockError {
+  border: 1px solid red; 
+}
+
+.resetPSWDBlockError .resetPSWDLabel{
+  color:red; 
+}
+
+.resetPSWDBlockError input {
+  border-right: 1px solid red; 
+}
+
+
+.resetPSWDErrorLine{
+  display: flex; 
+  align-items:center;
+  gap: 8px;
+  padding: 4px; 
+}
+
+.resetPSWDErrorLine img{
+  height: 14px;
+  width: auto;
+}
+
+.resetPSWDError{
+  font-size: 12px;
+  font-family: Roboto;
+  color: red;
+}
+
+ 
+.noSignUpError{
+  display: none;
+}
+.resetPSWDBtn{
+  width: 120px;
+  padding: 8px;
+  border: none;
+  border-radius: 12px;
+  background-color: #253E2D;
+  color: white;
+  cursor: pointer;
+  z-index: 1000;
+}
+ 
+.loginRedirect{
+  font-size: 16px;
+  z-index: 1000;
+  color: #a49f9f;
+}
+
+.loginRedirect a{
+  text-decoration: none;
+  color: black;
+}
+
+
+ 
+@media(max-width: 750px){
+  .resetPSWDBlock{  
+    flex-direction: column;
+    margin-top: 160px;
+    margin-bottom: 160px;
+    transition: margin-top 0.5s, margin-bottom 0.5s;
+  }
+
+  .resetPSWDImg{
+    border-radius:10px 10px 0px 0px;
+  }
+
+  .resetPSWDFormSide{
+    border-radius: 0px 0px 10px 10px;
+  }
+}

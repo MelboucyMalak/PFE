@@ -4,11 +4,13 @@ import { validateForgotPSWD } from "../../utils/validateForgotPSWD"
 import styles from "./ForgotPSWDBlock.module.css"
 
 import { useState } from "react"
+import { useNavigate } from "react-router"
 
 
 export function ForgotPSWDBlock() {
   const [email, setEmail] = useState('')
   const [errors, setErrors] = useState({})
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -40,7 +42,8 @@ export function ForgotPSWDBlock() {
 
         </form>
         <button className={styles.sendCodeBtn} type="submit"
-          form="forgotPSWD-form">Send code</button>
+          form="forgotPSWD-form" 
+          onClick={() => navigate('/verify-password')}>Send code</button>
       </div>
     </div>
   )

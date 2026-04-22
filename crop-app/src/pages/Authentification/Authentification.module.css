@@ -1,5 +1,5 @@
 
-.signUp, .login, .forgotPSWD{
+.signUp, .login, .forgotPSWD, .verifyPSWD, .resetPassword{
   position: relative; 
   min-height: 100vh;
   width: 100%;

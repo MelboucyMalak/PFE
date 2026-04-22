@@ -5,6 +5,8 @@ from './pages/farmer'
 import  Login  from './pages/Authentification/Login/Login'
 import Home from './pages/Home/Home'
 import ForgotPassword from './pages/Authentification/ForgotPassword/ForgotPassword'
+import VerifyPassword from './pages/Authentification/VerifyPassword/VerifyPassword/'
+import ResetPassword from './pages/Authentification/ResetPassword/ResetPassword/'
 import NotFound from './pages/NotFound' 
 import './App.css' 
 import SignUp from './pages/Authentification/Sign-up/Sign-up'
@@ -17,6 +19,8 @@ function App() {
         <Route path="/sign-up" element={<SignUp/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/forgot-password" element={<ForgotPassword/>} />
+        <Route path="/verify-password" element={<VerifyPassword/>} />
+        <Route path="/reset-password" element={<ResetPassword/>} />
 
         <Route path="/admin"> 
           <Route path="dashboard" element={<AdminDashboard />} />
