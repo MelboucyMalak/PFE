@@ -185,7 +185,7 @@ def fetch_environment_data(long, lat):
         "rainfall": rain_value,
         "koppen": koppen
     }
-
+def meteo():
 """
 lat = 
 lon = 

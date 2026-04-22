@@ -129,7 +129,7 @@ class CropClimate(models.Model):
 # 𝗖𝗟𝗔𝗦𝗦 𝗖𝗥𝗢𝗣 𝗦𝗢𝗜𝗟 𝗧𝗘𝗫𝗧𝗨𝗥𝗘
 class CropSoilTexture(models.Model):
     crop = models.ForeignKey(Crop, on_delete=models.CASCADE)
-    texture_name = models.CharField(max_length=50) 
+    texture_name = models.CharField(max_length=50)
     suitability_rank = models.IntegerField(choices=SUITABILITY_CHOICES)
     note = models.CharField(default='', max_length=100)
 

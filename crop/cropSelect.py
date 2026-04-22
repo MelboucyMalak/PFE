@@ -17,7 +17,7 @@ def Cropselect(ph, soil_texture, rainfall, temperature, humedity, koppen):
         humidity_min__lte=humedity,# <=
         humidity_max__gte=humedity,# >=
 
-        cropsoiltexture__soil_texture__texture_class=soil_texture,
+        cropsoiltexture__texture_class=soil_texture,
 
     ).filter(
         Q(ph_min__lte=ph, ph_max__gte=ph) |
