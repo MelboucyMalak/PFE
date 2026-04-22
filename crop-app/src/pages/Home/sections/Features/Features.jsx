@@ -6,7 +6,7 @@ import styles from './Features.module.css';
 
 export function Features() {
   return (
-    <div className={styles.features}>
+    <div className={styles.features} id='how'>
 
       <div className={styles.featuresTitle}>
         <p className={styles.featuresTitleText}>How does it work?</p>

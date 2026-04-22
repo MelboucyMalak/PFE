@@ -2,8 +2,7 @@ import { useEffect } from 'react';
 import { useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet-control-geocoder';
-import 'leaflet-control-geocoder/dist/Control.Geocoder.css';
-import 'leaflet-control-geocoder';
+import 'leaflet-control-geocoder/dist/Control.Geocoder.css'; 
 
  export function GeocoderControl() {
   const map = useMap();
@@ -17,7 +16,7 @@ import 'leaflet-control-geocoder';
 
     // Create and add the control
     const geocoder = L.Control.geocoder({
-      defaultMarkGeocode: false, // We'll handle it ourselves
+      defaultMarkGeocode:false, // We'll handle it ourselves
       position: 'topleft'
     }).addTo(map);
 

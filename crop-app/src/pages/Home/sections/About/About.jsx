@@ -11,7 +11,7 @@ import divider from '../../images/dividers/divider-2.png';
 
 export function About() {
   return (
-    <div className={styles.about}>
+    <div className={styles.about} id='about'>
 
       <div className={styles.aboutTitle}>
         <p className={styles.aboutTitleText}>The People Behind Torbati  </p>

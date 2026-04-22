@@ -5,17 +5,20 @@
 }
 .leaflet-control-geocoder {
   position: absolute;
-    top: 10px; 
-    left: 380px;
+    top: 0px; 
+    left: 40px;
     z-index: 1000;
     background-color: #fff;
     border: none;
-    padding: 10px 20px;
+    padding: 8px 20px;
     cursor: pointer;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
+    border-radius: 5px; 
 }
 
 * {
   font-family: 'Inika', serif;
+}
+
+html{
+  scroll-behavior: smooth;
 }

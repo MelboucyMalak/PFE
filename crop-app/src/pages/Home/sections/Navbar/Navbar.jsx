@@ -3,15 +3,15 @@ import logo from '../../../../assets/images/logo.png';
 
 export function Navbar() {
   return (
-    <header className={styles.navbar}>
+    <header className={styles.navbar}  >
       <div className={styles.navLogo}>
         <img className={styles.logo} src={logo} alt="Logo" />
         <p className={styles.logoText}>Torbati</p>
       </div>
       <ul className={styles.navSections}>
-        <li><a href="">Home</a></li>
-        <li><a href="">About</a></li>
-        <li><a href="">FAQ</a></li>
+        <li><a href="#how">How</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#faq">FAQ</a></li>
       </ul>
       <div className={styles.fullActionButtons}>
         <select className={styles.language} defaultValue="en">

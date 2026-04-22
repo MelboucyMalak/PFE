@@ -8,6 +8,7 @@ import { validateResetPSWD } from "../../utils/validateResetPSWD"
 import styles from "./ResetPSWDBlock.module.css"
 
 import { useState } from "react"
+import { useNavigate } from "react-router"
 
 
 export function ResetPSWDBlock() {
@@ -15,6 +16,7 @@ export function ResetPSWDBlock() {
   const [errors, setErrors] = useState({}) 
   const [password, setPassword] = useState('')
   const [confPassword, setConfPassword] = useState('')
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault()
@@ -52,7 +54,8 @@ export function ResetPSWDBlock() {
 
           </div>
 
-          <div className={`${styles.resetPSWDField} ${errors.password ? styles.resetPSWDBlockError : ''}`}>
+          <div className={`${styles.resetPSWDField} 
+          ${errors.confPassword ? styles.resetPSWDBlockError : ''}`}>
             <p className={styles.resetPSWDLabel}>Confirm Password</p>
             <div className={`${styles.resetPSWDFieldBlock} ${errors.confPassword ? styles.resetPSWDFieldBlockError : ''}`} >
               <input type={showPassword ? 'text' : 'password'} required
@@ -62,6 +65,7 @@ export function ResetPSWDBlock() {
                 src={showPassword ? (errors.confPassword ?  hidePSWDRed : hidePSWD) : (errors.confPassword ? showPSWDRed : showPSWD)} alt=""
                 onClick={() => setShowPassword(!showPassword)} />
             </div>
+
             <div className={errors.confPassword ? styles.resetPSWDErrorLine : styles.noSignUpError}>
               <img src={errorCross} alt="x" />
               <p className={styles.resetPSWDError}>{errors.confPassword}</p>
@@ -69,7 +73,10 @@ export function ResetPSWDBlock() {
           </div>
 
         </form>
-        <button className={styles.resetPSWDBtn} type="submit" form="reset-password-form">Log In</button> 
+        <button className={styles.resetPSWDBtn} type="submit"
+        onClick={() => navigate('/farmer/dashboard')}
+        form="reset-password-form" 
+        >Log In</button> 
       </div>
     </div>
   )

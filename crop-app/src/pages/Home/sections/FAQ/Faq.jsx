@@ -3,7 +3,7 @@ import styles from './Faq.module.css';
 
 export function Faq() {
   return (
-    <div className={styles.faq}>
+    <div className={styles.faq} id='faq'>
       <div className={styles.faqTitle}>
         <p className={styles.faqTitleText}>Frequently Asked Questions</p>
         <img className={styles.faqDivider} src={divider} alt="" />
