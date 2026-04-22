@@ -129,10 +129,15 @@
    
  }
 
- .signinBtn a{
+ .signinBtn a {
   text-decoration: none;
   font-family: DM Sans, sans-serif;
   color: white;
+ }
+  .loginBtn a{
+  text-decoration: none;
+  font-family: DM Sans, sans-serif;
+  color: rgb(0, 0, 0);
  }
 
  .loginBtn {

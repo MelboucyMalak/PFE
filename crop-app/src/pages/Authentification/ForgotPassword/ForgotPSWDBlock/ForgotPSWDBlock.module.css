@@ -1,0 +1,166 @@
+.forgotPSWDBlock{ 
+position: relative; 
+display: flex;  
+align-items: center; 
+justify-content: center;    
+background-color: white;
+border-radius: 10px;
+}
+
+.forgotPSWDFormBck{
+  position: absolute;
+  background: url(../../images/endless-clouds.png) ; 
+  background-repeat: repeat ; 
+  background-size: auto;
+  inset: 0;
+  opacity: 5%;  
+  border-radius: 10px;
+  border: 1px solid red;
+}
+
+.forgotPSWDImg{
+  width: 300px;
+  height: auto; 
+  z-index: 2;  
+}
+
+.forgotPSWDFormSide{ 
+  width: 300px;
+  height: 300px;   
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  display: flex; 
+  padding: 25px;
+  gap: 20px;
+  flex-direction: column;
+  justify-content: center;  
+  background-color: #FFFFFF;  
+}
+
+
+
+.forgotPSWDForm{ 
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
+  width: 250px;
+  margin-left: auto;
+  margin-right: auto;   
+}
+
+.forgotPSWDIndication{
+  font-size: 18px;
+  color: #a49f9f;
+}
+
+.forgotPSWDField{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;  
+}
+ 
+ 
+
+.forgotPSWDField input{
+  width: 100%;
+  border: 1px solid #B5B5B5;
+  color: #000000;
+  font-size: 18px;
+  border-radius: 12px;
+  padding:6px 10px; 
+}
+
+.forgotPSWDField input:focus{
+  outline: none;
+  border: 1px solid #253E2D ;
+}
+ 
+.forgotPSWDField input::placeholder{
+  color: #B5B5B5;;
+}
+ 
+ 
+
+.forgotPSWDLabel{
+  font-family: Roboto, sans-serif;
+  font-weight: 400;
+  font-size: 12px;
+  padding: 4px; 
+  color: #a49f9f;
+  transition: color 0.5s;
+}
+
+.forgotPSWDFieldError .forgotPSWDLabel {
+  color: red; 
+  transition: color 0.5s;
+}
+
+.forgotPSWDFieldError input{  
+  border: 1px solid red; 
+  
+} 
+
+.forgotPSWDErrorLine{
+  display: flex; 
+  align-items:center;
+  gap: 8px;
+  padding: 4px; 
+}
+
+.forgotPSWDErrorLine img{
+  height: 14px;
+  width: auto; 
+}
+
+.forgotPSWDError{
+  font-size: 12px;
+  font-family: Roboto;
+  color: red;
+}
+
+ 
+.noForgotPSWDError{
+  display: none;
+}
+
+.sendCodeBtn{
+  width: 120px;
+  padding: 8px;
+  border: none;
+  border-radius: 12px;
+  background-color: #253E2D;
+  color: white;
+  cursor: pointer;
+  z-index: 1000;
+}
+ 
+
+ 
+@media(max-width: 700px){
+  .forgotPSWDBlock{  
+    flex-direction: column;
+    margin-top: 160px;
+    margin-bottom: 160px;
+    transition: margin-top 0.5s, margin-bottom 0.5s;
+  }
+ 
+  .forgotPSWDFormSide{ 
+    align-items: center;
+  }
+
+  .forgotPSWDIndication{
+    text-align: center;
+    transition: text-align 0.5s;
+  }
+
+  .forgotPSWDImg{
+    border-radius:10px 10px 0px 0px; 
+  }
+
+  .forgotPSWDFormSide{
+    border-radius: 0px 0px 10px 10px; 
+  }
+}

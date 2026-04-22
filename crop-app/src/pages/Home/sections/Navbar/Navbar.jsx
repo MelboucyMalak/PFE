@@ -21,7 +21,7 @@ export function Navbar() {
         </select>
         <div className={styles.signinLoginButtons}>
           <button className={styles.signinBtn}><a href="/sign-up">Sign Up</a></button>
-          <button className={styles.loginBtn}>Login</button>
+          <button className={styles.loginBtn}><a href="/login">Login</a></button>
         </div>
       </div>
       

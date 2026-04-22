@@ -1,7 +1,10 @@
 import { Routes, Route, Navigate } from 'react-router'
-import { AdminDashboard, CropsManagement, CropDetail, UsersManagement, UserHistory, UserDetail, RecommendationsManagement, RecommendationDetail, AdminProfile, AdminForgotPassword, AdminResetPassword, AdminLogin } from './pages/admin' 
-import { FarmerDashboard, CropsConsulting, RecommendationsHistory, FarmerProfile, FarmerLogin, FarmerForgotPassword, FarmerResetPassword } from './pages/farmer'
+import { AdminDashboard, CropsManagement, CropDetail, UsersManagement, UserHistory, UserDetail, RecommendationsManagement, RecommendationDetail, AdminProfile } from './pages/admin' 
+import { FarmerDashboard, CropsConsulting, RecommendationsHistory, FarmerProfile } 
+from './pages/farmer'
+import  Login  from './pages/Authentification/Login/Login'
 import Home from './pages/Home/Home'
+import ForgotPassword from './pages/Authentification/ForgotPassword/ForgotPassword'
 import NotFound from './pages/NotFound' 
 import './App.css' 
 import SignUp from './pages/Authentification/Sign-up/Sign-up'
@@ -12,9 +15,10 @@ function App() {
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/sign-up" element={<SignUp/>} />
+        <Route path="/login" element={<Login/>} />
+        <Route path="/forgot-password" element={<ForgotPassword/>} />
 
-        <Route path="/admin">
-          <Route index element={<Navigate to="/admin/login" />} />
+        <Route path="/admin"> 
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="crops-management">
             <Route index element={<CropsManagement />} />
@@ -29,23 +33,17 @@ function App() {
             <Route index element={<RecommendationsManagement />} />
             <Route path=":recommendationId" element={<RecommendationDetail />} />
           </Route>
-          <Route path="profile" element={<AdminProfile />} />
-          <Route path="forgot-password" element={<AdminForgotPassword />} />
-          <Route path="reset-password" element={<AdminResetPassword />} /> 
-          <Route path="login" element={<AdminLogin />} />
+          <Route path="profile" element={<AdminProfile />} /> 
         </Route>
-        <Route path="/farmer">
-          <Route index element={<Navigate to="/farmer/login" />} />
+
+        <Route path="/farmer"> 
           <Route path="dashboard" element={<FarmerDashboard />} />
           <Route path="crops-consulting">
             <Route index element={<CropsConsulting />} />
             <Route path=":cropId" element={<CropDetail />} />
           </Route>
           <Route path="recommendations-history" element={<RecommendationsHistory />} />
-          <Route path="profile" element={<FarmerProfile />} />
-          <Route path="login" element={<FarmerLogin />} />
-          <Route path="forgot-password" element={<FarmerForgotPassword />} />
-          <Route path="reset-password" element={<FarmerResetPassword />} /> 
+          <Route path="profile" element={<FarmerProfile />} />  
         </Route>
         <Route path="*" element={<NotFound/>} />
       </Routes>

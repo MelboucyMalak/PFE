@@ -1,6 +1,7 @@
-import gardener from "../../images/gardener.png"
+import hero from "../../images/SignUpHero.png"
 import showPSWD from "../../images/showPSWD.png"
-import hidePSWD from "../../images/hidePSWD.png"
+import hidePSWD from "../../images/hidePSWD.png" 
+import showPSWDRed from "../../images/showPSWDRed.png"
 import errorCross from "../../images/errorCross.png"
 import { validateSignUp } from "../../utils/validateSignUp"
 import styles from "./SignUpBlock.module.css"
@@ -25,7 +26,7 @@ export function SignUpBlock() {
 
   return (
     <div className={styles.signUpBlock}>
-      <img className={styles.signUpImg} src={gardener} alt="gardener" />
+      <img className={styles.signUpImg} src={hero} alt="gardener" />
       <div className={styles.signUpFormSide}>
         <div className={styles.signUpFormBck}></div>
 
@@ -56,14 +57,15 @@ export function SignUpBlock() {
           </div>
 
           <div className={`${styles.signUpField}
-            ${errors.password ? styles.signUpFieldError : ''}`}>
+            ${errors.password ? styles.signUpBlockError : ''}`}>
 
             <p className={styles.signUpLabel}>Password</p>
-            <div className={styles.signUpFieldBlock}>
+            <div className= {`${styles.signUpFieldBlock} ${errors.password ? styles.signUpFieldBlockError : ''}`}>
               <input type={showPassword ? 'text' : 'password'} required minLength={8}
                 placeholder="••••••••"
                 onChange={e => setPassword(e.target.value)} />
-              <img className={styles.PSWDEye} src={showPassword ? hidePSWD : showPSWD} alt=""
+              <img className={styles.PSWDEye} 
+                src={showPassword ? (errors.password ? 'hidePSWDRed' : hidePSWD) : (errors.password ? showPSWDRed : showPSWD)} alt=""
                 onClick={() => setShowPassword(!showPassword)} />
             </div>
             <div className={errors.password ? styles.signUpErrorLine : styles.noSignUpError}>
@@ -73,14 +75,14 @@ export function SignUpBlock() {
 
           </div>
 
-          <div className={`${styles.signUpField}
-            ${errors.confPassword ? styles.signUpFieldError : ''}`}>
+          <div className={`${styles.signUpField} ${errors.password ? styles.signUpBlockError : ''}`}>
             <p className={styles.signUpLabel}>Confirm Password</p>
-            <div className={styles.signUpFieldBlock}>
+            <div className={`${styles.signUpFieldBlock} ${errors.confPassword ? styles.signUpFieldBlockError : ''}`} >
               <input type={showPassword ? 'text' : 'password'} required
                 placeholder="••••••••" 
                 onChange={e => setConfPassword(e.target.value)}/>
-              <img className={styles.PSWDEye} src={showPassword ? hidePSWD : showPSWD} alt=""
+              <img className={styles.PSWDEye} 
+                src={showPassword ? (errors.confPassword ? 'hidePSWDRed' : hidePSWD) : (errors.confPassword ? showPSWDRed : showPSWD)} alt=""
                 onClick={() => setShowPassword(!showPassword)} />
             </div>
             <div className={errors.confPassword ? styles.signUpErrorLine : styles.noSignUpError}>
@@ -91,7 +93,7 @@ export function SignUpBlock() {
 
         </form>
         <button className={styles.signUpBtn} type="submit" form="sign-up-form">Sign Up</button>
-        <p className={styles.loginRedirect}>Already have an account-<a href="">Log in.</a></p>
+        <p className={styles.loginRedirect}>Already have an account-<a href="/login">Log in.</a></p>
       </div>
     </div>
   )
