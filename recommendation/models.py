@@ -9,6 +9,7 @@ from crop.models import Crop
 
 # 𝗖𝗟𝗔𝗦𝗦 𝗥𝗘𝗖𝗢𝗠𝗠𝗘𝗡𝗗𝗔𝗧𝗜𝗢𝗡 𝗦𝗘𝗦𝗦𝗜𝗢𝗡
 class RecommendationSession(models.Model):
+    user=models.ForeignKey(User, on_delete=models.CASCADE,null=True, blank=True)
     date=models.DateTimeField(default=timezone.now)
     lat=models.FloatField(validators=[MinValueValidator(-90), MaxValueValidator(90)])
     lon=models.FloatField(validators=[MinValueValidator(-180), MaxValueValidator(180)])

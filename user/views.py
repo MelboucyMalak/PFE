@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 
 from recommendation.models import RecommendationSession
-from .models import History
+
 from .serializers import UserSerializer, ChangePasswordSerializer
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import authenticate, update_session_auth_hash
@@ -44,7 +44,7 @@ def login(request):
 
     if user is not None:
         token, created = Token.objects.get_or_create(user=user)
-        return Response({'message':'Login Success','token': token.key},status=status.HTTP_200_OK)
+        return Response({'message':'Login Success','token': token.key, 'admin':user.is_staff },status=status.HTTP_200_OK)
     else:
         return Response({'message':'Login Failed'}, status=status.HTTP_401_UNAUTHORIZED)
 
@@ -86,39 +86,24 @@ def change_password(request):
 
 @api_view(['POST'])
 def testcode(request):
-    token = request.data.get('token')
+    token = request.data.get('code')
 
     if token : # see if user really insert a token means token <> null
         try:
              token_obj = ResetPasswordToken.objects.get(key=token)
              time = token_obj.created_at + timezone.timedelta(minutes=10) # the exact expiry time
              if timezone.now() < time: # mazal ma l7a9na l time
-                 return Response({'message':'Token is valid'}, status=status.HTTP_200_OK)
+                 return Response({'message':'Code is valid'}, status=status.HTTP_200_OK)
              else:
-                 return Response({'message':'Token is expired'}, status=status.HTTP_400_BAD_REQUEST)
+                 return Response({'message':'Code is expired'}, status=status.HTTP_400_BAD_REQUEST)
         except ResetPasswordToken.DoesNotExist:
-            return Response({'message':'Token not found.'}, status=404)
+            return Response({'message':'Code not found.'}, status=404)
     else:
-        return Response({'message':'Token must insert'}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({'message':'Code must insert'}, status=status.HTTP_400_BAD_REQUEST)
 
 
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def save_recommendation(request):
-    session_id= request.data.get('session_id')
-    if not session_id:
-        return Response({'message':'should send session_id!'}, status=status.HTTP_400_BAD_REQUEST)
-    try:
-        recommendation = RecommendationSession.objects.get(pk=session_id)
-    except RecommendationSession.DoesNotExist:
-        return Response({'message':'Recommendation not found.'}, status=status.HTTP_404_NOT_FOUND)
 
-    history = History.objects.filter(user=request.user,recommendation=recommendation).exists()
-    if history:
-        return Response({'message':'Recommendation already saved.'}, status=status.HTTP_200_OK)
-    History.objects.create(user=request.user, recommendation=recommendation)
-    return Response({'message':'Recommendation saved successfully'},status=status.HTTP_201_CREATED)
 
 
 

@@ -186,15 +186,3 @@ def fetch_environment_data(long, lat):
         "koppen": koppen
     }
 #def meteo():
-"""
-lat = 
-lon = 
-if is_inside_algeria(lon,lat):
-    nasa = fetch_nasa_power_data(lon,lat)
-    opn= fetch_openlandmap_data(lon,lat)
-    isda = fetch_isda_data(lon,lat)
-    env = fetch_environment_data(lon,lat)
-    print(nasa, opn, isda, env)
-else:
-    print("sorry")
-"""
