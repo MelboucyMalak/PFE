@@ -33,17 +33,25 @@ def fetch_isda_data(long,lat):
     combined = ee.Image.cat([N_final, P_final, K_final])
     sample = combined.sample(point, 30).first()
     if sample is None:
-        return None
+        return {'n': -1 ,'p': -1,'k': -1}
+
     def _get(name):
         try:
-            return sample.get(name).getInfo()
+            val = sample.get(name).getInfo()
+            return val if val is not None else -1
         except:
-            return None
+            return -1
     n_val =_get('Nitrogen_mg_kg')
     p_val = _get('Phosphorus_mg_kg')
     k_val = _get('Potassium_mg_kg')
-    if n_val is None and p_val is None and k_val is None:
-        return None
+
+    if n_val is None:
+        n_val= -1
+    if p_val is None:
+        p_val= -1
+    if k_val is None:
+        k_val= -1
+
     return  {'n': n_val,'p': p_val,'k': k_val}
 
 def fetch_openlandmap_data(long,lat):
@@ -64,21 +72,25 @@ def fetch_openlandmap_data(long,lat):
     # Sample once
     sample = combined.sample(point, 30).first()
     if sample is None:
-        return None
+        return {"soil_texture": "Unknown" , "ph": -1}
 
     try:
         info = sample.getInfo()['properties']
     except:
-        info = None
+        return {"soil_texture": "Unknown", "ph": -1}
 
     class_number = info['b0']
     ph_value = info['b30'] / 10.0  # Divide by 10 as required
 
-    if class_number is None and ph_value is None :
-        return None
-    soil_texture_name = texture_classes.get(class_number, "Unknown")
-
-    return {"soil_texture": soil_texture_name, "ph": round(ph_value, 2)}
+    if class_number is not None and class_number in texture_classes:
+        soil_texture_name = texture_classes[class_number]
+    else:
+        soil_texture_name = "Unknown"
+    if ph_value is not None:
+        ph_finale = round(ph_value, 2)
+    else:
+        ph_finale = -1
+    return {"soil_texture": soil_texture_name, "ph": ph_finale }
 
 def fetch_nasa_power_data(long, lat):
     algeria, x = get_algeria()
@@ -99,23 +111,37 @@ def fetch_nasa_power_data(long, lat):
         def avg_param(name):
             values_dict = params.get(name)
             if not values_dict:
-                return None
+                return  {
+                 "temperature_avg": -1,
+                 "humidity_avg": -1
+                 }
             values = [v for v in values_dict.values() if v is not None and v != -999]
             if not values:
                 return None
             return round(sum(values) / len(values), 2)
 
-        if avg_param('RH2M') is None and  avg_param("T2M") is None :
-            return None
+
+
+        if avg_param('RH2M') is None :
+            temp= -1
+        else:
+            temp = avg_param('RH2M')
+        if avg_param("T2M") is None :
+            hum= -1
+        else:
+            hum= avg_param("T2M")
 
         return {
-            "temperature_avg": avg_param("T2M"),
-            "humidity_avg": avg_param("RH2M")
+            "temperature_avg": temp,
+            "humidity_avg": hum
         }
 
     except Exception as e:
         print("NASA API Error:", e)
-        return None
+        return {
+            "temperature_avg": -1,
+            "humidity_avg": -1
+        }
 
 def fetch_environment_data(long, lat):
     algeria, x = get_algeria()
@@ -133,10 +159,18 @@ def fetch_environment_data(long, lat):
     # Sample at the point once
     sample = combined.sample(point, scale=30).first()
     if sample is None:
-        return None
+        return {
+        "land_cover": "Unknown",
+        "slope": -1,
+        "rainfall": -1,
+        "koppen": "Unknown"
+    }
 
     # Get all raster info in one go
-    info = sample.getInfo()['properties']
+    try:
+        info = sample.getInfo()['properties']
+    except:
+        return {"land_cover": "Unknown", "slope": -1, "rainfall": -1, "koppen": "Unknown"}
 
     # Land Cover lookup
     lc_lookup = {
@@ -144,9 +178,14 @@ def fetch_environment_data(long, lat):
         50: 'Built-up', 60: 'Bare / Sparse vegetation', 70: 'Snow and Ice',
         80: 'Water', 90: 'Wetland'
     }
-    land_cover_name = lc_lookup.get(info['land_cover'])
-    slope_degrees = info['slope']
-    rain_value = info['rainfall']
+    land_cover_code =  info.get('land_cover')
+    if land_cover_code in lc_lookup and land_cover_code is not None:
+       land_cover_name = lc_lookup.get(land_cover_code)
+    else:
+        land_cover_name = "Unknown"
+
+    slope_degrees = info.get('slope', -1)
+    rain_value = info.get('rainfall', -1)
 
     # ----- Köppen Climate (vector) -----
     climate = ee.FeatureCollection("RESOLVE/ECOREGIONS/2017").filterBounds(point)
@@ -177,7 +216,7 @@ def fetch_environment_data(long, lat):
         }
         koppen = koppen_lookup.get(name_used)
     else:
-        koppen = None
+        koppen = "Unknown"
 
     return {
         "land_cover": land_cover_name,

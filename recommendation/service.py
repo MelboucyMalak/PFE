@@ -11,7 +11,7 @@ def is_ok(long,lat):
         raise NotInsideALgeria
     else:
         env=fetch_environment_data(long,lat)
-        if env is None or env["slope"] is None or env["land_cover"] is None:
+        if  env["slope"] == -1 or env["land_cover"] == "Unknown":
             raise InvalidData
         if env["slope"] > 23:
             raise NotSuitableLand
@@ -21,8 +21,10 @@ def is_ok(long,lat):
 
 
 
-def creatRecomendation(lat,lon):
+def creatRecomendation(request):
     # maybe the object already exist why create again
+    lat = float(request.data.get('lat'))
+    lon = float(request.data.get('lon'))
     maybe_exist=RecommendationSession.objects.filter(lat=lat,lon=lon).first()
     if maybe_exist:
         return maybe_exist
@@ -32,26 +34,26 @@ def creatRecomendation(lat,lon):
     nasa = fetch_nasa_power_data(lon,lat)
     opnl = fetch_openlandmap_data(lon,lat)
     recommendation=RecommendationSession.objects.create(
+        user=request.user,
         lat = float(lat),
         lon = float(lon),
-        n_total_raw_ppm = isda["n"] if isda["n"] is not None else -1,
-        p_extractable_raw_ppm = isda["p"] if isda["p"] is not None else -1,
-        k_extractable_raw_ppm = isda["k"] if isda["k"] is not None else -1,
-        soil_texture_initial = opnl["soil_texture"]if opnl["soil_texture"] is not None else "Unknown",
-        soil_ph_initial = opnl["ph"] if opnl["ph"] is not None else -1,
+        n_total_raw_ppm = isda["n"],
+        p_extractable_raw_ppm = isda["p"],
+        k_extractable_raw_ppm = isda["k"] ,
+        soil_texture_initial = opnl["soil_texture"],
+        soil_ph_initial = opnl["ph"] ,
         slope_angle =env["slope"],
         land_cover = env["land_cover"],
-        rainfall_avg = env["rainfall"] if env["rainfall"] is not None else -1,
-        temperature_avg =nasa["temperature_avg"] if nasa["temperature_avg"] is not None else -1,
-        humidity_avg = nasa ["humidity_avg"] if nasa["humidity_avg"] is not None else -1,
-        koppen = env["koppen"] if  env["koppen"] is not None else "Unknown"
+        rainfall_avg = env["rainfall"],
+        temperature_avg =nasa["temperature_avg"],
+        humidity_avg = nasa ["humidity_avg"],
+        koppen = env["koppen"]
     )
     return recommendation
 
 def generate_CropRecommendations(id):
     recommendation=RecommendationSession.objects.get(pk=id)
     #ph, soil_texture, rainfall, temperature, humedity, koppen
-    #
     crops=Cropselect(recommendation.soil_ph_initial,
                recommendation.soil_texture_initial,
                recommendation.rainfall_avg,
@@ -59,25 +61,32 @@ def generate_CropRecommendations(id):
                recommendation.humidity_avg,
                recommendation.koppen)
     if not crops:
-        return {}
-    for data_crop in crops:
-        crop=Crop.objects.get(crop_name=data_crop["crop_name"])
-        if crop.ph_min <= recommendation.soil_ph_initial <= crop.ph_max:
-            ph_score=1
-        else:
-            ph_score=0.5
-        crop_climate = CropClimate.objects.get(crop=crop,climate__climate_zone=recommendation.koppen)
-        climate_score = crop_climate.rating
-        crop_soil = CropSoilTexture.objects.get(crop=crop,soil_texture__texture_class=recommendation.soil_texture_initial)
-        soil_score = crop_soil. suitability_rank
-        score= ph_score + climate_score + soil_score
+        return CropRecommendation.objects.none()
+    for crop in crops:
+        score=calculate_compatibility_score(crop,recommendation,recommendation.soil_texture_initial)
         CropRecommendation.objects.create(
             recommendation=recommendation,
             crop=crop,
             compatibility_score=score,
         )
-    crops=CropRecommendation.objects.filter(recommendation=recommendation)
-    return crops
+
+    return CropRecommendation.objects.filter(recommendation=recommendation)
+
+def calculate_compatibility_score(crop,session,soil):
+    if crop.ph_min <= session.soil_ph_initial <= crop.ph_max:
+        ph_score = 1
+    else:
+        ph_score = 0.5
+    crop_climate = CropClimate.objects.get(crop=crop, climate__climate_zone=session.koppen)
+    climate_score = crop_climate.rating
+    crop_soil = CropSoilTexture.objects.get(
+        crop=crop,
+        texture_name=soil
+    )
+    soil_score = crop_soil.suitability_rank
+    score = ph_score * 0.1 + climate_score * 0.6 * 1/8 + soil_score * 0.3 * 1/5
+    return score * 100
+
 
 
 

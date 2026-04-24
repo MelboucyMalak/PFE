@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from .models import RecommendationSession, CropRecommendation
+from .models import RecommendationSession
 from .serializers import RecommendationSerializer, CropRecommendationSerializer
 from rest_framework.decorators import api_view, permission_classes
 
@@ -20,11 +20,11 @@ def recommendation_list_api(request):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def recommendation_api_view(request):
-    lat=float(request.data.get('lat'))
-    lon=float(request.data.get('lon'))
+    lat = float(request.data.get('lat'))
+    lon = float(request.data.get('lon'))
     if lat==None or lon==None :
         return Response({'error':'Latitude or longitude is required'},status=status.HTTP_400_BAD_REQUEST)
-    recommendations = creatRecomendation(lat,lon)
+    recommendations = creatRecomendation(request)
     data = RecommendationSerializer(recommendations, many=False).data
     return Response({'recommendations': data},status=status.HTTP_200_OK)
 
@@ -39,7 +39,7 @@ def croplist_api_view(request):
     if not recommendations:
         return Response({'error':'session_id is invalid'},status=status.HTTP_400_BAD_REQUEST)
     crops=  generate_CropRecommendations(session_id)
-    data=  CropRecommendationSerializer(crops, many=True).data
+    data = CropRecommendationSerializer(crops, many=True).data
     return Response({'Crop List': data},status=status.HTTP_200_OK)
 
 '''
