@@ -30,6 +30,7 @@ export default function MapComponent() {
 
   return (
     <div className={MapStyles.mapPage}>
+      <div className={MapStyles.mapBck}></div>
       <div className={MapStyles.mapContainer}>
         <MapContainer
           center={center} zoom={13}
