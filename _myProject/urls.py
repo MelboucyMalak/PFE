@@ -24,7 +24,7 @@ urlpatterns = [
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0)),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0)),
     path('dev/', admin.site.urls),
-    path("api-auth/", include("rest_framework.urls")),
+   # path("api-auth/", include("rest_framework.urls")),
     # your routes...
     path('', include('user.urls')),
     path('',include('crop.urls')),
