@@ -2,7 +2,7 @@ from crop.cropSelect import Cropselect
 from crop.models import CropClimate, CropSoilTexture, Crop
 from .errors import NotInsideALgeria, NotSuitableLand, InvalidData
 from .models import RecommendationSession,CropRecommendation
-from .utils import is_inside_algeria, fetch_openlandmap_data, fetch_isda_data, fetch_environment_data, \
+from .ExternalApiService import is_inside_algeria, fetch_openlandmap_data, fetch_isda_data, fetch_environment_data, \
     fetch_nasa_power_data, initEE
 
 initEE()
@@ -19,25 +19,25 @@ def is_ok(long,lat):
             raise NotSuitableLand
     return env
 
-
-
-def creatRecomendation(request):
+def creatRecommendation(request):
     # maybe the object already exist why create again
     lat = float(request.data.get('lat'))
     lon = float(request.data.get('lon'))
-    maybe_exist=RecommendationSession.objects.filter(lat=lat,lon=lon).first()
+    user = request.user
+    maybe_exist=RecommendationSession.objects.filter(lat=lat,lon=lon,user=user).first()
     if maybe_exist:
         return maybe_exist
     # fetch the data
-    env=is_ok(lon,lat)
+    env  = is_ok(lon,lat)
     isda = fetch_isda_data(lon,lat)
     nasa = fetch_nasa_power_data(lon,lat)
     opnl = fetch_openlandmap_data(lon,lat)
+
     recommendation=RecommendationSession.objects.create(
         user=request.user,
         lat = float(lat),
         lon = float(lon),
-        n_total_raw_ppm = isda["n"],
+        n_total_raw_ppm = isda['n'],
         p_extractable_raw_ppm = isda["p"],
         k_extractable_raw_ppm = isda["k"] ,
         soil_texture_initial = opnl["soil_texture"],

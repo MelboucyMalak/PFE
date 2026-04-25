@@ -1,6 +1,9 @@
 import ee
 import requests
 
+from recommendation.NutrientCalculator import convert_ppm_to_kg_ha
+
+
 def initEE():
     try:
         ee.Initialize(project='alpha-earth-test-486217')
@@ -45,11 +48,11 @@ def fetch_isda_data(long,lat):
     p_val = _get('Phosphorus_mg_kg')
     k_val = _get('Potassium_mg_kg')
 
-    if n_val is None:
+    if n_val is None or n_val== -1:
         n_val= -1
-    if p_val is None:
+    if p_val is None or p_val== -1:
         p_val= -1
-    if k_val is None:
+    if k_val is None or k_val== -1:
         k_val= -1
 
     return  {'n': n_val,'p': p_val,'k': k_val}
@@ -123,13 +126,13 @@ def fetch_nasa_power_data(long, lat):
 
 
         if avg_param('RH2M') is None :
-            temp= -1
-        else:
-            temp = avg_param('RH2M')
-        if avg_param("T2M") is None :
             hum= -1
         else:
-            hum= avg_param("T2M")
+            hum = avg_param('RH2M')
+        if avg_param("T2M") is None :
+            temp= -1
+        else:
+            temp= avg_param("T2M")
 
         return {
             "temperature_avg": temp,
@@ -224,4 +227,5 @@ def fetch_environment_data(long, lat):
         "rainfall": rain_value,
         "koppen": koppen
     }
+
 #def meteo():

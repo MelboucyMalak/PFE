@@ -42,4 +42,4 @@ test.py is for test idk how to use it
 admin.py is bach nzid la table l /dev bach tban l supperstaff
 
 
-super staff: zineb /sarahzineb
+super staff: zineb /zineb2005

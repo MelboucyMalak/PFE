@@ -1,6 +1,6 @@
 import math
 from recommendation.service import calculate_compatibility_score
-from recommendation.utils import fetch_openlandmap_data
+from recommendation.ExternalApiService import fetch_openlandmap_data
 from recommendation.models import CropRecommendation
 from crop.models import CropSoilTexture
 from .models import FieldAnalysis, DetectedTexture
@@ -138,24 +138,3 @@ class FieldAnalyzerService:
         }, None
 
 
-class NutrientCalculatorService:
-    @staticmethod
-    def convert_ppm_to_kg_ha(ppm, depth, density=1.3):
-        return ppm * (depth / 10) * density * 10
-
-    @staticmethod
-    def get_mineralization_factor(koppen):
-        factors = {"Af": 0.05, "Am": 0.04, "Aw": 0.03}
-        return factors.get(koppen, 0.02)
-
-    @staticmethod
-    def calculate_percentage(total_n, p_extr, k_extr, depth):
-        return {"N": total_n * 0.1, "P": p_extr * 0.2, "K": k_extr * 0.2}
-
-    @staticmethod
-    def calculate_deficit(available, needed):
-        return {
-            "n_deficit": max(0, needed.get('n', 0) - available.get('n', 0)),
-            "p_deficit": max(0, needed.get('p', 0) - available.get('p', 0)),
-            "k_deficit": max(0, needed.get('k', 0) - available.get('k', 0)),
-        }

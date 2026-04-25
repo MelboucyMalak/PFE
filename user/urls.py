@@ -6,16 +6,13 @@ from user import views
 
 
 urlpatterns = [
-    path("admin/user-management",views.user_list,name="user_list"),
-    path("admin/user-management/<int:id>",views.user_details,name="user_details"),
-    path('',include('crop.urls')),
-    path("login",views.login),
-    path("admin/logout",views.logout),
-    path("farmer/logout",views.logout),
-    path("sign-up",views.register),
-    path("admin/Profile",views.change_password),
-    path("farmer/Profile",views.change_password),
-    path('forgot-password', ResetPasswordRequestToken.as_view(), name="forgot-password"),
-    path('verify-password',views.testcode,name='test-code'),
-    path('reset-password', ResetPasswordConfirm.as_view(), name="confirm-password"),]
+    path("api/users",views.user_list,name="user_list"),
+    path("api/users/<int:id>",views.user_details,name="user_details"),
+    path("api/login",views.login),
+    path("api/logout",views.logout),
+    path("api/sign-up",views.register),
+    path("api/Profile/change-password",views.change_password),# not complete
+    path('api/forgot-password', ResetPasswordRequestToken.as_view(), name="forgot-password"),
+    path('api/verify-password',views.testcode,name='test-code'),
+    path('api/reset-password', ResetPasswordConfirm.as_view(), name="confirm-password"),]
 

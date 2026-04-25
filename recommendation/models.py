@@ -24,6 +24,7 @@ class RecommendationSession(models.Model):
     temperature_avg=models.FloatField()
     humidity_avg=models.FloatField()
     koppen = models.CharField(max_length=10)
+    favorite = models.BooleanField(default=False)
 
     def __str__(self):
         return f"Session {self.id} ({self.lat},{self.lon})"
