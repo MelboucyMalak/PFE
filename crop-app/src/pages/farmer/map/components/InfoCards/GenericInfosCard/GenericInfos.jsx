@@ -2,6 +2,7 @@
 import { useState } from "react"
 import { GenericCardHeader, GenericCardFooter, GenericCardBodyHeader } from "./CardParts/CardParts" 
 import { LocationPanel } from "./Panels/Location/LocationPanel"
+import { SoilPanel } from "./Panels/Soil/SoilPanel"
  
 
 import styles from "./GenericInfos.module.css"

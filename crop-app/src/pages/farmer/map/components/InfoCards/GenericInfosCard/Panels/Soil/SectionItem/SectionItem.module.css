@@ -1,0 +1,69 @@
+ .nutrientItem, .propertyItem {
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+   padding: 8px;
+   flex: 1;
+   z-index: 2;
+   border-radius: 13px; 
+ }
+ 
+
+ .nutrientItem.blue {
+   background-color: #E6F1FB;
+   box-shadow: 0px -2.4px 0px #378ADD;
+ }
+
+ .nutrientItem.blue .itemTitleText {
+   color: #378ADD;
+ }
+
+ .nutrientItem.green {
+   background-color: #E1F5EE;
+   box-shadow: 0px -2.4px 0px #0F6E56;
+ }
+
+ .nutrientItem.green .itemTitleText {
+   color: #0F6E56;
+ }
+
+ .nutrientItem.orange {
+   background-color: #FAEEDA;
+   box-shadow: 0px -2.4px 0px #BA7517
+ }
+
+ .nutrientItem.orange .itemTitleText {
+   color: #BA7517;
+ }
+
+ .propertyItem{
+  border: 1px solid rgba(0, 0, 0, 0.537);
+  background-color: #FAF7F2;
+ }
+
+ .itemTitle {
+   display: flex;
+   align-items: center;
+   gap: 5px;
+ }
+
+ .itemTitle img {
+   height: 14px;
+   width: auto;
+ }
+
+ .itemTitleText{
+  font-family: Roboto;
+  font-size: 12px;
+ }
+
+ .itemValue{
+  font-family: Roboto;
+  font-size: 14px;
+  font-weight: 300;
+  margin-left: 5px; 
+ }
+
+ .propertyItem .itemValue{
+  font-weight: 400;
+ }  

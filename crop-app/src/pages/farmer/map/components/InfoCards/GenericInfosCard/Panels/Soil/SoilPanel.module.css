@@ -1,0 +1,43 @@
+.soilPanel{
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  gap: 10px; 
+}
+
+.nutrientSection, .propertiesSection{
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
+}
+
+
+.sectionTitle{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sectionTitle img{
+  height: 5px;
+}
+
+.sectionTitleText{
+  color:#706B6B ;
+  font-size: 12px;
+}
+
+.sectionBody{
+  display: flex; 
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.propertiesSection .sectionBody{
+  gap: 13px;
+}
+
+
+
+
+ 
