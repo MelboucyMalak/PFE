@@ -1,0 +1,100 @@
+.meteoCard{
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  width: 320px;  
+}
+
+.cardBody{
+  position: relative;
+  background-color: #FFFFFF ;
+  padding: 10px 10px 30px 10px ;
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
+}
+
+
+
+.coordSection, .weatherSection{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;  
+}
+
+.sectionTitle{
+  color: #706B6B;
+  font-size: 11px; 
+  line-height: 100%;
+
+}
+
+.coordBody{
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background-color:#F5F4ED ;
+  border-radius: 13px;
+  width: 200px;
+  border : 0.8px solid black;
+}
+
+
+
+.sectionTitle, .coordBody{
+  z-index: 1;
+}
+
+.bodyTitle{
+  display: flex;
+  align-items: center;
+  gap: 5px; 
+}
+
+.bodyTitle img{
+  height: 15px;
+  width: auto; 
+}
+
+.coordTitleText{
+  font-size: 11px;
+}
+
+.coordText{
+  font-size: 13px;
+  margin-left: 5px;
+}
+
+.coordTitleText, .coordText{
+  font-family: Roboto;
+}
+
+.coordBody {
+  padding: 5px;
+}
+ 
+.weatherBody{
+  display: flex;
+  gap: 6px; 
+}
+
+.hide{
+  display: none;
+}
+
+.cardBck{
+  position: absolute;
+  height: px;
+  background: url(../../images/background.png) ; 
+  background-repeat: repeat ; 
+  background-size: auto;
+  inset: 0;
+  opacity: 5%;  
+  z-index: 0;
+
+}
+
+ 

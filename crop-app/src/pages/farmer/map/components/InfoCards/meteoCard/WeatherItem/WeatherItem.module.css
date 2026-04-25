@@ -1,0 +1,32 @@
+.weatherItem{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-around; 
+  align-items: center;
+  height: 70px;
+  background-color: #F5F4ED;
+  border-radius: 12px;
+  padding: 4px 0px;
+  border: 0.8px solid black;
+  z-index: 1;
+}
+
+.weatherItem img{
+  height: 22px;
+  width: auto; 
+}
+
+.weatherItemLabel{
+  text-align: center; 
+}
+
+.weatherItemValue{
+
+  font-family: Roboto; 
+  line-height: 100%; 
+}
+
+.weatherItemValue, .weatherItemLabel{
+  font-size: 10px;
+}

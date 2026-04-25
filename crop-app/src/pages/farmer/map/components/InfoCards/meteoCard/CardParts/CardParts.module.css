@@ -1,0 +1,101 @@
+.meteoCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  background: #232D22;
+  padding: 13px 10px ;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+  
+}
+
+.cardMeta{
+  display: flex;
+  flex-direction: column;
+  gap: 5px; 
+  
+}
+
+.region{
+  display: flex;
+  gap:10px; 
+}
+
+.regionName{
+  font-size: 18px;
+}
+
+.date{
+  font-size: 13px;
+  margin-left: 6px;
+}
+
+.regionName, .date{
+  font-family: Roboto;
+  color: white;
+}
+ 
+ 
+.region img{
+  height: 23px;
+  width: auto;
+  
+}
+
+.currentMeteo{
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  gap: 5px;
+  padding: 0px 10px;  
+}
+
+.currentTemp{
+  font-size: 23px; 
+  line-height: 100%;
+}
+
+.currentWeather{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:6px;
+}
+
+.currentWeather img{
+  height: 23px;
+  
+}
+
+.currentWeatherText{
+  font-size: 11px; 
+  
+}
+
+
+.currentWeatherText, .currentTemp{
+  font-family: Roboto;
+  color: white;
+}
+
+.meteoCardFooter{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #232D22;
+  
+  height: 50px;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.showLocationBtn{
+  border: 1px solid ;
+  font-size: 14px;
+  color: white;
+  border: 1px solid #6F826D;
+  border-radius: 10px; 
+  background-color: #69815040;
+  padding: 4px ;
+  cursor: pointer;
+}

@@ -1,5 +1,6 @@
-
+import locate from "../../images/locate.png"
 import styles from '../MapButtons.module.css'
+
 export function ShowLocation({ setPosition, map }) {
 
   function handleLocate() {
@@ -12,9 +13,10 @@ export function ShowLocation({ setPosition, map }) {
   }
  
   return (
-    <button className={styles.mapButton}
+    <button className={`${styles.mapButton} ${styles.locateBtn}`}
       onClick={handleLocate}>
-      Locate me
+      <p className={styles.btnText}>Locate me</p>
+      <img src={locate} alt="" />
     </button>
   )
 }

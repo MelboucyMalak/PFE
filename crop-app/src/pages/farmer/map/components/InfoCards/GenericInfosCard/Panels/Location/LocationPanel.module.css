@@ -1,0 +1,69 @@
+.locationPanel{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sectionTitle{
+  color: #706B6B;
+  font-size: 12px; 
+  line-height: 100%; 
+}
+
+.sectionTitle::before{
+  content: '· ';
+  font-size: 20px; 
+}
+
+.coordBody{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 8px;
+  background-color:#F5F4ED ;
+  border-radius: 13px; 
+  padding: 8px;
+  background-color:#232D22; 
+}
+  
+.bodyTitle{ 
+  display: flex;
+  align-items: center;
+  gap: 8px;   
+}
+
+.bodyTitle p{
+  color: #BBD6B8;
+  font-size: 14px ;
+  font-family: Roboto;
+  line-height: 100%;
+}
+
+.sectionTitle, .coordBody, .sectionItem{
+  z-index: 1;
+}
+
+ 
+.bodyTitle img{
+  height: 18px;
+  width: auto; 
+}
+ 
+
+.coordText{
+  margin-left: 5px;
+  font-family: Roboto;
+  color: white;
+}
+ 
+section{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;   
+}
+
+.sectionBody{
+  display: flex;
+  gap: 15px; 
+}
+ 

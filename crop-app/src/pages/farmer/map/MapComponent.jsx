@@ -1,21 +1,18 @@
 import { MapContainer, TileLayer, ImageOverlay } from 'react-leaflet'
-import { ShowLocation } from './buttons/ShowLocation/ShowLocation.jsx'
-import { Draggable } from './buttons/Draggable/Draggable.jsx'
-import { ShowMarker } from './buttons/ShowMarker/ShowMarker.jsx'
 import { SetViewOnClick } from './utils/SetViewOnClick.jsx'
 import { SetPositionOnMove } from './utils/SetPositionOnMove.jsx'
 import { MarkerComponent } from './components/MarkerComponent.jsx'
 import { MiniMapControl } from './mini-map/MiniMapControl.jsx'
 import { ExternalState } from './components/ExternalState.jsx'
-import { useMemo, useState } from 'react' 
-import { ShowMiniMap } from './buttons/ShowMiniMap/ShowMiniMap.jsx'
+import { useMemo, useState } from 'react'
 import { MapPlaceholder } from './MapPlaceholder.jsx'
 import { Draw } from './components/Draw.jsx'
-import { SetView } from './buttons/SetView/SetView.jsx'
-import { GeocoderControl } from './components/GeocoderControl.jsx'
 import { MapRefGrabber } from './utils/MapRefGrabber.jsx'
-import styles from "./buttons/MapButtons.module.css"
+import { ControlsBar } from "./components/ControlsBar/ControlsBar.jsx"
+import { MeteoCard } from './components/InfoCards/meteoCard/MeteoCard.jsx'
+import { GenericInfosCard } from './components/InfoCards/GenericInfosCard/GenericInfos.jsx'
 import MapStyles from "./MapComponent.module.css"
+import { disableMapInteractions, enableMapInteractions } from './utils/MapOverlay.js'
 
 
 export default function MapComponent() {
@@ -26,12 +23,18 @@ export default function MapComponent() {
   const [draggable, setDraggable] = useState(false)
   const [markerIsVisible, setMarkerVisible] = useState(true)
   const [miniMapIsVisible, setMiniMapVisible] = useState(true)
-  const [viewIsOn, setViewOn] = useState(true)  
+  const [viewIsOn, setViewOn] = useState(true)
+  const [coverOn, setCoverOn] = useState(false)
+  const [meteoIsVisible, setMeteo]=useState(true)
+  const [genericIsVisible, setGeneric]= useState(false)
+
 
   return (
     <div className={MapStyles.mapPage}>
       <div className={MapStyles.mapBck}></div>
+
       <div className={MapStyles.mapContainer}>
+
         <MapContainer
           center={center} zoom={13}
           scrollWheelZoom={true}
@@ -45,26 +48,29 @@ export default function MapComponent() {
           />
           <MapRefGrabber setMap={setMap} />
           <MarkerComponent position={position} draggable={draggable} markerIsVisible={markerIsVisible} setPosition={setPosition} />
-          {miniMapIsVisible && <MiniMapControl position={"topright"}   />}
-          <Draw/>
-           {viewIsOn && <SetViewOnClick setPosition={setPosition} setViewOn={setViewOn} />}
-           <SetPositionOnMove setDisplayPosition={setDisplayPosition} />
-           <GeocoderControl />
-           <ExternalState displayPosition={displayPosition} />
+          {miniMapIsVisible && <MiniMapControl position={"topright"} />}
+          <Draw />
+          {viewIsOn && <SetViewOnClick setPosition={setPosition} />}
+          <SetPositionOnMove setDisplayPosition={setDisplayPosition} />
+          <ExternalState displayPosition={displayPosition} />
+          <div className={MapStyles.mapButtons
+          }>
+            <ControlsBar map={map} setPosition={setPosition} viewIsOn={viewIsOn} setViewOn={setViewOn} />
+          </div>
+          {meteoIsVisible && <MeteoCard 
+          setViewOn={setViewOn} map={map} setCoverOn={setCoverOn} setMeteo={setMeteo} setGeneric={setGeneric}/>}
+          
+          <div className={coverOn ? MapStyles.coverMap : ''}
+            onMouseEnter={() => disableMapInteractions(map, setViewOn)}
+            onMouseLeave={() =>
+              enableMapInteractions(map, setViewOn)
+            }>
+              {genericIsVisible && <GenericInfosCard setGeneric={setGeneric}/> }
+            </div> 
         </MapContainer>
       </div>
 
-      <div className={styles.mapButtons}>
-        <ShowLocation setPosition={setPosition} map={map} /> 
-        <Draggable draggable={draggable} setDraggable={setDraggable}  />
-        <ShowMarker markerIsVisible={markerIsVisible} setMarkerVisible={setMarkerVisible}  />
-         <ShowMiniMap miniMapIsVisible={miniMapIsVisible} setMiniMapVisible={setMiniMapVisible}  />
-         <SetView  viewIsOn={viewIsOn} setViewOn={setViewOn} />
-         
-        
-       
 
-      </div>
     </div>
   )
 }

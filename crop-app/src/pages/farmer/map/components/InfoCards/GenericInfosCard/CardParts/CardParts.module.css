@@ -1,0 +1,82 @@
+.genericCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  background: #232D22;
+  padding: 13px 10px ;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px; 
+}
+
+.cardMeta{
+  display: flex; 
+  gap: 15px;  
+}
+
+.cardMeta img{
+  height: 35px;
+  width: auto;  
+}
+
+.region{
+  display: flex;
+  flex-direction: column;
+  gap:8px;  
+
+}
+
+.regionName{
+  font-size: 18px;
+}
+
+.coord{
+  font-size: 13px; 
+}
+
+.regionName, .coord{
+  font-family: Roboto;
+  color: white;
+}
+ 
+ 
+.bodyHeader{
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 0.6px solid rgba(0, 0, 0, 0.436);  
+}
+
+.bodyHeaderBtn{
+  border: none;
+  padding: 8px;
+  background-color:#FFFFFF;
+  color: #777676;
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.bodyHeaderBtn.active{
+  color:#8BAF7C ;
+  border-bottom: 1px solid #8BAF7C  ;
+}
+ 
+.genericCardFooter{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #232D22; 
+  height: 50px;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.confLocationBtn{
+  border: 1px solid ;
+  font-size: 14px;
+  color: white;
+  border: 1px solid #6F826D;
+  border-radius: 10px; 
+  background-color: #69815040;
+  padding: 4px ;
+  cursor: pointer;
+}

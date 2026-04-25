@@ -2,23 +2,64 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
-.leaflet-control-geocoder {
-  position: absolute;
-    top: 0px; 
-    left: 40px;
-    z-index: 1000;
-    background-color: #fff;
-    border: none;
-    padding: 8px 20px;
-    cursor: pointer;
-    border-radius: 5px; 
-}
-
-* {
   font-family: 'Inika', serif;
 }
+.leaflet-control-geocoder { 
+  display: flex;
+  position: relative;
+  flex-direction: row-reverse;
+  justify-content: start;
+  align-items: center;
+  height: 40px;
+  color: black;
+    z-index: 1000; 
+    border: none; 
+    cursor: pointer;
+    border-radius: 12px; 
+    box-shadow: none;  
+    max-height: 400px;
+    border: 1px solid rgba(0, 0, 0, 0.4);;
+}
+ 
+
+.leaflet-control-geocoder-form input {
+  
+  width: 190px;
+  height: 36px;
+  background: #367631; 
+  color: rgb(0, 0, 0); 
+  border-radius: 12px;
+  padding: 8px 12px;
+  font-size: 14px;
+  background-color: #fff;
+}
+
+.leaflet-control-geocoder-icon { 
+  height: 38px; 
+  width: 40px;
+  border-radius: 12px;
+}
+
+.leaflet-control-geocoder-alternatives {
+  background: #cbd8ca;
+  position: absolute ;
+  top: 100%;
+  left: 0;
+  border-radius: 8px;
+  overflow-y: auto;  
+  max-width: 230px;
+  z-index: 2000;
+}
+
+.leaflet-control-geocoder-alternatives li { 
+  padding: 8px 12px;
+  font-size: 14px; 
+}
+
+ 
+ 
 
 html{
   scroll-behavior: smooth;
 }
+ 

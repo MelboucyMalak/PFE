@@ -9,7 +9,7 @@ import VerifyPassword from './pages/Authentification/VerifyPassword/VerifyPasswo
 import ResetPassword from './pages/Authentification/ResetPassword/ResetPassword/'
 import NotFound from './pages/NotFound' 
 import './App.css' 
-import SignUp from './pages/Authentification/Sign-up/Sign-up'
+import SignUp from './pages/Authentification/Sign-up/Sign-up' 
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
         <Route path="/login" element={<Login/>} />
         <Route path="/forgot-password" element={<ForgotPassword/>} />
         <Route path="/verify-password" element={<VerifyPassword/>} />
-        <Route path="/reset-password" element={<ResetPassword/>} />
+        <Route path="/reset-password" element={<ResetPassword/>} /> 
 
         <Route path="/admin"> 
           <Route path="dashboard" element={<AdminDashboard />} />
