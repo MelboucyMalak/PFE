@@ -142,3 +142,20 @@ EMAIL_HOST = 'smtp.gmail.com'  # Replace with your email host for gmail -> 'smtp
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD') # Replace with your email password
 DJANGO_REST_PASSWORDRESET_TOKEN_EXPIRY_TIME = 600 # 10 min
+
+# Add this after your REST_FRAMEWORK settings
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Token': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    },
+    'USE_SESSION_AUTH': False,  # This disables the session login button in Swagger UI
+    'LOGIN_URL': None,  # Disable login redirect
+    'LOGOUT_URL': None,
+}
+
+# Alternatively, you can completely remove SessionAuthentication for API docs
+# by creating different authentication classes for different views
