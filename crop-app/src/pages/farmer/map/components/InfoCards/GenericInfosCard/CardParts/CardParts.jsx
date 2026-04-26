@@ -37,7 +37,9 @@ export function GenericCardFooter({setGeneric}){
   return(
     <div className={styles.genericCardFooter}>
     <button className={styles.confLocationBtn}
-    onClick={() => setGeneric(false)}
+    onClick={() => {
+      setGeneric(false)
+      }}
        >Confirm Location</button>
   </div>
   ) 

@@ -1,0 +1,150 @@
+.climatePanel{
+  display: flex;
+  flex-direction: column; 
+  gap: 15px;
+  z-index: 2; 
+}
+
+.liveWeatherContainer{
+  display: flex;
+  flex-direction: column;
+  background-color: #1B262C;
+  border-radius: 23px;
+  padding: 20px;
+  padding-bottom: 5px;
+  gap: 15px;
+  align-items: center; 
+}
+
+.weatherTitle{
+  display: flex;
+  align-items: center;
+  gap: 8px ; 
+}
+
+.weatherTitle img{
+  height:6px;
+}
+
+.weatherTitleText{
+  font-size: 14px;
+  font-family: Roboto;
+  color:#FFFFFF ;
+} 
+
+.liveWeather{
+  display: flex;
+  gap: 40px;
+}
+
+.metaWeather{
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
+}
+
+.metaHeader{
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.region{
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.region img{
+  height: 20px;
+  width: auto;
+}
+
+.regionName{
+  font-size: 16px; 
+}
+
+.date{
+  font-size: 12px; 
+  margin-left: 5px;
+}
+
+.date, .regionName{
+  font-family: Roboto;
+  color: #BBE1FA;
+}
+
+.temp{
+  font-family: Roboto;
+  font-size: 20px;
+  color: white;
+  text-align: center;
+}
+
+.briefWeather{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px; 
+}
+
+.briefWeather img{
+  width: 70px;
+  height: auto;
+}
+
+.briefText{
+  color: white;
+  font-family: Roboto;
+  font-size: 13px;
+}
+
+.weatherItems{
+  display: flex;
+  flex:1;
+  width: 100%;
+  justify-content: space-between; 
+  padding-top: 5px;
+  border-top: 1px solid #bbe1fa34;
+}
+
+.showWeatherItems{
+  border: none;
+  background-color: transparent;
+}
+
+.showWeatherItems img{
+  cursor: pointer;
+  width: 25px;
+}
+
+.averagesSection{
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
+}
+
+.sectionTitle{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #706B6B;
+  font-size: 12px; 
+  line-height: 100%;  
+}
+
+.sectionTitle img{
+  height: 6px;
+  width: auto;
+}
+
+.sectionBody{
+  display: flex; 
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sectionLine{
+  display: flex;
+  gap: 10px;
+}
