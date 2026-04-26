@@ -11,6 +11,7 @@ import { MapRefGrabber } from './utils/MapRefGrabber.jsx'
 import { ControlsBar } from "./components/ControlsBar/ControlsBar.jsx"
 import { MeteoCard } from './components/InfoCards/meteoCard/MeteoCard.jsx'
 import { GenericInfosCard } from './components/InfoCards/GenericInfosCard/GenericInfos.jsx'
+import { CropsList} from './components/CropsRecommendation/CropsList.jsx'
 import MapStyles from "./MapComponent.module.css"
 import { disableMapInteractions, enableMapInteractions } from './utils/MapOverlay.js'
 
@@ -27,6 +28,9 @@ export default function MapComponent() {
   const [coverOn, setCoverOn] = useState(false)
   const [meteoIsVisible, setMeteo]=useState(true)
   const [genericIsVisible, setGeneric]= useState(false)
+  const [cropsListIsVisible, setCropsList] = useState(false)
+  const [cropContext, setCropContext] = useState({})
+  const [cropRecoIsVisible, setCropReco] = useState(false)
 
 
   return (
@@ -60,12 +64,14 @@ export default function MapComponent() {
           {meteoIsVisible && <MeteoCard 
           setViewOn={setViewOn} map={map} setCoverOn={setCoverOn} setMeteo={setMeteo} setGeneric={setGeneric}/>}
           
-          <div className={coverOn ? MapStyles.coverMap : ''}
+          <div className={`${coverOn ? MapStyles.coverMap : ''} ${cropsListIsVisible ? MapStyles.coverMapRecommendation : ''}`}
             onMouseEnter={() => disableMapInteractions(map, setViewOn)}
             onMouseLeave={() =>
               enableMapInteractions(map, setViewOn)
             }>
-              {genericIsVisible && <GenericInfosCard setGeneric={setGeneric}/> }
+              {genericIsVisible && <GenericInfosCard setGeneric={setGeneric} setCropsList={setCropsList}/> }
+              {cropsListIsVisible &&  <CropsList setCropList={setCropsList} setCropContext={setCropContext}/>}
+              {cropRecoIsVisible && <CropReco cropContext={cropContext}/>}
             </div> 
         </MapContainer>
       </div>
@@ -73,4 +79,4 @@ export default function MapComponent() {
 
     </div>
   )
-}
+}  

@@ -1,0 +1,62 @@
+.wrapper{
+  height: 600px; overflow-y: auto;
+}
+
+.cropsList{ 
+  position: relative; 
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  
+  z-index: 1000;  
+  padding: 50px 15px;
+  background-color: #E5E2E2; 
+  
+}
+
+.cropsListNav{
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+ 
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 10px;
+  background-color: #E5E2E2;
+  z-index: 1;
+  border: 1px solid rgba(0, 0, 0, 0.467);
+}
+
+.cropsListTitle{
+  color:#455A64 ;
+}
+
+.toolbar{
+  display: flex;
+  gap: 10px;
+}
+
+.toolbarBtn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.cropsListNav img{
+  height: 20px;
+  width: auto;  
+}
+
+.listBck{ 
+  position: absolute; 
+  background: url("@/assets/images/cardsBck.png") ; 
+  background-repeat: repeat ; 
+  background-size: 50px 50px;
+  inset: 0;
+  opacity: 7%;  
+} 

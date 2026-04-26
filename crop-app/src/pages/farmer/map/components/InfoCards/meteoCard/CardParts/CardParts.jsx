@@ -1,5 +1,5 @@
- import marker from "../../images/marker.png"
-import weather from "../../images/weather.png"
+ import marker from "@/assets/images/soilWeatherRelated/marker.png"
+import weather from "@/assets/images/soilWeatherRelated/weather.png"
 import styles from "./CardParts.module.css"
 
 export function MeteoCardHeader(){

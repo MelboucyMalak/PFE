@@ -1,10 +1,10 @@
 import { NutrientItem, PropertyItem } from "./SectionItem/SectionItem"
-import dot from "../../../images/listDot.png"
-import N from "../../../images/N.png"
-import P from "../../../images/P.png"
-import K from "../../../images/K.png"
-import PH from "../../../images/PH.png"
-import soil from "../../../images/soil.png"
+import dot from "@/assets/images/soilWeatherRelated/listDot.png"
+import N from "@/assets/images/soilWeatherRelated/N.png"
+import P from "@/assets/images/soilWeatherRelated/P.png"
+import K from "@/assets/images/soilWeatherRelated/K.png"
+import PH from "@/assets/images/soilWeatherRelated/PH.png"
+import soil from "@/assets/images/soilWeatherRelated/soil.png"
 import styles from "./SoilPanel.module.css"
 
 export function SoilPanel() {

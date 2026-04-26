@@ -1,4 +1,4 @@
- import marker from "../../images/marker.png" 
+ import marker from "@/assets/images/soilWeatherRelated/marker.png" 
  import { changeWindow } from "../../../../utils/changeWindow"
 import styles from "./CardParts.module.css" 
 
@@ -33,12 +33,13 @@ export function GenericCardBodyHeader({locationIsOn, soilIsOn, climateIsOn, setL
   )
 }
 
-export function GenericCardFooter({setGeneric}){ 
+export function GenericCardFooter({setGeneric, setCropsList}){ 
   return(
     <div className={styles.genericCardFooter}>
     <button className={styles.confLocationBtn}
     onClick={() => {
       setGeneric(false)
+      setCropsList(true)
       }}
        >Confirm Location</button>
   </div>

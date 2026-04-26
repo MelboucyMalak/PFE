@@ -1,9 +1,9 @@
 import { SectionItem } from "./SectionItem/SectionItem"
-import compass from "../../../images/clearCompass.png"
-import sessionId from "../../../images/sessionId.png"
-import date from "../../../images/date.png"
-import angle from "../../../images/angle.png"
-import land from "../../../images/landCover.png"
+import compass from "@/assets/images/soilWeatherRelated/clearCompass.png"
+import sessionId from "@/assets/images/soilWeatherRelated/sessionId.png"
+import date from "@/assets/images/soilWeatherRelated/date.png"
+import angle from "@/assets/images/soilWeatherRelated/angle.png"
+import land from "@/assets/images/soilWeatherRelated/landCover.png"
 import styles from "./LocationPanel.module.css"
 
 export function LocationPanel() {

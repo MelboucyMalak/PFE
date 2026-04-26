@@ -1,10 +1,10 @@
  
 import { MeteoCardHeader, MeteoCardFooter } from "./CardParts/CardParts"
 import { WeatherItem } from "./WeatherItem/WeatherItem"
-import compass from "../images/darkCompass.png"
-import soilMoisture from "../images/soilMoisture.png"
-import humidityMeteo from "../images/humidityMeteo.png"
-import wind from "../images/wind.png"
+import compass from "@/assets/images/soilWeatherRelated/darkCompass.png"
+import soilMoisture from "@/assets/images/soilWeatherRelated/soilMoisture.png"
+import humidityMeteo from "@/assets/images/soilWeatherRelated/humidityMeteo.png"
+import wind from "@/assets/images/soilWeatherRelated/wind.png"
 import { disableMapInteractions, enableMapInteractions } from "../../../utils/MapOverlay"
 import styles from "./MeteoCard.module.css"
 

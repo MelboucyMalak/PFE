@@ -2,7 +2,7 @@ import { useRef } from "react"
 import { GeocoderControl } from "./Controls/GeocoderControl"
 import { ShowLocation } from "./Controls/ShowLocation/ShowLocation"
 import { SetView } from "./Controls/SetView/SetView"
-import endCross from "../images/cross.png"
+import endCross from "@/assets/images/cross.png"
 import { enableMapInteractions, disableMapInteractions } from "../../utils/MapOverlay"
 import styles from "./ControlsBar.module.css"
 
