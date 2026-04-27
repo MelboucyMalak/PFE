@@ -1,0 +1,45 @@
+.cropCard{
+  z-index: 2000;
+  display: flex;
+  flex-direction: column; 
+   width: 400px;
+  border-radius: 15px;
+}
+
+.cardBody{
+  position: relative;
+  background-color: #FFFFFF ;
+  padding: 60px 60px 50px 60px ;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+  border: 1.6px solid #2C5A1E;
+  border-top: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px; 
+  z-index: 1;
+}
+   
+ 
+.cardBck{
+  position: absolute; 
+  background: url(@/assets/images/cardsBck.png) ; 
+  background-repeat: repeat ; 
+  background-size: 50px 50px;
+  inset: 0;
+  opacity: 5%;  
+  z-index: 0; 
+}
+
+.personalizeBtn{
+  border: none;
+  z-index: 1;
+  background-color: #253E2D;
+  font-size: 16px;
+  border-radius: 10px;
+  color: white;
+  padding: 4px; 
+  cursor: pointer;
+  margin-top: 30px;
+}

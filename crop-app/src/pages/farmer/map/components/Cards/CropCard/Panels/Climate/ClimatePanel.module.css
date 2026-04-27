@@ -1,0 +1,49 @@
+.climPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 1;
+}
+
+.climItems {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+}
+
+.climItemsLine {
+  display: flex;
+  gap: 10px;
+}
+
+.koppenRating {
+  display: flex;
+  padding: 10px;
+  border-radius: 10px;
+  flex-direction: column;
+  background-color: #FAF7F2;
+  box-shadow: -2px 0px 0px 0px #3282B8;
+}
+
+.koppenRating .title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.title img {
+  height: 14px;
+  width: auto;
+}
+
+.titleText{
+  color:#27374D;
+  font-family: Roboto;
+  font-size: 12px;
+}
+
+.rank{
+  font-family: Roboto;
+  color: #575B5D;
+}

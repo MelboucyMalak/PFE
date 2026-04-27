@@ -1,17 +1,6 @@
 .wrapper{
-  height: 600px; overflow-y: auto;
-}
-
-.cropsList{ 
-  position: relative; 
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  
-  z-index: 1000;  
-  padding: 50px 15px;
-  background-color: #E5E2E2; 
-  
+  height: 600px; 
+  overflow-y: auto;  
 }
 
 .cropsListNav{
@@ -28,6 +17,20 @@
   z-index: 1;
   border: 1px solid rgba(0, 0, 0, 0.467);
 }
+
+.cropsList{ 
+  position: relative; 
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 0;
+  z-index: 1000;  
+  padding: 50px 15px;
+  background-color: #E5E2E2; 
+  
+}
+
+
 
 .cropsListTitle{
   color:#455A64 ;

@@ -1,0 +1,279 @@
+.cropCardHeader {
+  display: flex;
+  align-items: center;
+  padding: 0px 8px; 
+  height: 100px;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  z-index: 1001;
+  border: 1.6px solid black;
+  border-bottom: none;
+  min-height: 100px;
+}
+
+.cropIcon {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px; 
+}
+
+.cropIcon img {
+  object-fit: cover;
+  object-position: center;
+  border-radius: 8px;
+  height: 100%;
+  width: 100%; 
+}
+
+.cropMeta{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  margin-left: 18px;
+  margin-right: 18px;
+  gap: 5px;
+  padding-right: 5px;
+  ;
+}
+
+.cropName{
+  line-height: 100%;
+  font-size: 16px;
+  font-family: Roboto;
+}
+
+.cropCycle{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  ;
+}
+
+.cropMonths,.cropDuration {
+  display: flex;
+  align-items: center;
+  gap: 9px; 
+}
+ 
+
+.cropMonths img {
+  height: 14px;
+  width: auto;
+  ;
+}
+
+.cropDuration img{
+  height: 14px;
+  width: auto;
+  ;
+}
+ 
+
+.months, .cropDuration p{
+  font-size: 11px;
+  line-height: 100%;
+}
+
+ 
+ 
+.rightContainer{
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-left:auto ;
+}
+  
+
+.cropRating{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  ;
+}
+ 
+.ratingContainer{
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 5px;
+  padding: 2px 6px;
+  ;
+}
+
+.ratingContainer p{
+  font-family: Roboto;
+  font-size: 11px;
+  color: white;
+}
+
+.ratingContainer img{
+  height: 12px;
+  width: auto;
+  ;
+}
+
+.cropRating > img{
+  height: 30px;
+  width: auto;
+  ;
+}
+ 
+
+.P .cropName,.P .cropCycle p, .P .duration{
+  color:#1A3A10 ;
+}
+.P .ratingLabel,.P .ratingContainer{
+  background-color:#3C552D ;
+}
+.P{
+  background-color:#B7D89A ;
+  border-color:#2C5A1E ;
+}
+
+
+.EH .cropName,.EH .cropCycle p, .EH .duration{
+  color:#354A0E;
+}
+.EH .ratingLabel,.EH .ratingContainer{
+  background-color:#5A7A1A;
+}
+.EH{
+  background-color:#DAEAB0 ;
+  border-color:#5A7A1A;
+}
+
+
+.H .cropName,.H .cropCycle p, .H .duration{
+  color:#4A4A08 ;
+}
+.H .ratingLabel,.H .ratingContainer{
+  background-color:#8A8A10 ;
+}
+.H{
+  background-color:#EEEBA9 ;
+  border-color:#8A8A10;
+}
+
+
+.G .cropName,.G .cropCycle p, .G .duration{
+  color:#5A3A08;
+}
+.G .ratingLabel,.G .ratingContainer{
+  background-color:#B07A10 ;
+}
+.G{
+  background-color:#B07A10 ;
+  border-color:#F6E185;
+}
+
+.L .cropName,.L .cropCycle p, .L .duration{
+  color:#6B1A10 ;
+}
+.L .ratingLabel,.L .ratingContainer{
+  background-color:#B83020 ;
+}
+.L{
+  background-color:#F5BEB2 ;
+  border-color:#C05A10 ;
+}
+
+/* bodyHeadrer*/ 
+/*********************/
+/*********************/
+/*********************/
+/*********************/
+/*********************/
+/*********************/
+/*********************/
+/*********************/
+/*********************/
+.genericCardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  background: #232D22;
+  padding: 13px 10px ;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px; 
+}
+
+.cardMeta{
+  display: flex; 
+  gap: 15px;  
+}
+
+.cardMeta img{
+  height: 35px;
+  width: auto;  
+}
+
+.region{
+  display: flex;
+  flex-direction: column;
+  gap:8px;  
+
+}
+
+.regionName{
+  font-size: 18px;
+}
+
+.coord{
+  font-size: 13px; 
+}
+
+.regionName, .coord{
+  font-family: Roboto;
+  color: white;
+}
+ 
+ 
+.bodyHeader{
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0; 
+  border-bottom: 0.6px solid rgba(0, 0, 0, 0.436);  
+}
+
+.bodyHeaderBtn{
+  border: none;
+  padding: 8px;
+  background-color:#FFFFFF;
+  color: #777676;
+  font-size: 14px;
+  cursor: pointer;
+  z-index: 2;
+}
+
+.bodyHeaderBtn.active{
+  color:#8BAF7C ;
+  border-bottom: 1px solid #8BAF7C  ;
+}
+ 
+.genericCardFooter{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #232D22; 
+  height: 50px;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.confLocationBtn{
+  border: 1px solid ;
+  font-size: 14px;
+  color: white;
+  border: 1px solid #6F826D;
+  border-radius: 10px; 
+  background-color: #69815040;
+  padding: 4px ;
+  cursor: pointer;
+}
+
+ 

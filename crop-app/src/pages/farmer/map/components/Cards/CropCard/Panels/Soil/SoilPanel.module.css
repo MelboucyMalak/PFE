@@ -1,0 +1,49 @@
+.soilPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 1;
+}
+
+.soilItems {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+}
+
+.soilItemsLine {
+  display: flex;
+  gap: 10px;
+}
+
+.textureRating {
+  display: flex;
+  padding: 10px;
+  border-radius: 10px;
+  flex-direction: column;
+  background-color: #FAF7F2;
+  box-shadow: -2px 0px 0px 0px #8D7B68;
+}
+
+.textureRating .title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.title img {
+  height: 14px;
+  width: auto;
+}
+
+.titleText{
+  color:#8D7B68;
+  font-family: Roboto;
+  font-size: 12px;
+}
+
+.rank{
+  font-family: Roboto;
+  color: #52483D;
+}

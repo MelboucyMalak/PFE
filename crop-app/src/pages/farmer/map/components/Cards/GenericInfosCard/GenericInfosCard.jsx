@@ -8,7 +8,7 @@ import { SoilPanel } from "./Panels/Soil/SoilPanel"
 import styles from "./GenericInfos.module.css"
 import { ClimatePanel } from "./Panels/Climate/ClimatePanel"
 
-export function GenericInfosCard({setGeneric, setCropsList}) {
+export function GenericInfosCard({handleConfirmLocation}) {
  
   const [locationIsOn, setLocation] = useState(true)
   const [soilIsOn, setSoil] = useState(false)
@@ -30,7 +30,7 @@ export function GenericInfosCard({setGeneric, setCropsList}) {
 
         {climateIsOn && <ClimatePanel/>}
       </div>
-      <GenericCardFooter setGeneric={setGeneric} setCropsList={setCropsList}/>
+      <GenericCardFooter handleConfirmLocation={handleConfirmLocation}/>
     </div>
   )
 }

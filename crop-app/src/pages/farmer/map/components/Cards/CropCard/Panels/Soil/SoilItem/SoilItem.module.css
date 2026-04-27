@@ -1,0 +1,35 @@
+.soilItem{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #8D7B68 ;
+  border-radius: 13px; 
+  flex: 1;
+  padding: 8px;  
+}
+
+.bodyTitle{
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.bodyTitle img{
+  height: 18px;
+  width: auto; 
+}
+ 
+.labelText{
+  color: #F1DEC9;
+  font-size: 14px ;
+  font-family: Roboto;
+  line-height: 100%;
+}
+
+.itemValue{ 
+  margin-left: 5px;
+  font-family: Roboto;
+  color: white;
+}
+
+ 

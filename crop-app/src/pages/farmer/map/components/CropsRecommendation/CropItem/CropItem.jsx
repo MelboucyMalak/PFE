@@ -4,8 +4,8 @@ import calendar from "@/assets/images/cropsRelated/calendar.png"
 
 import styles from "./CropItem.module.css"
 
-export function CropItem({ name, cropMonths, durationDays,  rating,    setCropList, setCropContext }) {
-  const scoreDisplay = getScoreDisplay(Number(94)) 
+export function CropItem({ name, cropMonths, durationDays,  rating,  handleCropChoice, setCropContext  }) {
+  const scoreDisplay = getScoreDisplay(Number(rating)) 
      const rank = scoreDisplay.rank
      const colorClass = scoreDisplay.color 
      const compatibility = scoreDisplay.compatibility
@@ -28,10 +28,10 @@ export function CropItem({ name, cropMonths, durationDays,  rating,    setCropLi
           <p>/</p>
           <div className={styles.cropDuration}>
             <img src={duration} alt="" />
-            <p>
+            <div>
               <p className={styles.duration}>{durationDays}</p>
               <p>days</p>
-            </p>
+            </div>
           </div>
         </div>
         <div className={styles.ratingLabel}>
@@ -47,9 +47,9 @@ export function CropItem({ name, cropMonths, durationDays,  rating,    setCropLi
           <img src={`/ratingIcons/mood${rank}.png`} alt="" />
         </div>
         <button className={styles.arrowBtn} 
-          onClick={()=> {
-            setCropList(false) 
-            setCropContext({ name, cropMonths, durationDays, rating})
+          onClick={()=> { 
+            handleCropChoice()
+            setCropContext({ name, cropMonths, durationDays, rating, rank, colorClass, compatibility })
           }}>
           <img src={`/ratingIcons/arrow${rank}.png`} alt="" />
         </button>

@@ -1,3 +1,4 @@
+ 
  import marker from "@/assets/images/soilWeatherRelated/marker.png"
 import weather from "@/assets/images/soilWeatherRelated/weather.png"
 import styles from "./CardParts.module.css"
@@ -26,15 +27,11 @@ export function MeteoCardHeader(){
   )
 }
 
-export function MeteoCardFooter({setMeteo, setCoverOn, setGeneric}){ 
+export function MeteoCardFooter({handleShowLocation}){ 
   return(
     <div className={styles.meteoCardFooter}>
     <button className={styles.showLocationBtn}
-    onClick={() => {
-      setMeteo(false)
-      setGeneric(true)
-      setCoverOn(true)
-       }}>Show Location Infos</button>
+    onClick={handleShowLocation}>Show Location Infos</button>
   </div>
   ) 
 }

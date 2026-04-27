@@ -8,7 +8,7 @@ import wind from "@/assets/images/soilWeatherRelated/wind.png"
 import { disableMapInteractions, enableMapInteractions } from "../../../utils/MapOverlay"
 import styles from "./MeteoCard.module.css"
 
-export function MeteoCard({setViewOn, map, setCoverOn, setMeteo, setGeneric }) {
+export function MeteoCard({setViewOn, map, handleShowLocation }) {
 
    
 
@@ -45,8 +45,7 @@ export function MeteoCard({setViewOn, map, setCoverOn, setMeteo, setGeneric }) {
           </div>
         </div>
       </div>
-      <MeteoCardFooter setMeteo={setMeteo} setCoverOn={setCoverOn}
-      setGeneric={setGeneric}  />
+      <MeteoCardFooter handleShowLocation={handleShowLocation}  />
     </div>
   )
 }

@@ -1,0 +1,83 @@
+.generalPanel{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 1; 
+  ;
+}
+
+.generalItems{
+  display: flex;
+  flex-direction: column;
+  gap: 8px; 
+}
+
+.generalItem{
+  display: flex;
+  align-items: center;
+  background-color: #2C3A28;
+  gap: 10px;
+  padding: 6px 8px;
+  border-radius: 15px; 
+}
+
+.itemImgContainer{
+  display: flex;
+  justify-content: center;
+  width: 30px;
+  height: 30px; 
+}
+
+.generalItem img{
+  height: 100%; 
+}
+
+.textContainer{
+  display: flex;
+  flex-direction: column;
+}
+
+.itemTitle, .itemText{
+  font-family: Roboto;
+}
+
+.itemTitle{
+ color: #8BAF7C;
+ font-size: 12px;
+}
+
+.itemText{
+  color: white;
+  margin-left: 5px;
+  margin-top: 4px;
+}
+
+.generalNote{
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  padding:10px;
+  border-radius: 15px;
+  box-shadow:-2.5px 0 0 0 #1A3A10 ; 
+  background-color: #EAF3DE; 
+}
+
+.noteTitle{
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.noteTitle img{
+  height: 18px;
+  width: auto;
+}
+
+.noteText, .noteTitle p{
+  color: #37582A;
+  font-family: Roboto;
+}
+
+.noteTitle p{
+  font-size: 12px;
+}
