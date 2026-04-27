@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 from django.http import JsonResponse
+=======
+from venv import create
+
+>>>>>>> 6f7eb695a30bb2034d83514c02d090de670d6f60
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -8,7 +13,7 @@ from .ExternalApiService import get_weather_data, is_inside_algeria
 from .models import RecommendationSession
 from .serializers import RecommendationSerializer, CropRecommendationSerializer
 from rest_framework.decorators import api_view, permission_classes
-from .service import creatRecommendation, generate_CropRecommendations
+from .service import createRecommendation, generate_CropRecommendations
 
 
 @api_view(['GET'])
@@ -24,8 +29,13 @@ def recommendation_api_view(request):
     lat = request.data.get('lat')
     lon = request.data.get('lon')
     if lat==None or lon==None :
+<<<<<<< HEAD
         return error_response("MISSING_COORDINATES")
     recommendations = creatRecommendation(request)
+=======
+        return Response({'error':'Latitude or longitude is required'},status=status.HTTP_400_BAD_REQUEST)
+    recommendations = createRecommendation(request)
+>>>>>>> 6f7eb695a30bb2034d83514c02d090de670d6f60
     data = RecommendationSerializer(recommendations, many=False).data
     return Response({'recommendations': data},status=status.HTTP_200_OK)
 

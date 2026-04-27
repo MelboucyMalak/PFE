@@ -18,35 +18,39 @@ def is_ok(long,lat):
             raise NotSuitableLand
     return env
 
-def creatRecommendation(request):
-    # maybe the object already exist why create again
+
+def createRecommendation(request):
     lat = float(request.data.get('lat'))
     lon = float(request.data.get('lon'))
     user = request.user
-    maybe_exist=RecommendationSession.objects.filter(lat=lat,lon=lon,user=user).first()
+
+    maybe_exist = RecommendationSession.objects.filter(lat=lat, lon=lon, user=user).first()
     if maybe_exist:
         return maybe_exist
-    # fetch the data
-    env  = is_ok(lon,lat)
-    isda = fetch_isda_data(lon,lat)
-    nasa = fetch_nasa_power_data(lon,lat)
-    opnl = fetch_openlandmap_data(lon,lat)
 
-    recommendation=RecommendationSession.objects.create(
-        user=request.user,
-        lat = float(lat),
-        lon = float(lon),
-        n_total_raw_ppm = isda['n'],
-        p_extractable_raw_ppm = isda["p"],
-        k_extractable_raw_ppm = isda["k"] ,
-        soil_texture_initial = opnl["soil_texture"],
-        soil_ph_initial = opnl["ph"] ,
-        slope_angle =env["slope"],
-        land_cover = env["land_cover"],
-        rainfall_avg = env["rainfall"],
-        temperature_avg =nasa["temperature_avg"],
-        humidity_avg = nasa ["humidity_avg"],
-        koppen = env["koppen"]
+    env = is_ok(lon, lat)
+    isda = fetch_isda_data(lon, lat)
+    nasa = fetch_nasa_power_data(lon, lat)
+    opnl = fetch_openlandmap_data(lon, lat)
+
+
+    recommendation = RecommendationSession.objects.create(
+        user=user,
+        lat=float(lat),
+        lon=float(lon),
+        n_total_raw_ppm=isda['n'],
+        p_extractable_raw_ppm=isda["p"],
+        k_extractable_raw_ppm=isda["k"],
+        # Add the new bulk density data here
+        bulk_density=isda.get("bulk_density", 1.3),
+        soil_texture_initial=opnl["soil_texture"],
+        soil_ph_initial=opnl["ph"],
+        slope_angle=env["slope"],
+        land_cover=env["land_cover"],
+        rainfall_avg=env["rainfall"],
+        temperature_avg=nasa["temperature_avg"],
+        humidity_avg=nasa["humidity_avg"],
+        koppen=env["koppen"]
     )
     return recommendation
 
