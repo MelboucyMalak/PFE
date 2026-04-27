@@ -49,7 +49,12 @@ class FieldAnalyzerService:
 
     @staticmethod
     def analyze_field(crop_rec_id, coords, area):
-        # STEP 1: getCropRecommendation → getCrop
+        from recommendation.service import calculate_compatibility_score
+        from recommendation.ExternalApiService import fetch_openlandmap_data
+        from recommendation.models import CropRecommendation
+        from crop.models import CropSoilTexture
+        from .models import FieldAnalysis, DetectedTexture
+
         try:
             crop_rec = CropRecommendation.objects.get(id=crop_rec_id)
             target_crop = crop_rec.crop
@@ -57,25 +62,22 @@ class FieldAnalyzerService:
         except CropRecommendation.DoesNotExist:
             return None, "Valid crop recommendation not found"
 
-        # STEP 2: calculateSamplingPoints(polygon)
         diagonal = FieldAnalyzerService.calculate_diagonal(coords)
         sampling_points = FieldAnalyzerService.generate_sampling_points(coords, diagonal)
 
-        # STEP 3: save(fieldAnalysis)
+        # Now links to crop_recommendation instead of session
         analysis = FieldAnalysis.objects.create(
-            recommendation_session=session,
+            crop_recommendation=crop_rec,
             polygon_coords=coords,
             surface_area_m2=area
         )
 
-        # STEP 4: loop [each point] → getSoilTexture(point, depth)
         texture_results = []
         for point in sampling_points:
             data = fetch_openlandmap_data(point[1], point[0])
             if data and data.get('soil_texture'):
                 texture_results.append(data['soil_texture'])
 
-        # STEP 5: processTextures + save(DetectedTextures)
         detected_textures_response = []
         dominant = None
         dominant_coverage = 0
@@ -111,16 +113,13 @@ class FieldAnalyzerService:
                     "texture_score": soil_score,
                 })
 
-            # Dominant texture
             dominant = max(unique_textures, key=lambda t: texture_results.count(t))
             dominant_coverage = round((texture_results.count(dominant) / total_points) * 100, 2)
             homogeneity_index = round(texture_results.count(dominant) / total_points, 2)
 
-            # STEP 6: calculateCropScore — called ONCE using dominant texture
             try:
                 overall_score = round(
-                    calculate_compatibility_score(target_crop, session, dominant),
-                    2
+                    calculate_compatibility_score(target_crop, session, dominant), 2
                 )
             except Exception:
                 overall_score = None
@@ -128,13 +127,12 @@ class FieldAnalyzerService:
         return {
             "field_analysis_id": analysis.id,
             "crop": target_crop.crop_name,
-
+            "overall_score": overall_score,
             "sampling_points": sampling_points,
             "detected_textures": detected_textures_response,
             "dominant_texture": dominant,
             "dominant_coverage_percent": dominant_coverage,
-            "homogeneity_index": homogeneity_index,
-            "overall_score": overall_score,
+            "homogeneity_index": homogeneity_index
         }, None
 
 

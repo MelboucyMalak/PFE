@@ -4,7 +4,6 @@ from .views import FieldAnalysisViewSet
 
 router = DefaultRouter()
 router.register(r'analysis', FieldAnalysisViewSet)
-
 urlpatterns = [
     path('', include(router.urls)),
 ]

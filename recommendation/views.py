@@ -1,10 +1,12 @@
+from venv import create
+
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from .models import RecommendationSession
 from .serializers import RecommendationSerializer, CropRecommendationSerializer
 from rest_framework.decorators import api_view, permission_classes
-from .service import creatRecommendation, generate_CropRecommendations
+from .service import createRecommendation, generate_CropRecommendations
 
 
 @api_view(['GET'])
@@ -21,7 +23,7 @@ def recommendation_api_view(request):
     lon = request.data.get('lon')
     if lat==None or lon==None :
         return Response({'error':'Latitude or longitude is required'},status=status.HTTP_400_BAD_REQUEST)
-    recommendations = creatRecommendation(request)
+    recommendations = createRecommendation(request)
     data = RecommendationSerializer(recommendations, many=False).data
     return Response({'recommendations': data},status=status.HTTP_200_OK)
 

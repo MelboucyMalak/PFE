@@ -24,19 +24,27 @@ def is_inside_algeria(long,lat):
          return False
     return True
 
-def fetch_isda_data(long,lat):
+
+import ee
+
+
+def fetch_isda_data(long, lat):
     algeria, x = get_algeria()
-    point=ee.Geometry.Point(long, lat)
+    point = ee.Geometry.Point(long, lat)
+
     n_total = ee.Image("ISDASOIL/Africa/v1/nitrogen_total").select('mean_0_20')
     p_ext = ee.Image("ISDASOIL/Africa/v1/phosphorus_extractable").select('mean_0_20')
     k_ext = ee.Image("ISDASOIL/Africa/v1/potassium_extractable").select('mean_0_20')
+    bulk = ee.Image("ISDASOIL/Africa/v1/bulk_density").select('mean_0_20')
     N_final = n_total.clip(algeria).rename('Nitrogen_mg_kg')
     P_final = p_ext.clip(algeria).rename('Phosphorus_mg_kg')
     K_final = k_ext.clip(algeria).rename('Potassium_mg_kg')
-    combined = ee.Image.cat([N_final, P_final, K_final])
+    B_final = bulk.clip(algeria).rename('Bulk_density')
+    combined = ee.Image.cat([N_final, P_final, K_final, B_final])
     sample = combined.sample(point, 30).first()
+
     if sample is None:
-        return {'n': -1 ,'p': -1,'k': -1}
+        return {'n': -1, 'p': -1, 'k': -1, 'bulk_density': 1.3}
 
     def _get(name):
         try:
@@ -44,18 +52,24 @@ def fetch_isda_data(long,lat):
             return val if val is not None else -1
         except:
             return -1
-    n_val =_get('Nitrogen_mg_kg')
+
+    n_val = _get('Nitrogen_mg_kg')
     p_val = _get('Phosphorus_mg_kg')
     k_val = _get('Potassium_mg_kg')
+    b_val = _get('Bulk_density')
 
-    if n_val is None or n_val== -1:
-        n_val= -1
-    if p_val is None or p_val== -1:
-        p_val= -1
-    if k_val is None or k_val== -1:
-        k_val= -1
+    # If it's missing (-1), we use 1.3 as a standard agricultural fallback
+    if b_val is None or b_val == -1:
+        bulk_density = 1.3
+    else:
+        bulk_density = round(b_val / 100, 2)
 
-    return  {'n': n_val,'p': p_val,'k': k_val}
+    return {
+        'n': n_val if n_val is not None else -1,
+        'p': p_val if p_val is not None else -1,
+        'k': k_val if k_val is not None else -1,
+        'bulk_density': bulk_density
+    }
 
 def fetch_openlandmap_data(long,lat):
     algeria, x = get_algeria()
