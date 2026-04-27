@@ -3,9 +3,8 @@ from crop.models import CropClimate, CropSoilTexture, Crop
 from .errors import NotInsideALgeria, NotSuitableLand, InvalidData
 from .models import RecommendationSession,CropRecommendation
 from .ExternalApiService import is_inside_algeria, fetch_openlandmap_data, fetch_isda_data, fetch_environment_data, \
-    fetch_nasa_power_data, initEE
+    fetch_nasa_power_data
 
-initEE()
 def is_ok(long,lat):
     if not is_inside_algeria(long,lat):
         raise NotInsideALgeria

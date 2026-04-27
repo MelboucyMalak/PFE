@@ -5,9 +5,7 @@ from django_rest_passwordreset.models import ResetPasswordToken
 from rest_framework import status
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
-
-from recommendation.models import RecommendationSession
-
+from _myProject.Errors.responses import error_response
 from .serializers import UserSerializer, ChangePasswordSerializer
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import authenticate, update_session_auth_hash
@@ -23,22 +21,26 @@ def user_list(request):
 @api_view(['GET'])
 @permission_classes([IsAdminUser])
 def user_details(request,id):
-    user = User.objects.get(id=id)
+    try:
+        user = User.objects.get(id=id)
+    except User.DoesNotExist:
+        return error_response("USER_NOT_FOUND_BY_ID")
+
     data = UserSerializer(user).data
     return Response({'user':data})
 
 
 @api_view(['POST'])
 def login(request):
-    EorU = request.data.get('username') or request.data.get('email') # email OR username
+    E= request.data.get('email') # email OR username
     password = request.data.get('password')
 
     # we try to find the user by email
-    user_obj = User.objects.filter(email=EorU).first()
+    user_obj = User.objects.filter(email=E).first()
     if user_obj: # if not null
         username = user_obj.username
-    else:# then it is username
-        username = EorU
+    else:
+        return error_response("USER_NOT_FOUND_BY_EMAIL")
 
     user = authenticate(username=username, password=password) # we try to log in the user
 
@@ -46,7 +48,7 @@ def login(request):
         token, created = Token.objects.get_or_create(user=user)
         return Response({'message':'Login Success','token': token.key, 'admin':user.is_staff },status=status.HTTP_200_OK)
     else:
-        return Response({'message':'Login Failed'}, status=status.HTTP_401_UNAUTHORIZED)
+        return error_response("LOGIN_FAILED",http_status=status.HTTP_401_UNAUTHORIZED)
 
 
 @api_view(['POST'])
@@ -58,7 +60,7 @@ def logout(request):
             token.delete()
             return Response({'message': 'Successfully logged out.'}, status=status.HTTP_200_OK)
         except Token.DoesNotExist:
-            return Response({'error': 'Token not found.'}, status=400)
+            return error_response("TOKEN_NOT_FOUND")
 
 
 @api_view(['POST'])
@@ -76,30 +78,30 @@ def change_password(request):
         serializer = ChangePasswordSerializer(data=request.data)
         if serializer.is_valid():
             user = request.user
-            if user.check_password(serializer.data.get('old_password')):
-                user.set_password(serializer.data.get('new_password'))
-                user.save()
-                update_session_auth_hash(request, user)  # To update session after password change
-                return Response({'message': 'Password changed successfully.'}, status=status.HTTP_200_OK)
-            return Response({'error': 'Incorrect old password.'}, status=status.HTTP_400_BAD_REQUEST)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            if not user.check_password(serializer.data.get('old_password')):
+                return error_response("INCORRECT_OLD_PASSWORD")
+            user.set_password(serializer.data.get('new_password'))
+            user.save()
+            update_session_auth_hash(request, user)  # To update session after password change
+            return Response({'message': 'Password changed successfully.'}, status=status.HTTP_200_OK)
+        return error_response("VALIDATION_ERROR")
 
 @api_view(['POST'])
 def testcode(request):
     token = request.data.get('code')
+    if not token:
+            return error_response("RESET_CODE_MISSING")
+    try:
+            token_obj = ResetPasswordToken.objects.get(key=token)
+    except ResetPasswordToken.DoesNotExist:
+            return error_response("RESET_CODE_NOT_FOUND")
 
-    if token : # see if user really insert a token means token <> null
-        try:
-             token_obj = ResetPasswordToken.objects.get(key=token)
-             time = token_obj.created_at + timezone.timedelta(minutes=10) # the exact expiry time
-             if timezone.now() < time: # mazal ma l7a9na l time
-                 return Response({'message':'Code is valid'}, status=status.HTTP_200_OK)
-             else:
-                 return Response({'message':'Code is expired'}, status=status.HTTP_400_BAD_REQUEST)
-        except ResetPasswordToken.DoesNotExist:
-            return Response({'message':'Code not found.'}, status=404)
-    else:
-        return Response({'message':'Code must insert'}, status=status.HTTP_400_BAD_REQUEST)
+    expiry_time = token_obj.created_at + timezone.timedelta(minutes=10)
+
+    if timezone.now() > expiry_time:
+            return error_response("RESET_CODE_EXPIRED")
+
+    return Response({'message': 'Code is valid'}, status=status.HTTP_200_OK)
 
 
 

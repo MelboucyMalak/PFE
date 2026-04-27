@@ -10,6 +10,8 @@ def initEE():
     except Exception as e:
         print(f"Earth Engine not available: {e}")
 
+initEE()
+
 def get_algeria():
     countries = ee.FeatureCollection("USDOS/LSIB_SIMPLE/2017")
     algeria = countries.filter(ee.Filter.eq('country_na', 'Algeria'))
@@ -228,4 +230,45 @@ def fetch_environment_data(long, lat):
         "koppen": koppen
     }
 
-#def meteo():
+def get_weather_data(latitude, longitude):
+    url = "https://api.open-meteo.com/v1/forecast"
+
+    params = {
+        "latitude": latitude,
+        "longitude": longitude,
+        "current": "weather_code,temperature_2m,wind_speed_10m,relative_humidity_2m",
+        "hourly": "soil_moisture_0_to_7cm",
+        "wind_speed_unit": "ms",
+        "timezone": "auto"
+    }
+
+    response = requests.get(url, params=params)
+    data = response.json()
+
+    def weather_code_to_string(code):
+        if code == 0:
+            return "Sunny"
+        elif code in [1, 2]:
+            return "Partly Cloudy"
+        elif code == 3:
+            return "Cloudy"
+        elif 45 <= code <= 48:
+            return "Fog"
+        elif 51 <= code <= 67:
+            return "Rain"
+        elif 71 <= code <= 77:
+            return "Snow"
+        elif 80 <= code <= 82:
+            return "Rain Showers"
+        elif 95 <= code <= 99:
+            return "Thunderstorm"
+        else:
+            return "Unknown"
+
+    return {
+        "temperature_C": data["current"]["temperature_2m"],
+        "wind_speed_m_s": data["current"]["wind_speed_10m"],
+        "relative_humidity_%": data["current"]["relative_humidity_2m"],
+        "soil_moisture": data["hourly"].get("soil_moisture_0_to_7cm", [None])[-1],
+        "weather": weather_code_to_string(data["current"]["weather_code"])
+    }

@@ -1,6 +1,5 @@
-from rest_framework.authentication import TokenAuthentication
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
+from _myProject.Errors.responses import error_response
 from .models import Crop
 from .serializers import CropSerializer
 from rest_framework.decorators import api_view
@@ -16,7 +15,10 @@ def crop_list(request):
 
 @api_view(['GET'])
 def crop_detail(request,pk):
-    crop = Crop.objects.get(pk=pk)
+    try:
+        crop = Crop.objects.get(pk=pk)
+    except Crop.DoesNotExist:
+        return error_response("CROP_NOT_FOUND")
     data = CropSerializer(crop).data
     return Response({'crop':data})
 
@@ -34,7 +36,7 @@ class CropViewSet(viewsets.ModelViewSet):
             status=status.HTTP_200_OK
         )
 
-    def update(self, request, partial=False, *args, **kwargs):
+    def update(self, request,partial=False, *args, **kwargs):
         instance = self.get_object()
         serializer = self.get_serializer(instance, data=request.data, partial=partial)
         serializer.is_valid(raise_exception=True)
@@ -43,6 +45,4 @@ class CropViewSet(viewsets.ModelViewSet):
             {"detail": f"Crop '{serializer.instance.crop_name}' updated successfully."},
             status=status.HTTP_200_OK
         )
-
-
 

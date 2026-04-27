@@ -2,18 +2,18 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import Q,F
 
-SOWING_MONTH_CHOICES = [
-    (1, "January"), (2, "February"), (3, "March"),
-    (4, "April"), (5, "May"), (6, "June"),
-    (7, "July"), (8, "August"), (9, "September"),
-    (10, "October"), (11, "November"), (12, "December"),
-]
 
 SUITABILITY_CHOICES = [
     (1, "Avoid"), (2, "Difficult"), (3, "Acceptable"),
     (4, "Good"), (5, "Ideal")
 ]
 
+SOWING_MONTH_CHOICES = [
+    (1, "January"), (2, "February"), (3, "March"),
+    (4, "April"), (5, "May"), (6, "June"),
+    (7, "July"), (8, "August"), (9, "September"),
+    (10, "October"), (11, "November"), (12, "December"),
+]
 
 # 𝗖𝗟𝗔𝗦𝗦 𝗖𝗥𝗢𝗣
 class Crop(models.Model):
@@ -37,6 +37,7 @@ class Crop(models.Model):
     sowing_month_start=models.IntegerField(choices=SOWING_MONTH_CHOICES)
     sowing_month_end = models.IntegerField(choices=SOWING_MONTH_CHOICES)
     note = models.CharField(default='', max_length=100)
+    image = models.ImageField(upload_to='crops/', null=True, blank=True)
 
     def __str__(self):
         return self.crop_name
@@ -86,9 +87,6 @@ class Crop(models.Model):
         ] # gte: greater or =  //  lte: less or =
 
 
-
-
-
 # 𝗖𝗟𝗔𝗦𝗦 𝗖𝗟𝗜𝗠𝗔𝗧𝗘
 class Climate(models.Model):
     climate_zone = models.CharField(max_length=50, unique=True)
@@ -103,12 +101,9 @@ class Climate(models.Model):
         ),
 
 
-
-
-
 # 𝗖𝗟𝗔𝗦𝗦 𝗖𝗥𝗢𝗣 𝗖𝗟𝗜𝗠𝗔𝗧𝗘
 class CropClimate(models.Model):
-    crop= models.ForeignKey(Crop,on_delete=models.CASCADE)
+    crop= models.ForeignKey(Crop,on_delete=models.CASCADE,related_name='crop_climates')
     climate= models.ForeignKey(Climate,on_delete=models.CASCADE)
     rating= models.IntegerField(choices=SUITABILITY_CHOICES)# I will see later if I need to change
     note= models.CharField(default='', max_length=100)
@@ -128,7 +123,7 @@ class CropClimate(models.Model):
 
 # 𝗖𝗟𝗔𝗦𝗦 𝗖𝗥𝗢𝗣 𝗦𝗢𝗜𝗟 𝗧𝗘𝗫𝗧𝗨𝗥𝗘
 class CropSoilTexture(models.Model):
-    crop = models.ForeignKey(Crop, on_delete=models.CASCADE)
+    crop = models.ForeignKey(Crop, on_delete=models.CASCADE,related_name='crop_soil_textures')
     texture_name = models.CharField(max_length=50)
     suitability_rank = models.IntegerField(choices=SUITABILITY_CHOICES)
     note = models.CharField(default='', max_length=100)
