@@ -1,10 +1,6 @@
 # core/error_codes.py
 
 ERROR_CODES = {
-
-    # ==================================================
-    # 1000 - Recommendation / Land / Geo Errors
-    # ==================================================
     "NOT_SUITABLE_LAND": {
         "code": 1001,
         "message": "Land is not suitable for planting."
@@ -44,11 +40,6 @@ ERROR_CODES = {
         "code": 1008,
         "message": "session_id is invalid."
     },
-
-
-    # ==================================================
-    # 2000 - Authentication / Authorization
-    # ==================================================
     "LOGIN_FAILED": {
         "code": 2001,
         "message": "Invalid username/email or password."
@@ -68,8 +59,6 @@ ERROR_CODES = {
         "code": 2004,
         "message": "You do not have permission to perform this action."
     },
-# ===== User / Auth gaps =====
-
     "LOGIN_INVALID_CREDENTIALS": {
         "code": 2001,
         "message": "Invalid username/email or password."
@@ -94,11 +83,6 @@ ERROR_CODES = {
         "code": 7005,
         "message": "Reset code must be provided."
     },
-
-
-    # ==================================================
-    # 3000 - User / Account
-    # ==================================================
     "USER_NOT_FOUND": {
         "code": 3001,
         "message": "User not found."
@@ -118,11 +102,6 @@ ERROR_CODES = {
         "code": 3004,
         "message": "Incorrect old password."
     },
-
-
-    # ==================================================
-    # 4000 - Validation / Input Errors
-    # ==================================================
     "VALIDATION_ERROR": {
         "code": 4001,
         "message": "Submitted data is invalid."
@@ -137,11 +116,6 @@ ERROR_CODES = {
         "code": 4003,
         "message": "Invalid numeric value."
     },
-
-
-    # ==================================================
-    # 5000 - Crop / Climate Resources
-    # ==================================================
     "CROP_NOT_FOUND": {
         "code": 5001,
         "message": "Crop not found."
@@ -151,11 +125,6 @@ ERROR_CODES = {
         "code": 5002,
         "message": "Climate not found."
     },
-
-
-    # ==================================================
-    # 6000 - External APIs / Services
-    # ==================================================
     "WEATHER_API_FAILED": {
         "code": 6001,
         "message": "Weather service unavailable."
@@ -170,11 +139,6 @@ ERROR_CODES = {
         "code": 6003,
         "message": "Earth Engine service unavailable."
     },
-
-
-    # ==================================================
-    # 7000 - Password Reset
-    # ==================================================
     "RESET_CODE_REQUIRED": {
         "code": 7001,
         "message": "Reset code is required."
@@ -189,11 +153,6 @@ ERROR_CODES = {
         "code": 7003,
         "message": "Reset code has expired."
     },
-
-
-    # ==================================================
-    # 9000 - Unknown / System
-    # ==================================================
     "UNKNOWN_ERROR": {
         "code": 9001,
         "message": "An unexpected error occurred."
