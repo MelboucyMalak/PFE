@@ -9,6 +9,25 @@ from .models import FieldAnalysis, DetectedTexture
 class FieldAnalyzerService:
 
     @staticmethod
+    def point_in_polygon(lat, lon, polygon_coords):
+        """Ray casting algorithm to check if point is inside polygon."""
+        n = len(polygon_coords)
+        inside = False
+        x, y = lon, lat
+        j = n - 1
+        for i in range(n):
+            xi, yi = polygon_coords[i][1], polygon_coords[i][0]
+            xj, yj = polygon_coords[j][1], polygon_coords[j][0]
+            if ((yi > y) != (yj > y)) and (x < (xj - xi) * (y - yi) / (yj - yi) + xi):
+                inside = not inside
+            j = i
+        return inside
+
+    @staticmethod
+    def hectares_to_m2(hectares):
+        return hectares * 10000
+
+    @staticmethod
     def calculate_diagonal(polygon_coords):
         if not polygon_coords or len(polygon_coords) < 2:
             return 0
@@ -61,11 +80,16 @@ class FieldAnalyzerService:
             session = crop_rec.recommendation
         except CropRecommendation.DoesNotExist:
             return None, "Valid crop recommendation not found"
+        # Validate that session coordinates are inside the polygon
+        if not FieldAnalyzerService.point_in_polygon(session.lat, session.lon, coords):
+            return None, "The field polygon must contain the location of the recommendation session"
 
         diagonal = FieldAnalyzerService.calculate_diagonal(coords)
         sampling_points = FieldAnalyzerService.generate_sampling_points(coords, diagonal)
 
-        # Now links to crop_recommendation instead of session
+        # Convert hectares to m² before saving
+        area_m2 = FieldAnalyzerService.hectares_to_m2(area)
+
         analysis = FieldAnalysis.objects.create(
             crop_recommendation=crop_rec,
             polygon_coords=coords,
@@ -134,5 +158,6 @@ class FieldAnalyzerService:
             "dominant_coverage_percent": dominant_coverage,
             "homogeneity_index": homogeneity_index
         }, None
+
 
 
