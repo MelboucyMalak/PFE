@@ -58,7 +58,7 @@ class CropSerializer(serializers.ModelSerializer):
         model  = Crop
         fields = '__all__'
     def to_internal_value(self, data):
-        new_data = data.copy() if hasattr(data, 'copy') else dict(data)
+        new_data = data.dict() if hasattr(data, 'dict') else dict(data)
         for field in ['crop_climates', 'crop_soil_textures']:
             val = new_data.get(field)
             if isinstance(val, str):

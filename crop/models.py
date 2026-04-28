@@ -1,3 +1,5 @@
+import os
+
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import Q,F
@@ -41,6 +43,23 @@ class Crop(models.Model):
 
     def __str__(self):
         return self.crop_name
+
+    def delete(self, *args, **kwargs):
+        if self.image:
+            if os.path.isfile(self.image.path):
+                os.remove(self.image.path)
+        super().delete(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        if self.pk:
+            try:
+                old_instance = Crop.objects.get(pk=self.pk)
+                if old_instance.image and old_instance.image != self.image:
+                    if os.path.isfile(old_instance.image.path):
+                        os.remove(old_instance.image.path)
+            except Crop.DoesNotExist:
+                pass
+        super().save(*args, **kwargs)
 
     class Meta:
         constraints = [
