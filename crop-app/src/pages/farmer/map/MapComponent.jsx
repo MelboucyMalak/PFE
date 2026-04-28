@@ -1,18 +1,19 @@
-import { MapContainer, TileLayer, ImageOverlay } from 'react-leaflet'
+import { MapContainer, TileLayer, ImageOverlay, ZoomControl } from 'react-leaflet'
 import { SetViewOnClick } from './utils/SetViewOnClick.jsx'
 import { SetPositionOnMove } from './utils/SetPositionOnMove.jsx'
 import { MarkerComponent } from './components/MarkerComponent.jsx'
 import { MiniMapControl } from './mini-map/MiniMapControl.jsx'
 import { ExternalState } from './components/ExternalState.jsx'
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import { MapPlaceholder } from './MapPlaceholder.jsx'
-import { Draw } from './components/Draw.jsx'
+import { Draw } from './components/Draw/Draw.jsx'
 import { MapRefGrabber } from './utils/MapRefGrabber.jsx'
 import { ControlsBar } from "./components/ControlsBar/ControlsBar.jsx"
 import { MeteoCard } from './components/Cards/meteoCard/MeteoCard.jsx'
 import { GenericInfosCard } from './components/Cards/GenericInfosCard/GenericInfosCard.jsx'
 import { CropsList } from './components/CropsRecommendation/CropsList.jsx'
 import { CropCard } from './components/Cards/CropCard/CropCard.jsx'
+import { DrawControlsBar } from './components/Draw/DrawControlsBar/DrawControlsBar.jsx'
 import MapStyles from "./MapComponent.module.css"
 
 import { disableMapInteractions, enableMapInteractions } from './utils/MapOverlay.js'
@@ -27,19 +28,30 @@ export default function MapComponent() {
   const [markerIsVisible, setMarkerVisible] = useState(true)
   const [miniMapIsVisible, setMiniMapVisible] = useState(true)
   const [viewIsOn, setViewOn] = useState(true)
+  const [mapBarIsVisible, setMapBar] = useState(true)
   const [coverOn, setCoverOn] = useState(false)
   const [meteoIsVisible, setMeteo] = useState(true)
   const [genericIsVisible, setGeneric] = useState(false)
   const [cropsListIsVisible, setCropsList] = useState(false)
   const [cropContext, setCropContext] = useState({})
   const [cropRecoIsVisible, setCropReco] = useState(false)
+  const [drawBarIsVisible, setDrawBar] = useState(false)
+  const [polygone, setPolygone] = useState(false)
+  const [drawControlsIsVisible, setDrawControls] = useState(false)
+  const drawRef = useRef()
 
-  const soilContext ={
+  const soilContext = {
     PH: 5.5, depth: 30, shape: "zigzag", texture: "Sandy loam", rank: 1
   }
 
-  const climContext ={
+  const climContext = {
     temp: 5.5, rain: 30, humidity: "zigzag", koppen: "Bsh", rank: 3
+  }
+
+  const fertContext = {
+    N: { nutrient: "Nitrogen", score: 45, available: 50, need: 123, deficit: 73 },
+    P: { nutrient: "Phosphorus", score: 45, available: 50, need: 123, deficit: 73 },
+    K: { nutrient: "Potassium", score: 45, available: 50, need: 123, deficit: 73 }
   }
 
 
@@ -56,9 +68,29 @@ export default function MapComponent() {
 
   function handleCropChoice() {
     setCropsList(false)
-    setCropReco(true) 
+    setCropReco(true)
   }
 
+  function handlePersonalizeReco() {
+    setCropReco(false)
+    setDrawBar(true)
+    setCoverOn(false) 
+  }
+
+  function handleClearShape(){
+    if (drawRef && drawRef.current) {
+      drawRef.current.clearMap();
+      setMapBar(true)
+    }
+  };
+  
+
+  function handleConfirmShape(){
+    setMapBar(true)
+    setDrawBar(false)
+    setDrawControls(false)
+    setCoverOn(true)
+  }
 
   return (
     <div className={MapStyles.mapPage}>
@@ -68,72 +100,89 @@ export default function MapComponent() {
 
         <MapContainer
           center={center} zoom={13}
-          scrollWheelZoom={true}
+          zoomControl={false}
           placeholder={<MapPlaceholder />}
           className={MapStyles.mapComponent}>
-        
+
           <TileLayer
             url='http://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}'
             minZoom={5}
-            subdomains={['mt0', 'mt1', 'mt2', 'mt3']}/>
-          
-          <MapRefGrabber 
+            subdomains={['mt0', 'mt1', 'mt2', 'mt3']} />
+
+          <MapRefGrabber
             setMap={setMap} />
 
-          <MarkerComponent 
-            position={position} 
-            draggable={draggable} 
-            markerIsVisible={markerIsVisible} 
+          <MarkerComponent
+            position={position}
+            draggable={draggable}
+            markerIsVisible={markerIsVisible}
             setPosition={setPosition} />
 
           {miniMapIsVisible &&
-            <MiniMapControl 
+            <MiniMapControl
               position={"topright"} />}
 
-          <Draw />
+          {drawBarIsVisible &&
+            <Draw
+              setPolygone={setPolygone}
+              setMapBar={setMapBar}
+              setDrawControls={setDrawControls}
+              ref={drawRef} />}
+
+
 
           {viewIsOn &&
             <SetViewOnClick setPosition={setPosition} />}
-            <SetPositionOnMove 
+          <SetPositionOnMove
             setDisplayPosition={setDisplayPosition} />
 
-          <ExternalState 
+          <ExternalState
             displayPosition={displayPosition} />
 
           <div className={MapStyles.mapButtons}>
-            <ControlsBar 
-            map={map} 
-            setPosition={setPosition} 
-            viewIsOn={viewIsOn} 
-            setViewOn={setViewOn} />
+            {mapBarIsVisible &&
+              <ControlsBar
+                map={map}
+                setPosition={setPosition}
+                viewIsOn={viewIsOn}
+                setViewOn={setViewOn} />}
+            {drawControlsIsVisible &&
+              <DrawControlsBar  
+                map={map}
+                setViewOn={setViewOn} 
+                handleClearShape={handleClearShape}
+                handleConfirmShape={handleConfirmShape} />}
           </div>
 
-          {meteoIsVisible && 
-          <MeteoCard
-            setViewOn={setViewOn} 
-            map={map} 
-            handleShowLocation={handleshowLocation} />}
+          {meteoIsVisible &&
+            <MeteoCard
+              setViewOn={setViewOn}
+              map={map}
+              handleShowLocation={handleshowLocation} />}
 
           <div className={`${coverOn ? MapStyles.coverMap : ''} 
                            ${cropsListIsVisible ? MapStyles.coverMapRecommendation : ''}`}
-            onMouseEnter={() => 
+            onMouseEnter={() =>
               disableMapInteractions(map, setViewOn)}
             onMouseLeave={() =>
-              enableMapInteractions(map, setViewOn) }>
-         
-            {genericIsVisible && 
-              <GenericInfosCard 
-              handleConfirmLocation={handleConfirmLocation} />}
+              enableMapInteractions(map, setViewOn)}>
+
+            {genericIsVisible &&
+              <GenericInfosCard
+                handleConfirmLocation={handleConfirmLocation} />}
 
             {cropsListIsVisible &&
-             <CropsList 
-              handleCropChoice={handleCropChoice} 
-              setCropContext={setCropContext}  />}
+              <CropsList
+                handleCropChoice={handleCropChoice}
+                setCropContext={setCropContext} />}
 
-            {cropRecoIsVisible && 
-            <CropCard 
-              cropContext={cropContext} soilContext={soilContext}
-              climContext={climContext} />}
+            {cropRecoIsVisible &&
+              <CropCard
+                cropContext={cropContext}
+                soilContext={soilContext}
+                climContext={climContext}
+                fertContext={fertContext}
+                handlePersonalizeReco={handlePersonalizeReco} />}
           </div>
         </MapContainer>
       </div>

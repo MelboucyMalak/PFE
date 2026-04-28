@@ -1,0 +1,38 @@
+.drawControlsBar{
+  display: flex;
+  align-items: center; 
+  padding: 6px;
+  border-radius: 10px;
+  background-color: #FFFFFF;
+  border: 0.5px solid rgba(0, 0, 0, 0.4);;
+  z-index: 2; 
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+}
+
+ .confirmBtn, .clearShapeBtn {
+   display: flex; 
+   align-items: center; 
+   gap: 8px; 
+   height: 40px;
+   z-index: 1000;  
+   border: 1px solid rgba(0, 0, 0, 0.4);
+   padding: 10px  ;
+   gap: 5px;
+   cursor: pointer;
+   border-radius: 8px; 
+ }
+
+ .clearShapeBtn img, .confirmBtn img{
+  height: 15px;
+  width: auto;
+ }
+
+ .clearShapeBtn{
+  background-color: #FAF7F2;
+  color: black;
+ }
+
+ .confirmBtn{
+  background-color:#628141 ;
+  color: #FFFFFF;
+ }

@@ -63,3 +63,54 @@ html{
   scroll-behavior: smooth;
 }
  
+
+/* 1. Le conteneur principal (La barre /* 1. On cible le CONTENEUR PARENT (le coin haut gauche) */
+.leaflet-top.leaflet-left {
+  /* Positionnement libre */
+  position: absolute !important;
+  top: 90px !important;   /* Distance du haut */
+  left: 20px !important;   /* Distance de gauche */
+   /* Espace entre le groupe de dessin et la gomme */
+  
+  /* Important pour le positionnement */
+  z-index: 700 !important;
+}
+
+/* 2. On reset les styles des barres d'outils individuelles */
+.leaflet-pm-toolbar.leaflet-control {
+  /* On enlève le positionnement absolu ICI pour éviter la superposition */
+  position: relative !important; 
+  top: auto !important;
+  left: auto !important;
+  margin: 0 !important;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  
+  /* Style visuel */
+  background-color: #232D22;
+  border-radius: 8px;
+  border: 1px solid #3a4a38;
+  padding: 5px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+/* 3. Styles des boutons (verticaux) */
+.leaflet-pm-toolbar .button-container {
+  display: block !important;
+  float: none !important; 
+  border-top: none !important;
+}
+
+/* 4. Apparence du bouton */
+.leaflet-pm-toolbar .leaflet-buttons-control-button {
+  background-color: #232D22 !important;
+  border: 1px solid #3a4a38 !important;
+  border-radius: 4px !important;
+  width: 50px !important;
+  height: 50px !important;
+}
+
+.leaflet-pm-toolbar .leaflet-buttons-control-button:hover {
+  background-color: #3a4a38 !important;
+}

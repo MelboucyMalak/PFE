@@ -3,6 +3,7 @@
   flex-direction: column;
   gap: 15px;
   z-index: 1;
+   padding: 60px 60px 20px 60px ;
 }
 
 .soilItems {
@@ -23,7 +24,8 @@
   border-radius: 10px;
   flex-direction: column;
   background-color: #FAF7F2;
-  box-shadow: -2px 0px 0px 0px #8D7B68;
+  box-shadow: -2px 0px 0px 0px #8D7B68,
+              0px 0px 4px rgba(0, 0, 0, 0.4);;
 }
 
 .textureRating .title {

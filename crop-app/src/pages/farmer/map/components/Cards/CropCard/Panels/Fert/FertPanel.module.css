@@ -1,52 +1,49 @@
-.climPanel {
+.fertPanel{
   display: flex;
   flex-direction: column;
   gap: 15px;
   z-index: 1;
-   padding: 60px 60px 20px 60px ;
+   padding: 60px 16px 20px 16px ;
 }
 
-.climItems {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-
-}
-
-.climItemsLine {
+.nutrients{
   display: flex;
   gap: 10px;
 }
 
-.koppenRating {
+.nutrientNote {
   display: flex;
-  padding: 10px;
+  padding: 8px;
   border-radius: 10px;
   flex-direction: column;
   background-color: #FAF7F2;
-
-  box-shadow: -2px 0px 0px 0px #3282B8,
+  margin: 0px 10px;
+  box-shadow: -2px 0px 0px 0px #1B262C,
               0px 0px 4px rgba(0, 0, 0, 0.4);
 }
 
-.koppenRating .title {
+.nutrientNote  
+ .title {
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
 .title img {
-  height: 14px;
+  height: 12px;
   width: auto;
+  border: 1px solid black;
+  margin-bottom: 4px;
 }
 
-.titleText{
-  color:#27374D;
+.titleText{ 
   font-family: Roboto;
   font-size: 12px;
 }
 
-.rank{
+.noteText{
   font-family: Roboto;
+  font-size: 14px;
+  line-height: 15px;
   color: #575B5D;
 }
