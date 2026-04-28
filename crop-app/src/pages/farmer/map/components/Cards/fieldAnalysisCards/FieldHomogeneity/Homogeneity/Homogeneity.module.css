@@ -1,0 +1,71 @@
+p:empty {
+  display: none;
+}
+
+.homogeneity{
+  background-color: #FFFFFF;
+  z-index: 1;
+  width: 300px;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  padding: 8px;
+}
+
+.containerTitle{ 
+  text-align: center;
+  color: #706B6B;
+}
+ 
+.homoAnalysis{
+  display: flex;
+  gap: 20px;
+}
+
+.scoreContainer{
+  height: 110px;
+  width: 110px;
+  position: relative;
+}
+
+.scoreContainer img{
+  width: 100%;
+  height: 100%;
+}
+
+.scoreContainer p{
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  inset: 0; 
+  font-family: Roboto;
+  font-size: 11px; 
+  white-space: pre-line;
+}
+
+.textAnalysis{
+  display: flex;
+  flex-direction: column;
+  width: 150px;
+}
+
+.textAnalysis p{
+  font-family: Roboto;
+}
+
+.homoStatus{
+  font-size: 14px;
+  margin-bottom: 8px;
+}
+
+.coverageText{
+  font-size: 16px;
+  line-height: 20px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(0, 0, 0, 0.4);
+}

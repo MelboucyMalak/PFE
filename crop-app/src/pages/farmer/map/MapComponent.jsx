@@ -14,6 +14,8 @@ import { GenericInfosCard } from './components/Cards/GenericInfosCard/GenericInf
 import { CropsList } from './components/CropsRecommendation/CropsList.jsx'
 import { CropCard } from './components/Cards/CropCard/CropCard.jsx'
 import { DrawControlsBar } from './components/Draw/DrawControlsBar/DrawControlsBar.jsx'
+import { FieldHomogeneity } from './components/Cards/fieldAnalysisCards/FieldHomogeneity/FieldHomogeneity.jsx'
+import { Personalization } from './components/Cards/fieldAnalysisCards/Personalization/Personalization.jsx'
 import MapStyles from "./MapComponent.module.css"
 
 import { disableMapInteractions, enableMapInteractions } from './utils/MapOverlay.js'
@@ -39,7 +41,9 @@ export default function MapComponent() {
   const [polygone, setPolygone] = useState(false)
   const [drawControlsIsVisible, setDrawControls] = useState(false)
   const drawRef = useRef()
-
+  const [fieldHomoIsVisible, setFieldHomo] = useState(false)
+  const [zonesNumber, setZonesNumber] = useState(0)
+  const [personalizationIsVisible, setPersonalization] = useState(false)
   const soilContext = {
     PH: 5.5, depth: 30, shape: "zigzag", texture: "Sandy loam", rank: 1
   }
@@ -52,6 +56,28 @@ export default function MapComponent() {
     N: { nutrient: "Nitrogen", score: 45, available: 50, need: 123, deficit: 73 },
     P: { nutrient: "Phosphorus", score: 45, available: 50, need: 123, deficit: 73 },
     K: { nutrient: "Potassium", score: 45, available: 50, need: 123, deficit: 73 }
+  }
+
+  const texturesContext ={
+    name : "Potato",
+    textures:{
+      "sandy loam":{coverage :50, score: 30},
+    "silt": {coverage :30, score: 78},
+    "clay loam": {coverage: 20, score: 90} 
+    },
+
+    winner : {
+      name : "sandy loam", coverage :52, score: 30}, 
+
+    nbr:3 
+  }
+
+  const samplingContext ={
+    nbr : texturesContext.nbr,
+    depth: 30,
+    pattern : "zigzag",
+    name: "potato",
+    
   }
 
 
@@ -82,15 +108,21 @@ export default function MapComponent() {
       drawRef.current.clearMap();
       setMapBar(true)
     }
-  };
+  }
   
-
+  
   function handleConfirmShape(){
     setMapBar(true)
     setDrawBar(false)
     setDrawControls(false)
     setCoverOn(true)
+    setFieldHomo(true)
   }
+
+  function handlePersonalizeFert(){
+    setFieldHomo(false) 
+  }
+   
 
   return (
     <div className={MapStyles.mapPage}>
@@ -183,6 +215,14 @@ export default function MapComponent() {
                 climContext={climContext}
                 fertContext={fertContext}
                 handlePersonalizeReco={handlePersonalizeReco} />}
+
+            {fieldHomoIsVisible &&
+              <FieldHomogeneity 
+                texturesContext={texturesContext} 
+                handlePersonalizeFert={handlePersonalizeFert}/> }
+
+            {personalizationIsVisible && 
+              <Personalization samplingContext={samplingContext} /> }
           </div>
         </MapContainer>
       </div>

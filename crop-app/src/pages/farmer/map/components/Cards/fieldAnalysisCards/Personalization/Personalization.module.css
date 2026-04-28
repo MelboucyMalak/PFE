@@ -1,0 +1,112 @@
+.personalization {
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  width: 400px;
+  flex-shrink: 0;
+  border-radius: 15px;
+}
+
+.cardBody {
+  position: relative;
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 40px;
+  z-index: 1;
+}
+
+.cardBck {
+  position: absolute;
+  background: url(@/assets/images/cardsBck.png);
+  background-repeat: repeat;
+  background-size: 50px 50px;
+  inset: 0;
+  opacity: 5%;
+  z-index: 0;
+}
+
+/* Conteneur du formulaire en Grille 2x2 */
+.nutrientsForm {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 colonnes égales */
+  gap: 15px; /* Espace entre les cartes */
+  width: 100%;
+  padding: 10px;
+}
+
+/* Style de base pour chaque carte */
+.nutrientCard {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Style du Label */
+.nutrientCard label {
+  font-weight: bold;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+/* Groupe Input + Unité */
+.inputGroup {
+  display: flex;
+  align-items: center;
+  background-color: white;
+  border-radius: 4px;
+  padding: 0 5px;
+}
+
+/* Style de l'Input */
+.inputGroup input {
+  border: none;
+  outline: none;
+  padding: 8px;
+  font-size: 16px;
+  width: 100%;
+  background: transparent;
+}
+
+.inputGroup input::placeholder {
+  color: #aaa;
+}
+
+/* Unité (ppm) */
+.unit {
+  font-size: 12px;
+  color: #666;
+  margin-left: 5px;
+}
+
+/* === COULEURS SPÉCIFIQUES === */
+
+/* 1. Phosphorus (Vert Pastel) */
+.cardGreen {
+  background-color: #E8F5E9; /* Vert très clair */
+  border-left: 4px solid #66BB6A; /* Barre verte gauche */
+}
+
+/* 2. Nitrogen (Bleu Pastel) */
+.cardBlue {
+  background-color: #E3F2FD; /* Bleu très clair */
+  border-left: 4px solid #42A5F5; /* Barre bleue gauche */
+}
+
+/* 3. Potassium (Orange Pastel) */
+.cardOrange {
+  background-color: #FFF3E0; /* Orange très clair */
+  border-left: 4px solid #FFA726; /* Barre orange gauche */
+}
+
+/* 4. Soil pH (Rouge/Rose Pastel) */
+.cardRed {
+  background-color: #FFEBEE; /* Rouge très clair */
+  border-left: 4px solid #EF5350; /* Barre rouge gauche */
+}

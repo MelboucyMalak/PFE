@@ -1,0 +1,93 @@
+.detectedTextures {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.title {
+  color: #706B6B;
+}
+
+.container {
+  z-index: 2;
+  display: flex; 
+  width: 350px; 
+  flex-direction: column;  
+}
+
+.header {
+  background-color: #638242;
+  display: flex;
+  height: 35px;
+  padding: 0px 5px;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 10px 10px 0 0; 
+  border: 1px solid rgba(0, 0, 0, 0.4);;
+  border-bottom: none;
+}
+
+.footer{
+  height: 30px;
+  background-color: #638242;
+  border-radius: 0 0 10px 10px;
+   border: 1px solid rgba(0, 0, 0, 0.4);;
+  border-top: none;
+}
+
+.headerTitle{
+  color: white;
+  font-family: Roboto;
+  font-size: 14px;
+}
+
+.nbrFound{
+  background-color: #fff;
+  padding: 4px 6px;
+  border-radius: 13px;
+  font-size: 11px;
+}
+
+.textureItems{
+  display: flex;
+  flex-direction: column;
+  background-color: #FDFCF9;
+  gap: 5px;
+  height: 140px;
+  overflow-y: auto;
+   border: 1px solid rgba(0, 0, 0, 0.4);;
+  border-top: none;
+  border-bottom: none;
+}
+
+.item{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background-color: #F5F4ED; 
+  padding: 0px 8px;
+  height: 40px;
+}
+
+.name, .score, .coverage, .nbrFound{
+  font-family: Roboto;
+}
+
+.name{
+  font-size:15px;
+}
+
+.score{
+  font-size: 12px;
+}
+
+.coverage{
+  position: absolute;
+  top: 0;
+  right: 8px;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  font-size: 12px;
+}
+
