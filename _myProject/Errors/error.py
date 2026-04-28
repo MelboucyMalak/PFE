@@ -102,6 +102,14 @@ ERROR_CODES = {
         "code": 3004,
         "message": "Incorrect old password."
     },
+    "USER_ID_REQUIRED": {
+        "code": 3006,
+        "message": "user_id is required."
+    },
+    "USER_ID_INTEGER": {
+        "code": 3007,
+        "message": "user_id must be an integer."
+    },
     "VALIDATION_ERROR": {
         "code": 4001,
         "message": "Submitted data is invalid."

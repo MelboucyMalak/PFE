@@ -47,7 +47,7 @@ def croplist_api_view(request):
     return Response({'Crop List': data},status=status.HTTP_200_OK)
 
 
-@api_view(['POST'])
+@api_view(['PATCH'])
 @permission_classes([IsAuthenticated])
 def favorite_api_view(request):
     session_id = request.data.get('session_id')
@@ -59,7 +59,7 @@ def favorite_api_view(request):
         return error_response("SESSION_ID_INTEGER")
     recommendation = RecommendationSession.objects.filter(pk=session_id).exists()
     if not recommendation:
-        return error_response("SESSION_ID_INVALID")
+        return error_response("USER_NOT_FOUND_BY_ID")
     recommendation =  RecommendationSession.objects.get(pk=session_id)
     if recommendation.favorite == False:
         recommendation.favorite = True
