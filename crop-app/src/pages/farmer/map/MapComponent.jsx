@@ -6,6 +6,8 @@ import { MiniMapControl } from './mini-map/MiniMapControl.jsx'
 import { ExternalState } from './components/ExternalState.jsx'
 import { useMemo, useRef, useState } from 'react'
 import { MapPlaceholder } from './MapPlaceholder.jsx'
+import { Starter } from './components/Starter/Starter.jsx'
+import { Guide } from './components/Guide/Guide.jsx'
 import { Draw } from './components/Draw/Draw.jsx'
 import { MapRefGrabber } from './utils/MapRefGrabber.jsx'
 import { ControlsBar } from "./components/ControlsBar/ControlsBar.jsx"
@@ -16,8 +18,11 @@ import { CropCard } from './components/Cards/CropCard/CropCard.jsx'
 import { DrawControlsBar } from './components/Draw/DrawControlsBar/DrawControlsBar.jsx'
 import { FieldHomogeneity } from './components/Cards/fieldAnalysisCards/FieldHomogeneity/FieldHomogeneity.jsx'
 import { Personalization } from './components/Cards/fieldAnalysisCards/Personalization/Personalization.jsx'
+import { FinalResult } from './components/Cards/fieldAnalysisCards/FinalResult/FinalResult.jsx'
+
 import MapStyles from "./MapComponent.module.css"
 
+import cardCross from "@/assets/images/cardCross.png"
 import { disableMapInteractions, enableMapInteractions } from './utils/MapOverlay.js'
 
 
@@ -31,9 +36,13 @@ export default function MapComponent() {
   const [miniMapIsVisible, setMiniMapVisible] = useState(true)
   const [viewIsOn, setViewOn] = useState(true)
   const [mapBarIsVisible, setMapBar] = useState(true)
-  const [coverOn, setCoverOn] = useState(false)
-  const [meteoIsVisible, setMeteo] = useState(true)
+  const [starterIsVisible, setStarter] =useState(true)
+  const [guideIsVisible, setGuide] = useState(false)
+  const [closeGuide, setCloseGuideBtn] = useState(false)
+  const [coverOn, setCoverOn] = useState(true)
+  const [meteoIsVisible, setMeteo] = useState(false)
   const [genericIsVisible, setGeneric] = useState(false)
+  const [closeBtn, setCloseBtn] = useState(false)
   const [cropsListIsVisible, setCropsList] = useState(false)
   const [cropContext, setCropContext] = useState({})
   const [cropRecoIsVisible, setCropReco] = useState(false)
@@ -44,6 +53,8 @@ export default function MapComponent() {
   const [fieldHomoIsVisible, setFieldHomo] = useState(false)
   const [zonesNumber, setZonesNumber] = useState(0)
   const [personalizationIsVisible, setPersonalization] = useState(false)
+  const [finalResultIsVisible, setFinalResult] = useState(false)
+
   const soilContext = {
     PH: 5.5, depth: 30, shape: "zigzag", texture: "Sandy loam", rank: 1
   }
@@ -58,33 +69,61 @@ export default function MapComponent() {
     K: { nutrient: "Potassium", score: 45, available: 50, need: 123, deficit: 73 }
   }
 
-  const texturesContext ={
-    name : "Potato",
-    textures:{
-      "sandy loam":{coverage :50, score: 30},
-    "silt": {coverage :30, score: 78},
-    "clay loam": {coverage: 20, score: 90} 
+  const texturesContext = {
+    name: "Potato",
+    textures: {
+      "sandy loam": { coverage: 50, score: 30 },
+      "silt": { coverage: 30, score: 78 },
+      "clay loam": { coverage: 20, score: 90 }
     },
 
-    winner : {
-      name : "sandy loam", coverage :52, score: 30}, 
+    winner: {
+      name: "sandy loam", coverage: 52, score: 30
+    },
 
-    nbr:3 
+    nbr: 3
   }
 
-  const samplingContext ={
-    nbr : texturesContext.nbr,
+  const samplingContext = {
+    nbr: texturesContext.nbr,
     depth: 30,
-    pattern : "zigzag",
+    pattern: "zigzag",
     name: "potato",
+  }
+
+  const resultContext = {
+    N: { nutrient: "Nitrogen", score: 70, available: 50, need: 123, deficit: 73 },
+    P: { nutrient: "Phosphorus", score: 45, available: 50, need: 123, deficit: 73 },
+    K: { nutrient: "Potassium", score: 23, available: 50, need: 123, deficit: 73 },
+    PH: 4.5,
+    PHNote: "too alkaline",
+    name: "potatoes"
+  }
+
+  function handleShowGuide(){
+    setStarter(false)
+    setGuide(true) 
+    setCloseGuideBtn(true)
+  }
+
+  function handleQuitGuide(){
+    setGuide(false) 
+    setStarter(true)
+    setCloseGuideBtn(false)
+  }
+
+  function handleQuitStarter(){
+    setCoverOn(false)
+    setStarter(false)
+    setMeteo(true)
     
   }
-
 
   function handleshowLocation() {
     setMeteo(false)
     setGeneric(true)
     setCoverOn(true)
+    setCloseBtn(true)
   }
 
   function handleConfirmLocation() {
@@ -100,18 +139,18 @@ export default function MapComponent() {
   function handlePersonalizeReco() {
     setCropReco(false)
     setDrawBar(true)
-    setCoverOn(false) 
+    setCoverOn(false)
   }
 
-  function handleClearShape(){
+  function handleClearShape() {
     if (drawRef && drawRef.current) {
       drawRef.current.clearMap();
       setMapBar(true)
     }
   }
-  
-  
-  function handleConfirmShape(){
+
+
+  function handleConfirmShape() {
     setMapBar(true)
     setDrawBar(false)
     setDrawControls(false)
@@ -119,10 +158,35 @@ export default function MapComponent() {
     setFieldHomo(true)
   }
 
-  function handlePersonalizeFert(){
-    setFieldHomo(false) 
+  function handlePersonalizeFert() {
+    setFieldHomo(false)
+    setPersonalization(true)
   }
-   
+
+  function handleConfirmData() {
+    setPersonalization(false)
+    setFinalResult(true)
+    console.log("used")
+  }
+
+  function closeCard() {
+    setMapBar(true)
+    setCoverOn(false)
+    setMeteo(true)
+    setGeneric(false)
+    setCropsList(false)
+    setCropContext({})
+    setCropReco(false)
+    setDrawBar(false)
+    setPolygone(false)
+    setDrawControls(false)
+    setFieldHomo(false)
+    setZonesNumber(0)
+    setPersonalization(false)
+    setFinalResult(false)
+  }
+ 
+
 
   return (
     <div className={MapStyles.mapPage}>
@@ -179,9 +243,9 @@ export default function MapComponent() {
                 viewIsOn={viewIsOn}
                 setViewOn={setViewOn} />}
             {drawControlsIsVisible &&
-              <DrawControlsBar  
+              <DrawControlsBar
                 map={map}
-                setViewOn={setViewOn} 
+                setViewOn={setViewOn}
                 handleClearShape={handleClearShape}
                 handleConfirmShape={handleConfirmShape} />}
           </div>
@@ -190,7 +254,8 @@ export default function MapComponent() {
             <MeteoCard
               setViewOn={setViewOn}
               map={map}
-              handleShowLocation={handleshowLocation} />}
+              handleShowLocation={handleshowLocation}
+              closeCard={closeCard} />}
 
           <div className={`${coverOn ? MapStyles.coverMap : ''} 
                            ${cropsListIsVisible ? MapStyles.coverMapRecommendation : ''}`}
@@ -199,9 +264,28 @@ export default function MapComponent() {
             onMouseLeave={() =>
               enableMapInteractions(map, setViewOn)}>
 
+            {starterIsVisible && 
+              <Starter 
+                handleShowGuide={handleShowGuide}
+                handleQuitStarter={handleQuitStarter}/>}
+
+            {closeGuide &&
+              <img className="cardCross" src={cardCross} alt="" onClick={handleQuitGuide} />
+            }
+
+            {guideIsVisible && 
+              <Guide
+                handleShowGuide={handleShowGuide}
+                handleQuitStarter={handleQuitStarter}
+              />}
+
+            {closeBtn &&
+              <img className="cardCross" src={cardCross} alt="" onClick={closeCard} />
+            }
+
             {genericIsVisible &&
               <GenericInfosCard
-                handleConfirmLocation={handleConfirmLocation} />}
+                handleConfirmLocation={handleConfirmLocation}  />}
 
             {cropsListIsVisible &&
               <CropsList
@@ -214,15 +298,18 @@ export default function MapComponent() {
                 soilContext={soilContext}
                 climContext={climContext}
                 fertContext={fertContext}
-                handlePersonalizeReco={handlePersonalizeReco} />}
+                handlePersonalizeReco={handlePersonalizeReco}  />}
 
             {fieldHomoIsVisible &&
-              <FieldHomogeneity 
-                texturesContext={texturesContext} 
-                handlePersonalizeFert={handlePersonalizeFert}/> }
+              <FieldHomogeneity
+                texturesContext={texturesContext}
+                handlePersonalizeFert={handlePersonalizeFert}  />}
 
-            {personalizationIsVisible && 
-              <Personalization samplingContext={samplingContext} /> }
+            {personalizationIsVisible &&
+              <Personalization samplingContext={samplingContext} handleConfirmData={handleConfirmData}  />}
+
+            {finalResultIsVisible &&
+              <FinalResult resultContext={resultContext}  />}
           </div>
         </MapContainer>
       </div>

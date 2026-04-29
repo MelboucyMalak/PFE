@@ -7,13 +7,17 @@
   border-radius: 15px;
 }
 
+.personalization p:not(.formLabel){
+  font-family: Roboto;
+}
+
 .cardBody {
   position: relative;
   background-color: #FFFFFF;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px;
+  gap: 15px;
   padding-bottom: 40px;
   z-index: 1;
 }
@@ -28,85 +32,192 @@
   z-index: 0;
 }
 
-/* Conteneur du formulaire en Grille 2x2 */
+.patternContainer{
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  height: 150px;
+  width: 300px;  
+  align-items: center;
+  background-color: #FAF7F2;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  z-index: 1;
+}
+
+.patternContainer .header{
+  display: flex;
+  justify-content: center;
+  padding: 4px 0px;
+  gap: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  width: 100%;
+}
+
+.patternContainer .header img{
+  height: 20px;
+}
+
+.patternContainer .pattern  {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.patternContainer .pattern img {
+  width: 90%;
+}
+
+.soil{
+  width: 300px;
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+/*****************/
+.soil .item{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #FAF7F2 ;
+  border-radius: 13px; 
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  z-index: 1;
+  flex: 1;
+  padding: 8px;  
+}
+
+.bodyTitle{
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.bodyTitle img{
+  height: 14px;
+  width: auto; 
+}
+ 
+.labelText{ 
+  font-size: 14px ;
+  font-family: Roboto;
+  line-height: 100%;
+}
+
+.itemValue{ 
+  margin-left: 5px;
+  font-family: Roboto; 
+}
+
+/******************/
+
+.guide{
+  width: 300px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-direction: column;
+  border: 1px solid #6D894D ;
+  border-radius: 10px;
+  background-color: #fff;
+  z-index: 1;
+}
+
+.guide .firstLine{
+  display: flex; 
+  justify-content: center;
+  gap:5px;
+}
+
+.firstLine img{
+  height: 20px;
+  width: auto;
+}
+
+.guide .secondLine{
+  font-size: 13px;
+}
+
+/********************/
+
+.formLabel{
+  color: #666;
+  font-size: 16px;
+  line-height: 100%; 
+}
+
+ 
 .nutrientsForm {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* 2 colonnes égales */
-  gap: 15px; /* Espace entre les cartes */
-  width: 100%;
-  padding: 10px;
+  grid-template-columns: 1fr 1fr;  
+  gap: 15px;  
+  width:300px; 
+  height: 150px; 
 }
 
 /* Style de base pour chaque carte */
-.nutrientCard {
+.nutrientItem {
   display: flex;
   flex-direction: column;
-  padding: 15px;
+  padding: 10px 8px 10px 8px;
   border-radius: 8px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  z-index: 1;
 }
 
 /* Style du Label */
-.nutrientCard label {
+.nutrientItem p {
   font-weight: bold;
-  font-size: 14px;
+  font-size: 12px;
   margin-bottom: 8px;
   color: #333;
 }
-
-/* Groupe Input + Unité */
+ 
 .inputGroup {
   display: flex;
   align-items: center;
   background-color: white;
-  border-radius: 4px;
+  border-radius: 10px;
   padding: 0 5px;
 }
-
-/* Style de l'Input */
+  
 .inputGroup input {
   border: none;
   outline: none;
-  padding: 8px;
-  font-size: 16px;
+  padding: 4px; 
+  font-size: 14px;
   width: 100%;
   background: transparent;
 }
 
 .inputGroup input::placeholder {
   color: #aaa;
-}
+} 
 
-/* Unité (ppm) */
-.unit {
-  font-size: 12px;
-  color: #666;
-  margin-left: 5px;
-}
-
-/* === COULEURS SPÉCIFIQUES === */
-
-/* 1. Phosphorus (Vert Pastel) */
-.cardGreen {
+/***********colors***************/
+.itemGreen {
   background-color: #E8F5E9; /* Vert très clair */
-  border-left: 4px solid #66BB6A; /* Barre verte gauche */
+  border-top: 4px solid #66BB6A; /* Barre verte gauche */
 }
 
 /* 2. Nitrogen (Bleu Pastel) */
-.cardBlue {
+.itemBlue {
   background-color: #E3F2FD; /* Bleu très clair */
-  border-left: 4px solid #42A5F5; /* Barre bleue gauche */
+  border-top: 4px solid #42A5F5; /* Barre bleue gauche */
 }
 
 /* 3. Potassium (Orange Pastel) */
-.cardOrange {
+.itemOrange {
   background-color: #FFF3E0; /* Orange très clair */
-  border-left: 4px solid #FFA726; /* Barre orange gauche */
+  border-top: 4px solid #FFA726; /* Barre orange gauche */
 }
 
 /* 4. Soil pH (Rouge/Rose Pastel) */
-.cardRed {
+.itemRed {
   background-color: #FFEBEE; /* Rouge très clair */
-  border-left: 4px solid #EF5350; /* Barre rouge gauche */
+  border-top: 4px solid #EF5350; /* Barre rouge gauche */
 }

@@ -1,0 +1,21 @@
+.guideContainer{
+  display: flex;
+  gap: 20px; 
+  align-items: center;
+}
+
+.page{
+  width: 450px;
+}
+
+.arrowBtn{
+height: 45px;
+width: 45px;
+background-color: transparent;
+border: none; 
+cursor: pointer;
+}
+
+.arrowBtn img{
+  height: 100%; 
+}

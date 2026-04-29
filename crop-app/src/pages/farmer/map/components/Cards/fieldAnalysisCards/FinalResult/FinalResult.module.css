@@ -1,0 +1,82 @@
+.finalResult {
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  width: 450px;
+  flex-shrink: 0;
+  border-radius: 15px;
+}
+ 
+
+.cardBody {
+  position: relative;
+  background-color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 40px;
+  border-radius: 0px 0px 15px 15px;
+  z-index: 1;
+}
+
+.cardBck {
+  position: absolute;
+  background: url(@/assets/images/cardsBck.png);
+  background-repeat: repeat;
+  background-size: 50px 50px;
+  inset: 0;
+  opacity: 5%;
+  z-index: 0;
+}
+
+.bodyTitle{
+  margin-top: 20px;
+  font-size: 16px;
+  color: #4A7C59;
+  font-family: Roboto;
+}
+
+.nutrients{
+  display: flex;
+  gap: 15px;
+}
+
+.nutrientNote {
+  display: flex;
+  padding: 8px;
+  min-width: 350px;
+  gap: 6px;
+  z-index:1;
+  border-radius: 10px;
+  flex-direction: column;
+  background-color: #FAF7F2;
+  margin: 0px 10px;
+  box-shadow: -2px 0px 0px 0px #1B262C,
+              0px 0px 4px rgba(0, 0, 0, 0.4);
+}
+
+.nutrientNote  
+ .title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.title img {
+  height: 12px;
+  width: auto; 
+  margin-bottom: 4px;
+}
+
+.titleText{ 
+  font-family: Roboto;
+  font-size: 12px;
+}
+
+.noteText{
+  font-family: Roboto;
+  font-size: 14px;
+  line-height: 15px;
+  color: #575B5D;
+}

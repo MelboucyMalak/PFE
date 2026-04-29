@@ -26,16 +26,24 @@ export function Personalization({ samplingContext, handleConfirmData }) {
             <img src={`/fieldAnalysis/${pattern}.png`} alt="W" />
           </div>
         </div>
+
         <div className={styles.soil}>
           <div className={styles.item}>
-            <p className={styles.itemTitle}><img src={nbrFound} alt="" /> Zones : </p>
-            <p className={styles.value}>{displayNbr}</p>
+            <div className={styles.bodyTitle}>
+              <img src={nbrFound} alt="" /> 
+              <p className={styles.labelText}>Zones : </p>
+            </div>
+              <p className={styles.itemValue}>{displayNbr}</p> 
           </div>
           <div className={styles.item}>
-            <p className={styles.itemTitle}><img src={depthIcon} alt="" /> Sampling depth : </p>
-            <p className={styles.value}>{depth} m</p>
+            <div className={styles.bodyTitle}>
+              <img src={depthIcon} alt="" />
+              <p className={styles.labelText}>Sampling depth : </p> 
+            </div>
+            <p className={styles.itemValue}>{depth} m</p>
           </div>
         </div>
+
         <div className={styles.guide}>
           <div className={styles.firstLine}>
             <img src={chemical} alt="" />
@@ -45,35 +53,34 @@ export function Personalization({ samplingContext, handleConfirmData }) {
             Use the average values from your sampling
           </p>
         </div>
+
         <p className={styles.formLabel}>
           NPK Nutrients · soil PH
         </p>
+
         <form className={styles.nutrientsForm}>
-          <div className={`${styles.nutrientCard} ${styles.cardGreen}`}>
+          <div className={`${styles.nutrientItem} ${styles.itemGreen}`}>
             <p>Phosphorus P:</p>
             <div className={styles.inputGroup}>
-              <input type="number" name="phosphorus" placeholder="0" />
-              <span className={styles.unit}>ppm</span>
+              <input type="number" name="phosphorus" placeholder="ppm" /> 
             </div>
           </div>
  
-          <div className={`${styles.nutrientCard} ${styles.cardBlue}`}>
+          <div className={`${styles.nutrientItem} ${styles.itemBlue}`}>
             <p>Nitrogen N:</p>
             <div className={styles.inputGroup}>
-              <input type="number" name="nitrogen" placeholder="0" />
-              <span className={styles.unit}>ppm</span>
+              <input type="number" name="nitrogen" placeholder="ppm" /> 
             </div>
           </div>
  
-          <div className={`${styles.nutrientCard} ${styles.cardOrange}`}>
+          <div className={`${styles.nutrientItem} ${styles.itemOrange}`}>
             <p>Potassium K:</p>
             <div className={styles.inputGroup}>
-              <input type="number" name="potassium" placeholder="0" />
-              <span className={styles.unit}>ppm</span>
+              <input type="number" name="potassium" placeholder="ppm" /> 
             </div>
           </div>
  
-          <div className={`${styles.nutrientCard} ${styles.cardRed}`}>
+          <div className={`${styles.nutrientItem} ${styles.itemRed}`}>
             <p>Soil pH :</p>
             <div className={styles.inputGroup}>
               <input type="number" name="ph" step="0.1" min="0" max="14" placeholder="4.0 - 10" />
@@ -82,7 +89,7 @@ export function Personalization({ samplingContext, handleConfirmData }) {
 
         </form>
       </div>
-      <PersonalizationFooter handlePersonalizeFert={handleConfirmData} />
+      <PersonalizationFooter handleConfirmData={handleConfirmData} />
     </div>
   )
 }
