@@ -6,6 +6,7 @@ from .serializers import FieldAnalysisSerializer
 from .service import FieldAnalyzerService
 from recommendation.NutrientCalculator import convert_ppm_to_kg_ha, get_mineralization_factor
 from recommendation.models import CropRecommendation
+from _myProject.Errors.responses import error_response
 
 
 class FieldAnalysisViewSet(viewsets.ModelViewSet):
@@ -17,50 +18,67 @@ class FieldAnalysisViewSet(viewsets.ModelViewSet):
         area = request.data.get('surface_area_m2')
         crop_rec_id = request.data.get('crop_recommendation')
 
+        # Validate required fields
+        if not coords or area is None or not crop_rec_id:
+            return error_response("FIELD_MISSING_FIELDS")
+
+        # Validate surface area
+        try:
+            area = float(area)
+            if area <= 0:
+                return error_response("INVALID_SURFACE_AREA")
+        except (ValueError, TypeError):
+            return error_response("INVALID_SURFACE_AREA")
+
         result, error = FieldAnalyzerService.analyze_field(crop_rec_id, coords, area)
 
+        if error == "Valid crop recommendation not found":
+            return error_response("CROP_RECOMMENDATION_NOT_FOUND")
+        if error == "SESSION_OUTSIDE_POLYGON":
+            return error_response("SESSION_OUTSIDE_POLYGON")
+        if error == "NO_TEXTURE_DETECTED":
+            return error_response("NO_TEXTURE_DETECTED")
         if error:
-            return Response({"error": error}, status=status.HTTP_404_NOT_FOUND)
+            return error_response("UNKNOWN_ERROR")
 
         return Response({"status": "success", **result}, status=status.HTTP_201_CREATED)
 
 
 class GenericFertilizationView(APIView):
-    """
-    POST /api/field/fertilization/generic/
-    Input: { "crop_recommendation": 1 }
-    Auto-calculates fertilization doses per hectare from API data.
-    Called when farmer clicks a crop recommendation.
-    """
     def post(self, request):
         crop_rec_id = request.data.get('crop_recommendation')
+
+        if not crop_rec_id:
+            return error_response("FIELD_MISSING_FIELDS")
 
         try:
             crop_rec = CropRecommendation.objects.get(id=crop_rec_id)
             crop = crop_rec.crop
             session = crop_rec.recommendation
         except CropRecommendation.DoesNotExist:
-            return Response({"error": "Crop recommendation not found"}, status=404)
+            return error_response("CROP_RECOMMENDATION_NOT_FOUND")
 
         depth = crop.sampling_depth_cm
         bulk = session.bulk_density if session.bulk_density else 1.3
         mineral_factor = get_mineralization_factor(session.koppen)
 
-        # isda returns -1 for missing values — treat -1 as no data
         def valid(val):
             return val is not None and val != -1
 
-        n_available = round(convert_ppm_to_kg_ha(session.n_total_raw_ppm, depth, bulk) * mineral_factor, 2) if valid(session.n_total_raw_ppm) else None
-        p_available = round(convert_ppm_to_kg_ha(session.p_extractable_raw_ppm, depth, bulk), 2) if valid(session.p_extractable_raw_ppm) else None
-        k_available = round(convert_ppm_to_kg_ha(session.k_extractable_raw_ppm, depth, bulk), 2) if valid(session.k_extractable_raw_ppm) else None
+        try:
+            n_available = round(convert_ppm_to_kg_ha(session.n_total_raw_ppm, depth, bulk) * mineral_factor, 2) if valid(session.n_total_raw_ppm) else None
+            p_available = round(convert_ppm_to_kg_ha(session.p_extractable_raw_ppm, depth, bulk), 2) if valid(session.p_extractable_raw_ppm) else None
+            k_available = round(convert_ppm_to_kg_ha(session.k_extractable_raw_ppm, depth, bulk), 2) if valid(session.k_extractable_raw_ppm) else None
+        except Exception:
+            return error_response("SOIL_API_FAILED")
 
         n_deficit = round(max(0, crop.n_kg_ha - n_available), 2) if n_available is not None else None
         p_deficit = round(max(0, crop.p_kg_ha - p_available), 2) if p_available is not None else None
         k_deficit = round(max(0, crop.k_kg_ha - k_available), 2) if k_available is not None else None
 
-        n_percent = round(min(100, (n_available / crop.n_kg_ha) * 100), 2) if n_available and crop.n_kg_ha else None
-        p_percent = round(min(100, (p_available / crop.p_kg_ha) * 100), 2) if p_available and crop.p_kg_ha else None
-        k_percent = round(min(100, (k_available / crop.k_kg_ha) * 100), 2) if k_available and crop.k_kg_ha else None
+        n_percent = round(min(100, (n_available / crop.n_kg_ha) * 100), 2) if n_available and crop.n_kg_ha and crop.n_kg_ha > 0 else None
+        p_percent = round(min(100, (p_available / crop.p_kg_ha) * 100), 2) if p_available and crop.p_kg_ha and crop.p_kg_ha > 0 else None
+        k_percent = round(min(100, (k_available / crop.k_kg_ha) * 100), 2) if k_available and crop.k_kg_ha and crop.k_kg_ha > 0 else None
 
         GenericFertilizationRecommendation.objects.update_or_create(
             crop_recommendation=crop_rec,
@@ -90,24 +108,25 @@ class GenericFertilizationView(APIView):
 
 
 class PersonalizedFertilizationView(APIView):
-    """
-    POST /api/field/fertilization/personalized/
-    Input: {
-        "field_analysis": 1,
-        "ph_entered": 6.5,
-        "n_entered_ppm": 120,
-        "p_entered_ppm": 45,
-        "k_entered_ppm": 80
-    }
-    Farmer enters their own measured values.
-    Returns total doses for the whole field (kg total, not per ha).
-    """
     def post(self, request):
         field_analysis_id = request.data.get('field_analysis')
-        ph_entered = request.data.get('ph_entered')
+        ph = request.data.get('ph_entered')
         n_ppm = request.data.get('n_entered_ppm')
         p_ppm = request.data.get('p_entered_ppm')
         k_ppm = request.data.get('k_entered_ppm')
+
+        # Validate required fields
+        if not all([field_analysis_id, ph is not None, n_ppm is not None, p_ppm is not None, k_ppm is not None]):
+            return error_response("FERTILIZATION_MISSING_FIELDS")
+
+        # Validate numeric values
+        try:
+            ph_entered = float(ph)
+            n_ppm = float(n_ppm)
+            p_ppm = float(p_ppm)
+            k_ppm = float(k_ppm)
+        except (ValueError, TypeError):
+            return error_response("INVALID_NUMBER")
 
         try:
             analysis = FieldAnalysis.objects.get(id=field_analysis_id)
@@ -115,34 +134,35 @@ class PersonalizedFertilizationView(APIView):
             crop = crop_rec.crop
             session = crop_rec.recommendation
         except FieldAnalysis.DoesNotExist:
-            return Response({"error": "Field analysis not found"}, status=404)
+            return error_response("FIELD_ANALYSIS_NOT_FOUND")
 
         depth = crop.sampling_depth_cm
         bulk = session.bulk_density if session.bulk_density else 1.3
-        surface_ha = analysis.surface_area_m2 / 10000
+        surface_ha = analysis.surface_area_m2
         mineral_factor = get_mineralization_factor(session.koppen)
 
-        # Use farmer's entered values directly
-        n_available_ha = convert_ppm_to_kg_ha(float(n_ppm), depth, bulk) * mineral_factor
-        p_available_ha = convert_ppm_to_kg_ha(float(p_ppm), depth, bulk)
-        k_available_ha = convert_ppm_to_kg_ha(float(k_ppm), depth, bulk)
+        try:
+            n_available_ha = convert_ppm_to_kg_ha(n_ppm, depth, bulk) * mineral_factor
+            p_available_ha = convert_ppm_to_kg_ha(p_ppm, depth, bulk)
+            k_available_ha = convert_ppm_to_kg_ha(k_ppm, depth, bulk)
+        except Exception:
+            return error_response("UNKNOWN_ERROR")
 
         n_deficit_ha = max(0, crop.n_kg_ha - n_available_ha)
         p_deficit_ha = max(0, crop.p_kg_ha - p_available_ha)
         k_deficit_ha = max(0, crop.k_kg_ha - k_available_ha)
 
-        # Multiply by surface to get total kg needed for the whole field
         n_total = round(n_deficit_ha * surface_ha, 2)
         p_total = round(p_deficit_ha * surface_ha, 2)
         k_total = round(k_deficit_ha * surface_ha, 2)
 
-        n_percent = round(min(100, (n_available_ha / crop.n_kg_ha) * 100), 2) if crop.n_kg_ha else None
-        p_percent = round(min(100, (p_available_ha / crop.p_kg_ha) * 100), 2) if crop.p_kg_ha else None
-        k_percent = round(min(100, (k_available_ha / crop.k_kg_ha) * 100), 2) if crop.k_kg_ha else None
+        n_percent = round(min(100, (n_available_ha / crop.n_kg_ha) * 100), 2) if crop.n_kg_ha and crop.n_kg_ha > 0 else None
+        p_percent = round(min(100, (p_available_ha / crop.p_kg_ha) * 100), 2) if crop.p_kg_ha and crop.p_kg_ha > 0 else None
+        k_percent = round(min(100, (k_available_ha / crop.k_kg_ha) * 100), 2) if crop.k_kg_ha and crop.k_kg_ha > 0 else None
 
-        if crop.ph_min <= float(ph_entered) <= crop.ph_max:
+        if crop.ph_min <= ph_entered <= crop.ph_max:
             ph_note = f"pH {ph_entered} is ideal for {crop.crop_name} (range: {crop.ph_min}-{crop.ph_max})"
-        elif float(ph_entered) < crop.ph_min:
+        elif ph_entered < crop.ph_min:
             ph_note = f"pH {ph_entered} is too acidic for {crop.crop_name}. Consider adding lime."
         else:
             ph_note = f"pH {ph_entered} is too alkaline for {crop.crop_name}. Consider adding sulfur."
