@@ -43,3 +43,5 @@ admin.py is bach nzid la table l /dev bach tban l supperstaff
 
 
 super staff: zineb /zineb2005
+
+pip freeze > requirements.txt
