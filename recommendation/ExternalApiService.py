@@ -6,11 +6,29 @@ from recommendation.NutrientCalculator import convert_ppm_to_kg_ha
 
 def initEE():
     try:
-        ee.Initialize(project='alpha-earth-test-486217')
-    except Exception as e:
-        print(f"Earth Engine not available: {e}")
+        sa_email = os.environ.get('GEE_SA_EMAIL')
+        sa_key_json = os.environ.get('GEE_SA_KEY_JSON')
 
-initEE()
+        # Debug — check if variables are actually loaded
+        print("SA EMAIL:", sa_email)
+        print("SA KEY loaded:", sa_key_json is not None)
+
+        if not sa_email or not sa_key_json:
+            print("ERROR: Missing GEE environment variables")
+            return
+
+        # Parse the JSON string into a dict
+        key_data = json.loads(sa_key_json)
+
+        credentials = ee.ServiceAccountCredentials(
+            email=sa_email,
+            key_data=key_data  # pass dict not raw string
+        )
+        ee.Initialize(credentials, project='alpha-earth-test-486217')
+        print("✅ Earth Engine initialized successfully")
+
+    except Exception as e:
+        print(f"❌ Earth Engine init failed: {e}")
 
 def get_algeria():
     countries = ee.FeatureCollection("USDOS/LSIB_SIMPLE/2017")
