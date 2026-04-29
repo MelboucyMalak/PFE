@@ -82,7 +82,7 @@ class FieldAnalyzerService:
             return None, "Valid crop recommendation not found"
         # Validate that session coordinates are inside the polygon
         if not FieldAnalyzerService.point_in_polygon(session.lat, session.lon, coords):
-            return None, "The field polygon must contain the location of the recommendation session"
+            return None, "SESSION_OUTSIDE_POLYGON"
 
         diagonal = FieldAnalyzerService.calculate_diagonal(coords)
         sampling_points = FieldAnalyzerService.generate_sampling_points(coords, diagonal)
