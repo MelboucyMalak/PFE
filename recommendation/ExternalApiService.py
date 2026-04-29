@@ -1,7 +1,6 @@
-import ee
+import os
 import requests
 
-from recommendation.NutrientCalculator import convert_ppm_to_kg_ha
 
 
 def initEE():
@@ -9,20 +8,13 @@ def initEE():
         sa_email = os.environ.get('GEE_SA_EMAIL')
         sa_key_json = os.environ.get('GEE_SA_KEY_JSON')
 
-        # Debug — check if variables are actually loaded
-        print("SA EMAIL:", sa_email)
-        print("SA KEY loaded:", sa_key_json is not None)
-
         if not sa_email or not sa_key_json:
             print("ERROR: Missing GEE environment variables")
             return
 
-        # Parse the JSON string into a dict
-        key_data = json.loads(sa_key_json)
-
         credentials = ee.ServiceAccountCredentials(
             email=sa_email,
-            key_data=key_data  # pass dict not raw string
+            key_data=sa_key_json  # pass raw string directly, no json.loads()
         )
         ee.Initialize(credentials, project='alpha-earth-test-486217')
         print("✅ Earth Engine initialized successfully")
