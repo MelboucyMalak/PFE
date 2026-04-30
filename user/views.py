@@ -6,7 +6,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from _myProject.Errors.responses import error_response
-from .serializers import UserSerializer, ChangePasswordSerializer
+from .serializers import UserSerializer, ChangePasswordSerializer ,UserUpdateSerializer
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import authenticate, update_session_auth_hash
 from rest_framework.authtoken.models import Token
@@ -103,7 +103,19 @@ def testcode(request):
 
     return Response({'message': 'Code is valid'}, status=status.HTTP_200_OK)
 
+@api_view(['PUT', 'PATCH'])
+@permission_classes([IsAdminUser])
+def update_user(request, id):
+    try:
+        user = User.objects.get(id=id)
+    except User.DoesNotExist:
+        return error_response("USER_NOT_FOUND_BY_ID")
 
+    serializer = UserUpdateSerializer(user, data=request.data, partial=request.method == 'PATCH')
+    if serializer.is_valid():
+        serializer.save()
+        return Response({'user': serializer.data}, status=status.HTTP_200_OK)
+    return error_response("VALIDATION_ERROR")
 
 
 

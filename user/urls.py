@@ -14,5 +14,8 @@ urlpatterns = [
     path("api/Profile/change-password",views.change_password),# not complete
     path('api/forgot-password', ResetPasswordRequestToken.as_view(), name="forgot-password"),
     path('api/verify-password',views.testcode,name='test-code'),
-    path('api/reset-password', ResetPasswordConfirm.as_view(), name="confirm-password"),]
+    path('api/reset-password', ResetPasswordConfirm.as_view(), name="confirm-password"),
+    path('api/admin/users/<int:id>/update', views.update_user, name='update_user'),
+]
+
 
