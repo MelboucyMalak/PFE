@@ -11,6 +11,7 @@ from .service import createRecommendation, generate_CropRecommendations
 
 
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def recommendation_list_api(request):
     recommendations = RecommendationSession.objects.all()
     data = RecommendationSerializer(recommendations, many=True).data
@@ -88,3 +89,23 @@ def get_meteo(request):
     except Exception:
             return error_response("WEATHER_API_FAILED")
     return  JsonResponse(data)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def recommondation_favorite(request):
+    user = request.user
+    recommendations = RecommendationSession.objects.filter(user=user,favorite=True)
+    if not recommendations:
+        return Response({'recommendations': []},status=status.HTTP_200_OK)
+    data = RecommendationSerializer(recommendations, many=True).data
+    return Response({'recommendations': data},status=status.HTTP_200_OK)
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def recommondation_history(request):
+    user = request.user
+    recommendations = RecommendationSession.objects.filter(user=user)
+    if not recommendations:
+        return Response({'recommendations': []},status=status.HTTP_200_OK)
+    data = RecommendationSerializer(recommendations, many=True).data
+    return Response({'recommendations': data},status=status.HTTP_200_OK)

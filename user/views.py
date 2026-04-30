@@ -18,16 +18,22 @@ def user_list(request):
     data = UserSerializer(users,many=True).data
     return Response({'users':data})
 
-@api_view(['GET'])
+@api_view(['GET','PUT', 'PATCH'])
 @permission_classes([IsAdminUser])
 def user_details(request,id):
     try:
         user = User.objects.get(id=id)
     except User.DoesNotExist:
         return error_response("USER_NOT_FOUND_BY_ID")
-
-    data = UserSerializer(user).data
-    return Response({'user':data})
+    if request.method == 'GET':
+        data = UserSerializer(user).data
+        return Response({'user':data})
+    else:
+        serializer = UserUpdateSerializer(user, data=request.data, partial=request.method == 'PATCH')
+        if serializer.is_valid():
+            serializer.save()
+            return Response({'user': serializer.data}, status=status.HTTP_200_OK)
+        return error_response("VALIDATION_ERROR")
 
 
 @api_view(['POST'])
@@ -103,19 +109,6 @@ def testcode(request):
 
     return Response({'message': 'Code is valid'}, status=status.HTTP_200_OK)
 
-@api_view(['PUT', 'PATCH'])
-@permission_classes([IsAdminUser])
-def update_user(request, id):
-    try:
-        user = User.objects.get(id=id)
-    except User.DoesNotExist:
-        return error_response("USER_NOT_FOUND_BY_ID")
-
-    serializer = UserUpdateSerializer(user, data=request.data, partial=request.method == 'PATCH')
-    if serializer.is_valid():
-        serializer.save()
-        return Response({'user': serializer.data}, status=status.HTTP_200_OK)
-    return error_response("VALIDATION_ERROR")
 
 
 
