@@ -37,7 +37,7 @@ ERROR_CODES = {
     # --- Authentication (2xxx) ---
     "LOGIN_FAILED": {
         "code": 2001,
-        "message": "Invalid username/email or password."
+        "message": "Invalid email or password."
     },
     "LOGIN_INVALID_CREDENTIALS": {
         "code": 2001,
@@ -89,7 +89,10 @@ ERROR_CODES = {
         "code": 3007,
         "message": "user_id must be an integer."
     },
-
+    "USER_NOT_FOUND_BY_Email": {
+        "code": 3005,
+        "message": "No account found with this email."
+    },
     # --- Validation (4xxx) ---
     "VALIDATION_ERROR": {
         "code": 4001,

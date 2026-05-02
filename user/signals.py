@@ -8,6 +8,13 @@ from django_rest_passwordreset.signals import reset_password_token_created
 
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
+    # delete the old codes ( tokens )
+    from django_rest_passwordreset.models import ResetPasswordToken
+    ResetPasswordToken.objects.filter(
+        user=reset_password_token.user
+    ).exclude(
+        key=reset_password_token.key
+    ).delete()
     # send an e-mail to the user
     context = {
          'username': reset_password_token.user.username,

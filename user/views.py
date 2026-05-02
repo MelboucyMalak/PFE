@@ -1,7 +1,9 @@
 # user/views.py
+import secrets
 from django.utils import timezone
 from django.contrib.auth.models import User
 from django_rest_passwordreset.models import ResetPasswordToken
+from django_rest_passwordreset.signals import reset_password_token_created
 from rest_framework import status
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
@@ -10,6 +12,7 @@ from .serializers import UserSerializer, ChangePasswordSerializer ,UserUpdateSer
 from rest_framework.decorators import api_view, permission_classes
 from django.contrib.auth import authenticate, update_session_auth_hash
 from rest_framework.authtoken.models import Token
+
 
 @api_view(['GET'])
 @permission_classes([IsAdminUser])
@@ -46,7 +49,7 @@ def login(request):
     if user_obj: # if not null
         username = user_obj.username
     else:
-        return error_response("USER_NOT_FOUND_BY_EMAIL")
+        return error_response("USER_NOT_FOUND_BY_Email")
 
     user = authenticate(username=username, password=password) # we try to log in the user
 
@@ -105,11 +108,32 @@ def testcode(request):
     expiry_time = token_obj.created_at + timezone.timedelta(minutes=10)
 
     if timezone.now() > expiry_time:
-            return error_response("RESET_CODE_EXPIRED")
+        token_obj.delete()
+        return error_response("RESET_CODE_EXPIRED")
 
     return Response({'message': 'Code is valid'}, status=status.HTTP_200_OK)
 
+@api_view(['POST'])
+def forgot_password(request):
+    email = request.data.get('email')
+    if not email:
+        return error_response("REQUIRED_FIELD_MISSING")
 
+    user = User.objects.filter(email=email).first()
+    if not user:
+        return error_response("USER_NOT_FOUND_BY_EMAIL")
+    token = ResetPasswordToken.objects.create(
+        user=user,
+        key=secrets.token_hex(20)
+    )
 
+    # Send the email via signal
+    reset_password_token_created.send(
+        sender=ResetPasswordToken,
+        instance=None,
+        reset_password_token=token
+    )
+
+    return Response({'status': 'OK'}, status=status.HTTP_200_OK)
 
 

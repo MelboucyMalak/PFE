@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     "rest_framework",
     'rest_framework.authtoken',
     'django_rest_passwordreset',
+    'corsheaders',
 
 
     'user.apps.UserConfig',
@@ -43,6 +44,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',  # ← must be FIRST
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -167,3 +170,6 @@ SWAGGER_SETTINGS = {
     'LOGOUT_URL': None,
 }
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+]
