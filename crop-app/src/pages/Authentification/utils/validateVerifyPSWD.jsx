@@ -1,8 +1,7 @@
- 
+
 export function validateVerifyPSWD(code){
   let newErrors = {} 
-  if (code.length !== 8) newErrors.code = 'Invalid code' 
+  if (!code) newErrors.code = 'Please enter the code' 
   return newErrors;
 }
 
- 

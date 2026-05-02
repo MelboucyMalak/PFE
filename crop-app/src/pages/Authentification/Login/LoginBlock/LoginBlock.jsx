@@ -5,7 +5,8 @@ import showPSWDRed from "../../images/showPSWDRed.png"
 import errorCross from "../../images/errorCross.png"
 import { validateLogin } from "../../utils/validateLogin"
 import styles from "./LoginBlock.module.css"
-
+import { loginUser } from "@/services/authService"
+import { useNavigate } from "react-router-dom"
 import { useState } from "react"
 
 
@@ -14,12 +15,32 @@ export function LoginBlock() {
   const [errors, setErrors] = useState({})
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [isloading, setLoading] = useState(false)   
+  const navigate = useNavigate()
 
-  function handleSubmit(e) {
+async function handleSubmit(e) {
     e.preventDefault()
-    const errors = validateLogin(email, password)
-    setErrors(errors)
-    if (Object.keys(errors).length > 0) return
+    console.log('submitted', email, password)
+    const validationErrors = validateLogin(email, password)  
+    console.log('validation errors:', validationErrors)  
+    setErrors(validationErrors)
+    if (Object.keys(validationErrors).length > 0) return
+    setLoading(true)
+    try {
+      const data = await loginUser({ email, password })
+
+      localStorage.setItem('token', data.token)
+      localStorage.setItem('isAdmin', data.admin)
+      if (data.admin)
+        navigate('/admin/dashboard')
+      else
+        navigate('/farmer/dashboard')
+
+    } catch (error) {
+      setErrors({ api: error.message }) // shows "LOGIN_FAILED" or "USER_NOT_FOUND_BY_EMAIL"
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -60,9 +81,17 @@ export function LoginBlock() {
             </div>
 
           </div>
+          {errors.api && (
+            <div className={styles.loginErrorLine}>
+              <img src={errorCross} alt="x" />
+              <p className={styles.loginError}>{errors.api}</p>
+            </div>
+          )}
 
         </form>
-        <button className={styles.loginBtn} type="submit" form="login-form">login</button>
+        <button className={styles.loginBtn} type="submit" form="login-form" disabled={isloading}>
+          {isloading ? 'Logging in...' : 'login'}
+        </button>
         <p className={styles.forgotPSWDRedirect}>Forgot your password?-<a href="/forgot-password">Click Here.</a></p>
         <p className={styles.signUpRedirect}>Already have an account-<a href="/sign-up">Sign Up.</a></p>
       </div>

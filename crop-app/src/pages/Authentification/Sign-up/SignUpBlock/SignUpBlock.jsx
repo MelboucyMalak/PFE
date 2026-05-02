@@ -28,7 +28,7 @@ export function SignUpBlock() {
     setIsLoading(true)
 
     try {
-     const userData = { username, email, password };
+    const userData = { username, email, password };
     const response = await signUpUser(userData); // Appel au service
     
     console.log("SUCCÈS", response);

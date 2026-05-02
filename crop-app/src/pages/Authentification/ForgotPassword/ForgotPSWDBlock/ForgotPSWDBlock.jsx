@@ -2,7 +2,7 @@ import hero from "../../images/forgotPSWDHero.png"
 import errorCross from "../../images/errorCross.png"
 import { validateForgotPSWD } from "../../utils/validateForgotPSWD"
 import styles from "./ForgotPSWDBlock.module.css"
-
+import { forgotPassword } from "@/services/authService"
 import { useState } from "react"
 import { useNavigate } from "react-router"
 
@@ -11,13 +11,25 @@ export function ForgotPSWDBlock() {
   const [email, setEmail] = useState('')
   const [errors, setErrors] = useState({})
   const navigate = useNavigate();
-
-  function handleSubmit(e) {
+  const [loading, setLoading] = useState(false)
+  async function handleSubmit(e) {
     e.preventDefault()
     const errors = validateForgotPSWD(email)
     setErrors(errors)
     if (Object.keys(errors).length > 0) return
+
+    setLoading(true)
+    try {
+      await forgotPassword(email)
+      localStorage.setItem('reset_email', email)
+      navigate('/verify-password')
+    } catch (error) {
+      setErrors({ api: error.message })
+    } finally {
+      setLoading(false)
+    }
   }
+
 
   return (
     <div className={styles.forgotPSWDBlock}>
@@ -41,9 +53,16 @@ export function ForgotPSWDBlock() {
           </div>
 
         </form>
+        {errors.api && (
+          <div className={styles.forgotPSWDErrorLine}>
+            <img src={errorCross} alt="x" />
+            <p className={styles.forgotPSWDError}>{errors.api}</p>
+          </div>
+        )}
         <button className={styles.sendCodeBtn} type="submit"
-          form="forgotPSWD-form" 
-          onClick={() => navigate('/verify-password')}>Send code</button>
+          form="forgotPSWD-form"  disabled={loading}>
+          {loading ? 'Sending...' : 'Send code'}
+        </button>
       </div>
     </div>
   )

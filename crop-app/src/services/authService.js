@@ -1,13 +1,16 @@
 import axios from 'axios';
 
-const API_URL = "https://torbati.onrender.com/api";
+//const API_URL = "https://torbati.onrender.com/api";
+const API_URL = "http://127.0.0.1:8000/api";
 
+
+// NORMAL AUTHENTICATION
 export const signUpUser = async (userData) => {
   try { 
     const response = await axios.post(`${API_URL}/sign-up`, userData, {
       headers: { 'Content-Type': 'application/json' }
     });
-     
+    
     return response.data;
 
   } catch (error) {
@@ -32,6 +35,60 @@ export const signUpUser = async (userData) => {
     }
 
     // 4. On envoie le message propre au composant
+    throw new Error(finalMessage);
+  }
+};
+
+
+export const loginUser = async (credentials) => {
+  try {
+    const response = await axios.post(`${API_URL}/login`, {
+      email: credentials.email,
+      password: credentials.password,
+    });
+
+    // Django returns: { message, token, admin }
+    return response.data; // { message: "Login Success", token: "abc123", admin: true/false }
+
+  } catch (error) {
+    
+    const finalMessage = error.response?.data?.error || "Erreur inconnue";
+    throw new Error(finalMessage);
+  }
+};
+
+// FOEGOT PASSWORD RELATED THINGS 
+export const forgotPassword = async (email) => {
+  try {
+    const response = await axios.post(`${API_URL}/forgot-password`, { email });
+    return response.data; // { status: "OK" }
+  } catch (error) {
+    const data = error.response?.data;
+    const finalMessage =
+      data?.email?.[0] ||
+      data?.error ||
+      "Erreur inconnue";
+
+    throw new Error(finalMessage);
+  }
+};
+
+export const verifyCode = async (code) => {
+  try {
+    const response = await axios.post(`${API_URL}/verify-password`, { code });
+    return response.data; 
+  } catch (error) {
+    const finalMessage = error.response?.data?.error || "Erreur inconnue";
+    throw new Error(finalMessage);
+  }
+};
+
+export const resetPassword = async (token, password) => {
+  try {
+    const response = await axios.post(`${API_URL}/reset-password`, { token, password });
+    return response.data;
+  } catch (error) {
+    const finalMessage = error.response?.data?.error || "Erreur inconnue";
     throw new Error(finalMessage);
   }
 };

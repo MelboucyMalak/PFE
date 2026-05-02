@@ -6,7 +6,7 @@ import hidePSWDRed from "../../images/hidePSWDRed.png"
 import errorCross from "../../images/errorCross.png"
 import { validateResetPSWD } from "../../utils/validateResetPSWD"
 import styles from "./ResetPSWDBlock.module.css"
-
+import { resetPassword } from "@/services/authService"
 import { useState } from "react"
 import { useNavigate } from "react-router"
 
@@ -16,13 +16,25 @@ export function ResetPSWDBlock() {
   const [errors, setErrors] = useState({}) 
   const [password, setPassword] = useState('')
   const [confPassword, setConfPassword] = useState('')
+  const [loading, setLoading] = useState(false)  
   const navigate = useNavigate();
-
-  function handleSubmit(e) {
+  const token = localStorage.getItem('reset_token') 
+  async function handleSubmit(e) {
     e.preventDefault()
     const errors = validateResetPSWD(password, confPassword)
     setErrors(errors)
     if (Object.keys(errors).length > 0) return
+    setLoading(true)
+    try {
+      await resetPassword(token, password)
+      localStorage.removeItem('reset_token')
+      localStorage.removeItem('reset_email')
+      navigate('/login')
+    } catch (error) {
+      setErrors({ api: error.message })
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -71,12 +83,16 @@ export function ResetPSWDBlock() {
               <p className={styles.resetPSWDError}>{errors.confPassword}</p>
             </div>
           </div>
-
+        {errors.api && (
+          <div className={styles.resetPSWDErrorLine}>
+            <img src={errorCross} alt="x" />
+            <p className={styles.resetPSWDError}>{errors.api}</p>
+          </div>
+        )}
         </form>
         <button className={styles.resetPSWDBtn} type="submit"
-        onClick={() => navigate('/farmer/dashboard')}
-        form="reset-password-form" 
-        >Log In</button> 
+        form="reset-password-form" disabled={loading}>Log In</button> 
+          {loading ? 'Resetting...' : 'Reset Password'}
       </div>
     </div>
   )
