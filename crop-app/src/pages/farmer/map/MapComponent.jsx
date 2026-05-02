@@ -64,21 +64,21 @@ export default function MapComponent() {
   }
 
   const fertContext = {
-    N: { nutrient: "Nitrogen", score: 45, available: 50, need: 123, deficit: 73 },
-    P: { nutrient: "Phosphorus", score: 45, available: 50, need: 123, deficit: 73 },
-    K: { nutrient: "Potassium", score: 45, available: 50, need: 123, deficit: 73 }
+    N: { nutrient: "Nitrogen", score: 50, available: 40, need: 80, deficit: 40 },
+    P: { nutrient: "Phosphorus", score: 12.5, available: 5, need: 40, deficit: 35 },
+    K: { nutrient: "Potassium", score: 100, available: 65, need: 60, deficit: 0 }
   }
 
   const texturesContext = {
-    name: "Potato",
+    name: "Beetroot",
     textures: {
-      "sandy loam": { coverage: 50, score: 30 },
-      "silt": { coverage: 30, score: 78 },
+      "sandy loam": { coverage: 55, score: 30 },
+      "loam": { coverage: 25, score: 78 },
       "clay loam": { coverage: 20, score: 90 }
     },
 
     winner: {
-      name: "sandy loam", coverage: 52, score: 30
+      name: "sandy loam", coverage: 55, score: 30
     },
 
     nbr: 3
@@ -88,7 +88,7 @@ export default function MapComponent() {
     nbr: texturesContext.nbr,
     depth: 30,
     pattern: "zigzag",
-    name: "potato",
+    name: "Beetroot",
   }
 
   const resultContext = {
@@ -97,7 +97,7 @@ export default function MapComponent() {
     K: { nutrient: "Potassium", score: 23, available: 50, need: 123, deficit: 73 },
     PH: 4.5,
     PHNote: "too alkaline",
-    name: "potatoes"
+    name: "Beetroot"
   }
 
   function handleShowGuide(){
