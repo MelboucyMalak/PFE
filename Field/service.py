@@ -1,9 +1,4 @@
 import math
-from recommendation.service import calculate_compatibility_score
-from recommendation.ExternalApiService import fetch_openlandmap_data
-from recommendation.models import CropRecommendation
-from crop.models import CropSoilTexture
-from .models import FieldAnalysis, DetectedTexture
 
 
 class FieldAnalyzerService:

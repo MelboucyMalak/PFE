@@ -1,6 +1,6 @@
 import os
 import requests
-
+import ee
 
 
 def initEE():
@@ -14,7 +14,7 @@ def initEE():
 
         credentials = ee.ServiceAccountCredentials(
             email=sa_email,
-            key_data=sa_key_json  # pass raw string directly, no json.loads()
+            key_data=sa_key_json
         )
         ee.Initialize(credentials, project='alpha-earth-test-486217')
         print("✅ Earth Engine initialized successfully")
@@ -35,10 +35,6 @@ def is_inside_algeria(long,lat):
     if is_inside == 0:
          return False
     return True
-
-
-import ee
-
 
 def fetch_isda_data(long, lat):
     algeria, x = get_algeria()

@@ -1,10 +1,10 @@
 from rest_framework import viewsets, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import FieldAnalysis, DetectedTexture, GenericFertilizationRecommendation, PersonalizedFertilizationRecommendation
+from .models import FieldAnalysis, GenericFertilizationRecommendation, PersonalizedFertilizationRecommendation
 from .serializers import FieldAnalysisSerializer
 from .service import FieldAnalyzerService
-from recommendation.NutrientCalculator import convert_ppm_to_kg_ha, get_mineralization_factor
+from Field.NutrientCalculator import convert_ppm_to_kg_ha, get_mineralization_factor
 from recommendation.models import CropRecommendation
 from _myProject.Errors.responses import error_response
 

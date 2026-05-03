@@ -1,21 +1,21 @@
+from _myProject.Errors.responses import error_response
 from crop.cropSelect import Cropselect
-from crop.models import CropClimate, CropSoilTexture, Crop
-from .errors import NotInsideALgeria, NotSuitableLand, InvalidData
+from crop.models import CropClimate, CropSoilTexture
 from .models import RecommendationSession,CropRecommendation
 from .ExternalApiService import is_inside_algeria, fetch_openlandmap_data, fetch_isda_data, fetch_environment_data, \
     fetch_nasa_power_data
-
+from concurrent.futures import ThreadPoolExecutor
 def is_ok(long,lat):
     if not is_inside_algeria(long,lat):
-        raise NotInsideALgeria
+        return error_response("OUTSIDE_ALGERIA")
     else:
         env=fetch_environment_data(long,lat)
         if  env["slope"] == -1 or env["land_cover"] == "Unknown":
-            raise InvalidData
+            return error_response("INVALID_LAND_DATA")
         if env["slope"] > 23:
-            raise NotSuitableLand
+            return error_response("NOT_SUITABLE_LAND")
         if env["land_cover"] == "Build-up":
-            raise NotSuitableLand
+            return error_response("NOT_SUITABLE_LAND")
     return env
 
 
@@ -29,9 +29,15 @@ def createRecommendation(request):
         return maybe_exist
 
     env = is_ok(lon, lat)
-    isda = fetch_isda_data(lon, lat)
-    nasa = fetch_nasa_power_data(lon, lat)
-    opnl = fetch_openlandmap_data(lon, lat)
+
+    with ThreadPoolExecutor() as executor:
+        future_isda = executor.submit(fetch_isda_data, lon, lat)
+        future_nasa = executor.submit(fetch_nasa_power_data, lon, lat)
+        future_opnl = executor.submit(fetch_openlandmap_data, lon, lat)
+
+        isda = future_isda.result()
+        nasa = future_nasa.result()
+        opnl = future_opnl.result()
 
 
     recommendation = RecommendationSession.objects.create(
