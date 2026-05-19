@@ -7,5 +7,6 @@ urlpatterns = [
     path("api/recommendation/favorite",views.favorite_api_view),# add recommendation to fav
     path("api/meteo",views.get_meteo),# ta3 meteo
     path("api/history",views.recommondation_history),# historique ta3 recommendation
+    path("api/history/<int:pk>",views.crop_recommondation_history),# historique ta3 crop recommendation
     path("api/favorite",views.recommondation_favorite),# list ta3 fav recommendation
 ]

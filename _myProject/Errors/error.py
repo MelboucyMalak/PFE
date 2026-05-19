@@ -33,6 +33,10 @@ ERROR_CODES = {
         "code": 1008,
         "message": "session_id is invalid."
     },
+    "RECOMMENDATION_NOT_FOUND": {
+        "code": 1009,
+        "message": "Recommendation not found."
+    },
 
     # --- Authentication (2xxx) ---
     "LOGIN_FAILED": {

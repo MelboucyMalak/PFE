@@ -2,7 +2,7 @@ import os
 import requests
 import ee
 
-
+# external api I fetch data most of them using Google Earth Engin
 def initEE():
     try:
         sa_email = os.environ.get('GEE_SA_EMAIL')

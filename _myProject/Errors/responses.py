@@ -20,3 +20,7 @@ def serializer_error(key):
         "error_code": error["code"],
         "error": error["message"]
     })
+class AppError(Exception):
+    def __init__(self, key, http_status=status.HTTP_400_BAD_REQUEST):
+        self.key = key
+        self.http_status = http_status

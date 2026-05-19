@@ -4,7 +4,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from _myProject.Errors.responses import error_response
 from .ExternalApiService import get_weather_data, is_inside_algeria
-from .models import RecommendationSession
+from .models import RecommendationSession, CropRecommendation
 from .serializers import RecommendationSerializer, CropRecommendationSerializer
 from rest_framework.decorators import api_view, permission_classes
 from .service import createRecommendation, generate_CropRecommendations
@@ -40,8 +40,8 @@ def croplist_api_view(request):
         session_id = int( request.data.get('session_id'))
     except:
         return error_response("SESSION_ID_INTEGER")
-    recommendation = RecommendationSession.objects.filter(pk=session_id).exists()
-    if not recommendation:
+    recommendation = RecommendationSession.objects.filter(pk=session_id,user=request.user)
+    if not recommendation.exists():
         return error_response("SESSION_ID_INVALID")
     crops=  generate_CropRecommendations(session_id)
     data = CropRecommendationSerializer(crops, many=True).data
@@ -110,3 +110,17 @@ def recommondation_history(request):
     data = RecommendationSerializer(recommendations, many=True).data
     return Response({'recommendations': data},status=status.HTTP_200_OK)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def crop_recommondation_history(request,pk):
+    try:
+        recommendation = RecommendationSession.objects.get(pk=pk, user=request.user)
+    except RecommendationSession.DoesNotExist:
+        return error_response("RECOMMENDATION_NOT_FOUND")
+
+    crop_recommendations = CropRecommendation.objects.filter(recommendation_id=pk)
+    if not crop_recommendations.exists():
+        return Response({'crop_recommendations': []}, status=status.HTTP_200_OK)
+
+    data = CropRecommendationSerializer(crop_recommendations, many=True).data
+    return Response({'crop_recommendations': data},status=status.HTTP_200_OK)

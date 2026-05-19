@@ -7,14 +7,16 @@ from rest_framework import viewsets, status
 from rest_framework.permissions import IsAdminUser
 
 # farmer methods can only read
+# ta3 farmer get list crop
 @api_view(['GET'])
 def crop_list(request):
     crops = Crop.objects.all()
     data = CropSerializer(crops,many=True).data
     return Response({'crops':data})
 
+ #ta3 farmer crop details
 @api_view(['GET'])
-def crop_detail(request,pk):
+def crop_detail(request,pk):#
     try:
         crop = Crop.objects.get(pk=pk)
     except Crop.DoesNotExist:
@@ -24,7 +26,7 @@ def crop_detail(request,pk):
 
 
 # admin methods can CRUD
-class CropViewSet(viewsets.ModelViewSet):
+class CropViewSet(viewsets.ModelViewSet):#
     queryset = Crop.objects.all()
     serializer_class = CropSerializer
     permission_classes = [IsAdminUser]
