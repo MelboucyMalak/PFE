@@ -2,7 +2,7 @@ from django.db.models import Q
 
 from .models import Crop
 
-
+# hadi select that we use in crop recommendation
 def Cropselect(ph, soil_texture, rainfall, temperature, humedity, koppen):
 
     return Crop.objects.filter(

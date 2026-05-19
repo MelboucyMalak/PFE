@@ -1,27 +1,29 @@
 ## model data ---> json
 from rest_framework import serializers
+
+from _myProject.Errors.responses import serializer_error
 from crop.models import Crop, Climate, CropSoilTexture, CropClimate , SOWING_MONTH_CHOICES
 import json
 
-class MonthChoiceField(serializers.IntegerField):
+class MonthChoiceField(serializers.IntegerField):# hadi traje3 code month l string
     def to_representation(self, value):
         for num, name in SOWING_MONTH_CHOICES:
             if num == value:
                 return name
         return value
 
-class ClimateSerializer(serializers.ModelSerializer):
+class ClimateSerializer(serializers.ModelSerializer):# hadi tmed climate
     class Meta:
         model  = Climate
         fields = ['id','climate_zone']
 
-class  CropSoilTextureSerializer(serializers.ModelSerializer):
+class  CropSoilTextureSerializer(serializers.ModelSerializer):# hadi tmed cropsoiltexture
     class Meta:
         model  =  CropSoilTexture
         fields = ['texture_name','suitability_rank','note']
         extra_kwargs = {'id': {'read_only': True}}
 
-class  CropClimateSerializer(serializers.ModelSerializer):
+class  CropClimateSerializer(serializers.ModelSerializer):# hadi tmed cropclimate it use climateserialiser
     climate = serializers.CharField(source='climate.climate_zone', read_only=True)
     climate_id = serializers.IntegerField(write_only=True)
 
@@ -31,7 +33,7 @@ class  CropClimateSerializer(serializers.ModelSerializer):
         extra_kwargs = {'id': {'read_only': True}}
     def validate_climate_id(self, value):
         if not Climate.objects.filter(id=value).exists():
-            raise serializers.ValidationError(f"Climate with id {value} does not exist.")
+            raise serializer_error("CLIMATE_NOT_FOUND")
         return value
 
     def create(self, validated_data):
@@ -49,7 +51,7 @@ class  CropClimateSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-class CropSerializer(serializers.ModelSerializer):
+class CropSerializer(serializers.ModelSerializer):# hadi ta3 crop
     sowing_month_start = MonthChoiceField()
     sowing_month_end = MonthChoiceField()
     crop_climates = CropClimateSerializer(many=True,required=False)

@@ -15,9 +15,7 @@ class RecommendationSession(models.Model):
     n_total_raw_ppm = models.FloatField(null=True, blank=True)
     p_extractable_raw_ppm = models.FloatField(null=True, blank=True)
     k_extractable_raw_ppm = models.FloatField(null=True, blank=True)
-
     bulk_density = models.FloatField(null=True, blank=True, default=1.3)  # g/cm³
-
     soil_texture_initial = models.CharField(max_length=20)
     soil_ph_initial = models.FloatField(validators=[MinValueValidator(0.0), MaxValueValidator(14.0)])
     slope_angle = models.FloatField()

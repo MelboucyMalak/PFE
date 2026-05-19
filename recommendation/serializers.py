@@ -8,7 +8,6 @@ class RecommendationSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-
 class CropRecommendationSerializer(serializers.ModelSerializer):
     crop = CropSerializer(read_only=True)   # nested display of crop data
 

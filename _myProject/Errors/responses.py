@@ -1,4 +1,5 @@
 from rest_framework.response import Response
+from rest_framework import serializers as drf_serializers
 from rest_framework import status
 from .error import ERROR_CODES
 
@@ -13,3 +14,13 @@ def error_response(key, http_status=status.HTTP_400_BAD_REQUEST):
         },
         status=http_status
     )
+def serializer_error(key):
+    error = ERROR_CODES[key]
+    raise drf_serializers.ValidationError({
+        "error_code": error["code"],
+        "error": error["message"]
+    })
+class AppError(Exception):
+    def __init__(self, key, http_status=status.HTTP_400_BAD_REQUEST):
+        self.key = key
+        self.http_status = http_status
