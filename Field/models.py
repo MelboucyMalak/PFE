@@ -76,3 +76,52 @@ class PersonalizedFertilizationRecommendation(FertilizationBase):
     p_total_kg = models.FloatField(null=True, blank=True)
     k_total_kg = models.FloatField(null=True, blank=True)
     ph_note = models.CharField(max_length=100, null=True, blank=True)
+
+
+
+
+class FertilizationHistoryBase(models.Model):
+    n_percent = models.FloatField(null=True, blank=True)
+    p_percent = models.FloatField(null=True, blank=True)
+    k_percent = models.FloatField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        abstract = True
+        ordering = ['-created_at']
+
+
+class GenericFertilizationHistory(FertilizationHistoryBase):
+    crop_recommendation = models.ForeignKey(
+        'recommendation.CropRecommendation',
+        on_delete=models.CASCADE,
+        related_name='generic_fertilization_history'
+    )
+    n_available_kg_ha = models.FloatField(null=True, blank=True)
+    p_available_kg_ha = models.FloatField(null=True, blank=True)
+    k_available_kg_ha = models.FloatField(null=True, blank=True)
+    n_deficit_kg_ha   = models.FloatField(null=True, blank=True)
+    p_deficit_kg_ha   = models.FloatField(null=True, blank=True)
+    k_deficit_kg_ha   = models.FloatField(null=True, blank=True)
+
+    def __str__(self):
+        return f"Generic history #{self.id} — crop_rec {self.crop_recommendation_id} @ {self.created_at:%Y-%m-%d %H:%M}"
+
+
+class PersonalizedFertilizationHistory(FertilizationHistoryBase):
+    field_analysis = models.ForeignKey(
+        FieldAnalysis,
+        on_delete=models.CASCADE,
+        related_name='personalized_fertilization_history'
+    )
+    ph_entered    = models.FloatField()
+    n_entered_ppm = models.FloatField()
+    p_entered_ppm = models.FloatField()
+    k_entered_ppm = models.FloatField()
+    n_total_kg    = models.FloatField(null=True, blank=True)
+    p_total_kg    = models.FloatField(null=True, blank=True)
+    k_total_kg    = models.FloatField(null=True, blank=True)
+    ph_note       = models.CharField(max_length=100, null=True, blank=True)
+
+    def __str__(self):
+        return f"Personalized history #{self.id} — analysis {self.field_analysis_id} @ {self.created_at:%Y-%m-%d %H:%M}"

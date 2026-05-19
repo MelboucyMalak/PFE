@@ -7,6 +7,9 @@ from .service import FieldAnalyzerService
 from Field.NutrientCalculator import convert_ppm_to_kg_ha, get_mineralization_factor
 from recommendation.models import CropRecommendation
 from _myProject.Errors.responses import error_response
+from .models import GenericFertilizationHistory, PersonalizedFertilizationHistory
+from .models import GenericFertilizationHistory, PersonalizedFertilizationHistory
+from .serializers import GenericFertilizationHistorySerializer, PersonalizedFertilizationHistorySerializer
 
 
 class FieldAnalysisViewSet(viewsets.ModelViewSet):
@@ -79,6 +82,29 @@ class GenericFertilizationView(APIView):
         n_percent = round(min(100, (n_available / crop.n_kg_ha) * 100), 2) if n_available and crop.n_kg_ha and crop.n_kg_ha > 0 else None
         p_percent = round(min(100, (p_available / crop.p_kg_ha) * 100), 2) if p_available and crop.p_kg_ha and crop.p_kg_ha > 0 else None
         k_percent = round(min(100, (k_available / crop.k_kg_ha) * 100), 2) if k_available and crop.k_kg_ha and crop.k_kg_ha > 0 else None
+
+        snapshot = {
+            'n_available_kg_ha': n_available,
+            'p_available_kg_ha': p_available,
+            'k_available_kg_ha': k_available,
+            'n_deficit_kg_ha': n_deficit,
+            'p_deficit_kg_ha': p_deficit,
+            'k_deficit_kg_ha': k_deficit,
+            'n_percent': n_percent,
+            'p_percent': p_percent,
+            'k_percent': k_percent,
+        }
+
+        GenericFertilizationRecommendation.objects.update_or_create(
+            crop_recommendation=crop_rec,
+            defaults=snapshot
+        )
+
+        # Always write a new history row
+        GenericFertilizationHistory.objects.create(
+            crop_recommendation=crop_rec,
+            **snapshot
+        )
 
         GenericFertilizationRecommendation.objects.update_or_create(
             crop_recommendation=crop_rec,
@@ -167,6 +193,31 @@ class PersonalizedFertilizationView(APIView):
         else:
             ph_note = f"pH {ph_entered} is too alkaline for {crop.crop_name}. Consider adding sulfur."
 
+        snapshot = {
+            'ph_entered': ph_entered,
+            'n_entered_ppm': n_ppm,
+            'p_entered_ppm': p_ppm,
+            'k_entered_ppm': k_ppm,
+            'n_total_kg': n_total,
+            'p_total_kg': p_total,
+            'k_total_kg': k_total,
+            'n_percent': n_percent,
+            'p_percent': p_percent,
+            'k_percent': k_percent,
+            'ph_note': ph_note,
+        }
+
+        PersonalizedFertilizationRecommendation.objects.update_or_create(
+            field_analysis=analysis,
+            defaults=snapshot
+        )
+
+        # Always write a new history row
+        PersonalizedFertilizationHistory.objects.create(
+            field_analysis=analysis,
+            **snapshot
+        )
+
         PersonalizedFertilizationRecommendation.objects.update_or_create(
             field_analysis=analysis,
             defaults={
@@ -192,3 +243,21 @@ class PersonalizedFertilizationView(APIView):
             "soil_coverage_percent": {"N": n_percent, "P": p_percent, "K": k_percent},
             "total_to_add_for_field_kg": {"N": n_total, "P": p_total, "K": k_total},
         }, status=status.HTTP_201_CREATED)
+
+
+class GenericFertilizationHistoryView(APIView):
+    def get(self, request, crop_recommendation_id):
+        records = GenericFertilizationHistory.objects.filter(
+            crop_recommendation_id=crop_recommendation_id
+        )
+        serializer = GenericFertilizationHistorySerializer(records, many=True)
+        return Response(serializer.data)
+
+
+class PersonalizedFertilizationHistoryView(APIView):
+    def get(self, request, field_analysis_id):
+        records = PersonalizedFertilizationHistory.objects.filter(
+            field_analysis_id=field_analysis_id
+        )
+        serializer = PersonalizedFertilizationHistorySerializer(records, many=True)
+        return Response(serializer.data)
