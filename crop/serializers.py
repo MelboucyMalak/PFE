@@ -1,5 +1,7 @@
 ## model data ---> json
 from rest_framework import serializers
+
+from _myProject.Errors.responses import serializer_error
 from crop.models import Crop, Climate, CropSoilTexture, CropClimate , SOWING_MONTH_CHOICES
 import json
 
@@ -31,7 +33,7 @@ class  CropClimateSerializer(serializers.ModelSerializer):
         extra_kwargs = {'id': {'read_only': True}}
     def validate_climate_id(self, value):
         if not Climate.objects.filter(id=value).exists():
-            raise serializers.ValidationError(f"Climate with id {value} does not exist.")
+            raise serializer_error("CLIMATE_NOT_FOUND")
         return value
 
     def create(self, validated_data):

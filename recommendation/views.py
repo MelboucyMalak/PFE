@@ -109,3 +109,4 @@ def recommondation_history(request):
         return Response({'recommendations': []},status=status.HTTP_200_OK)
     data = RecommendationSerializer(recommendations, many=True).data
     return Response({'recommendations': data},status=status.HTTP_200_OK)
+

@@ -93,6 +93,19 @@ ERROR_CODES = {
         "code": 3005,
         "message": "No account found with this email."
     },
+    "CANNOT_DELETE_YOURSELF":{
+        "code": 3006,
+        "message": "You cant delete your self."
+    },
+    "CANNOT_DELETE_ONLINE_USER":{
+        "code": 3007,
+        "message": "the user is still browsing."
+    },
+    "CANNOT_DELETE_ADMIN":{
+        "code": 3008,
+        "message": "You cant delete an admin."
+    },
+
     # --- Validation (4xxx) ---
     "VALIDATION_ERROR": {
         "code": 4001,
@@ -114,7 +127,7 @@ ERROR_CODES = {
     },
     "CLIMATE_NOT_FOUND": {
         "code": 5002,
-        "message": "Climate not found."
+        "message": "Climate with this id does not exist."
     },
 
     # --- External APIs (6xxx) ---
