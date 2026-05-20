@@ -36,7 +36,7 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
 
     email = sib_api_v3_sdk.SendSmtpEmail(
         to=[{"email": reset_password_token.user.email}],
-        sender={"email": os.environ.get('EMAIL_HOST_USER'), "name": "Torbati"},
+        sender={"email": "berrachedizineb5@gmail.com", "name": "Torbati"},
         subject="Password Reset for Torbati",
         text_content=email_plaintext_message,
         html_content=email_html_message
