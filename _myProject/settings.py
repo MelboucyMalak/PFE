@@ -141,15 +141,8 @@ REST_FRAMEWORK = {
 }
 
 # Email Backend Configuration
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp-relay.brevo.com'
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-EMAIL_TIMEOUT = 10
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-# Replace with your email password
+# Email Backend Configuration
+EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 DJANGO_REST_PASSWORDRESET_TOKEN_EXPIRY_TIME = 600 # 10 min
 
 # Add this after your REST_FRAMEWORK settings
