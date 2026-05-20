@@ -1,5 +1,5 @@
 // pages/admin/index.js
-export { default as AdminDashboard } from './AdminDashboard'
+export { default as AdminDashboard } from './AdminDashboard/AdminDashboard'
 export { default as CropsManagement } from './crops-management/CropsManagement'
 export { default as CropDetail } from './crops-management/CropDetail'
 export { default as UsersManagement } from './users-management/UserManagement'
