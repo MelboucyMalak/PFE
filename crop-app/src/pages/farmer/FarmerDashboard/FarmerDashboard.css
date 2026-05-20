@@ -1,0 +1,243 @@
+.farmer-dashboard-container {
+  min-height: 100vh;
+  background-color: #F3EFE9;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+
+.farmer-dashboard-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('../../../assets/images/background.png');
+  background-size: auto;
+  background-position: top left;
+  background-repeat: repeat;
+  opacity: 0.08;
+  z-index: -1;
+}
+
+.dashboard-main-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 140px 40px 40px 40px;
+}
+
+.dashboard-grid {
+  display: flex;
+  gap: 20px;
+  max-width: 900px;
+  width: 100%;
+  justify-content: center;
+}
+
+/* Profile Card */
+.profile-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 30px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #E0E0E0;
+}
+
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+
+.profile-name {
+  font-size: 26px;
+  margin: 0 0 10px 0;
+  color: #000;
+  font-family: "Roboto", Times, serif;
+}
+
+.profile-role {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 30px;
+}
+
+.role-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.profile-role span {
+  color: #5D8B6C;
+  font-size: 14px;
+  font-family: "Roboto", Times, serif;
+}
+
+.profile-actions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.profile-actions button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: "Roboto", Times, serif;
+  transition: all 0.2s ease;
+}
+
+.btn-manage-profile {
+  background-color: #273628;
+  color: white;
+  border: none;
+}
+
+.btn-manage-profile:hover {
+  opacity: 0.9;
+}
+
+.btn-log-out {
+  background-color: white;
+  color: #273628;
+  border: 1px solid #273628;
+}
+
+.btn-log-out:hover {
+  background-color: #FF3D3D;
+  color: white;
+  border-color: #FF3D3D;
+}
+
+
+.action-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 400px;
+}
+
+.action-card {
+  background-color: #273628;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s, color 0.2s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.action-card:hover {
+  background-color: white;
+  color: #273628;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.action-icon {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+.action-card .hover-icon {
+  display: none;
+}
+
+.action-card:hover .normal-icon {
+  display: none;
+}
+
+.action-card:hover .hover-icon {
+  display: block;
+}
+
+.action-title {
+  font-size: 18px;
+  font-family: "Roboto", Times, serif;
+}
+
+
+.dashboard-loading-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #F3EFE9;
+  font-family: "Roboto", Times, serif;
+  position: relative;
+  z-index: 1;
+}
+
+.dashboard-loading-container::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url('../../../assets/images/background.png');
+  background-size: auto;
+  background-position: top left;
+  background-repeat: repeat;
+  opacity: 0.08; 
+  z-index: -1;
+}
+
+.dashboard-loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(39, 54, 40, 0.1);
+  border-left-color: #273628;
+  border-radius: 50%;
+  animation: dashboard-spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+.dashboard-loading-text {
+  color: #273628;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  animation: dashboard-pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes dashboard-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes dashboard-pulse {
+
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
