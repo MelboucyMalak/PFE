@@ -264,6 +264,7 @@ def get_weather_data(latitude, longitude):
 
     response = requests.get(url, params=params)
     data = response.json()
+    print(f"Open-meteo response: {data}")
 
     def weather_code_to_string(code):
         if code == 0:
