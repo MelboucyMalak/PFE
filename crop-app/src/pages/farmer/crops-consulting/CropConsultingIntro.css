@@ -1,0 +1,105 @@
+.crop-consulting-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #F3EFE9;
+}
+
+/* Page content area with Topographic lines background */
+.crop-consulting-intro-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Shift card closer to the top of the page */
+  position: relative;
+  z-index: 1;
+  padding: 120px 24px 40px 24px; /* Clean spacing from the fixed header */
+  box-sizing: border-box;
+}
+
+.crop-consulting-intro-container::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url('../../../assets/images/background.png');
+  background-size: auto;
+  background-position: top left;
+  background-repeat: repeat;
+  opacity: 0.12; /* Topographic contour backdrop */
+  z-index: -1;
+}
+
+/* Floating White Card with Concentric Cloud/Arc Pattern */
+.crop-consulting-intro-card {
+  background-color: #ffffff;
+  border-radius: 24px;
+  padding: 50px 40px;
+  max-width: 500px;
+  width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 10px 30px rgba(39, 54, 40, 0.05); /* Premium soft organic shadow */
+  border: 1px solid #E6E1DA; /* Blends with warm beige */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden; /* Ensures repeating pattern respects rounded corners */
+  z-index: 1;
+}
+
+/* Cloud pattern pseudo-element with controllable low opacity */
+.crop-consulting-intro-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url('../FarmerDashboard/Icons/endless-clouds.png');
+  background-repeat: repeat;
+  background-size: auto;
+  opacity: 0.06; /* Lower opacity as requested for subtle premium texture! */
+  z-index: -1;
+}
+
+.intro-image {
+  max-width: 260px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 35px;
+  object-fit: contain;
+}
+
+.intro-title {
+  font-family: 'Inika', Georgia, serif;
+  font-size: 32px;
+  color: #273628;
+  margin: 0 0 16px 0;
+  font-weight: normal;
+}
+
+.intro-description {
+  font-family: 'Inika', Georgia, serif;
+  font-size: 19px;
+  color: #5D8B6C; /* Sage green color */
+  line-height: 1.5;
+  margin: 0 0 35px 0;
+  max-width: 440px;
+}
+
+.btn-begin {
+  background-color: #273628;
+  color: white;
+  border: none;
+  padding: 12px 70px;
+  font-size: 20px;
+  font-family: 'Inika', Georgia, serif;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(39, 54, 40, 0.15);
+  transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+}
+
+.btn-begin:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(39, 54, 40, 0.25);
+  background-color: #1e2a1f;
+}

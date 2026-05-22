@@ -1,0 +1,126 @@
+.crop-display-card {
+  background-color: #ffffff;
+  border: 1px solid #E6E1DA;
+  border-radius: 20px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  box-shadow: 0 6px 16px rgba(39, 54, 40, 0.02);
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.crop-display-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(39, 54, 40, 0.06);
+}
+
+.crop-card-img-wrapper {
+  width: 100%;
+  height: 115px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  border-radius: 12px;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+.crop-card-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  transition: transform 0.3s ease;
+}
+
+.crop-display-card:hover .crop-card-img {
+  transform: scale(1.05);
+}
+
+.crop-card-title {
+  font-family: 'Inika', Georgia, serif;
+  font-size: 20px;
+  font-weight: normal;
+  color: #273628;
+  margin: 0 0 10px 0;
+  text-align: center;
+}
+
+.crop-card-specs-list {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.crop-spec-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.crop-spec-icon {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+  opacity: 0.65;
+}
+
+.crop-spec-item p {
+  font-family: 'Inika', Georgia, serif;
+  font-size: 13px;
+  color: #273628;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.crop-spec-item p span {
+  color: #7A8E7E; /* soft secondary label */
+  display: block;
+  font-size: 11px;
+  margin-bottom: 2px;
+}
+
+.crop-card-btn-view {
+  width: 100%;
+  background-color: transparent;
+  color: #273628;
+  border: 1.5px solid #273628;
+  padding: 8px 0;
+  font-family: 'Inika', Georgia, serif;
+  font-size: 14px;
+  border-radius: 30px;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.crop-card-btn-view:hover {
+  background-color: #273628;
+  color: #ffffff;
+}
+
+.crop-card-btn-view:active {
+  transform: scale(0.98);
+}
+
+.view-crop-arrow-icon {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.crop-card-btn-view:hover .view-crop-arrow-icon {
+  transform: translateX(4px);
+  filter: brightness(0) invert(1);
+}

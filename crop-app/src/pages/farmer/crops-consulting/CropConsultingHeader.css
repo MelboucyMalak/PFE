@@ -1,0 +1,83 @@
+.crop-consulting-header {
+  background-color: #273628;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  box-sizing: border-box;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.btn-back {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+}
+
+.back-arrow-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.btn-back .hover-arrow {
+  position: absolute;
+  opacity: 0;
+
+}
+
+.btn-back:hover .default-arrow {
+  opacity: 0;
+  transform: translateX(-2px);
+}
+
+.btn-back:hover .hover-arrow {
+  opacity: 1;
+
+  transform: translateX(-2px);
+}
+
+
+
+.header-title-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.header-icon {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+
+
+}
+
+.header-title {
+  font-family: 'Inika', Georgia, serif;
+  font-size: 26px;
+  color: white;
+  margin: 0;
+  font-weight: normal;
+}
+
+.header-spacer {
+  width: 44px;
+
+}

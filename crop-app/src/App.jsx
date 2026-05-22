@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router'
 import { AdminDashboard, CropsManagement, CropDetail, UsersManagement, UserHistory, UserDetail, RecommendationsManagement, RecommendationDetail, AdminProfile } from './pages/admin' 
-import { FarmerDashboard, CropsConsulting, RecommendationsHistory, FarmerProfile, MapComponent } 
+import { FarmerDashboard, CropConsultingIntro, CropsConsulting, RecommendationsHistory, FarmerProfile, MapComponent } 
 from './pages/farmer'
 import  Login  from './pages/Authentification/Login/Login'
 import Home from './pages/Home/Home'
@@ -44,7 +44,8 @@ function App() {
           <Route path="dashboard" element={<FarmerDashboard />} />
           <Route path="map" element={<MapComponent />} />
           <Route path="crops-consulting">
-            <Route index  element={<CropsConsulting />} />
+            <Route index element={<CropConsultingIntro />} />
+            <Route path="list" element={<CropsConsulting />} />
             <Route path=":cropId" element={<CropDetail />} />
           </Route>
           <Route path="recommendations-history" element={<RecommendationsHistory />} />
