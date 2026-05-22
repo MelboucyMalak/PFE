@@ -86,7 +86,8 @@ def get_meteo(request):
         return error_response("OUTSIDE_ALGERIA")
     try:
             data=get_weather_data(lat, lon)
-    except Exception:
+    except Exception as e:
+            print(f"Weather error: {e}")
             return error_response("WEATHER_API_FAILED")
     return  JsonResponse(data)
 
