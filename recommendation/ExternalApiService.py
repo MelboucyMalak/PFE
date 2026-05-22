@@ -1,6 +1,7 @@
 import os
 import requests
 import ee
+from geopy.geocoders import Nominatim
 
 # external api I fetch data most of them using Google Earth Engin
 def initEE():
@@ -292,4 +293,14 @@ def get_weather_data(latitude, longitude):
         "relative_humidity_%": data["current"]["relative_humidity_2m"],
         "soil_moisture": data["hourly"].get("soil_moisture_0_to_7cm", [None])[-1],
         "weather": weather_code_to_string(data["current"]["weather_code"])
+    }
+def get_place_name(lat, lon):
+    geolocator = Nominatim(user_agent="torbati")
+    location = geolocator.reverse(f"{lat}, {lon}", language="fr")
+    address = location.raw['address']
+    wilaya = address.get('state', '')
+    village = address.get('village') or address.get('town') or address.get('city') or ''
+    return {
+        "village" :village,
+        "wilaya" : wilaya
     }

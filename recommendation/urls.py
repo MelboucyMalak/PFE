@@ -9,4 +9,5 @@ urlpatterns = [
     path("api/history",views.recommondation_history),# historique ta3 recommendation
     path("api/history/<int:pk>",views.crop_recommondation_history),# historique ta3 crop recommendation
     path("api/favorite",views.recommondation_favorite),# list ta3 fav recommendation
+    path("api/place",views.get_place)# ta3 name the place
 ]

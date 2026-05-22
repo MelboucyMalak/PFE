@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from _myProject.Errors.responses import error_response
-from .ExternalApiService import get_weather_data, is_inside_algeria
+from .ExternalApiService import get_weather_data, is_inside_algeria,get_place_name
 from .models import RecommendationSession, CropRecommendation
 from .serializers import RecommendationSerializer, CropRecommendationSerializer
 from rest_framework.decorators import api_view, permission_classes
@@ -125,3 +125,13 @@ def crop_recommondation_history(request,pk):
 
     data = CropRecommendationSerializer(crop_recommendations, many=True).data
     return Response({'crop_recommendations': data},status=status.HTTP_200_OK)
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def get_place(request):
+    lat = request.data.get('lat')
+    lon = request.data.get('lon')
+    if lat == None or lon == None:
+        return error_response("MISSING_COORDINATES")
+    data = get_place_name(lat, lon)
+    return Response({'place_name': data},status=status.HTTP_200_OK)

@@ -5,6 +5,9 @@ from .models import RecommendationSession,CropRecommendation
 from .ExternalApiService import is_inside_algeria, fetch_openlandmap_data, fetch_isda_data, fetch_environment_data, \
     fetch_nasa_power_data
 from concurrent.futures import ThreadPoolExecutor
+
+
+
 def is_ok(long,lat):# check if point in algeria and if the slope land cover ysal7o using extAPI
     if not is_inside_algeria(long,lat):
         raise AppError("OUTSIDE_ALGERIA")
