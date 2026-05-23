@@ -6,7 +6,7 @@ import K from "@/assets/images/cropsRelated/K.png"
 import note from "@/assets/images/cropsRelated/nutrientNote.png"
 import styles from "./FinalResult.module.css"
 
-export function FinalResult({ resultContext }) {
+export function FinalResult({ resultContext, onClose, isLoading }) {
   const name = resultContext.name
   const PContext = resultContext.P
   const NContext = resultContext.N
@@ -15,26 +15,35 @@ export function FinalResult({ resultContext }) {
   const PHNote = resultContext.PHNote
   return (
     <div className={styles.finalResult}> 
-      <FertCardHeader name={name} />
+      <FertCardHeader name={name} onClose={isLoading ? undefined : onClose} />
       <div className={styles.cardBody}>
         <p className={styles.bodyTitle}>{name}'s Personalized Fertilization</p>
         <div className={styles.cardBck}></div>
-        <div className={styles.nutrients}>
-          <NutrientItem context={NContext} icon={N} />
-          <NutrientItem context={PContext} icon={P} />
-          <NutrientItem context={KContext} icon={K} />
-        </div>
-        <div className={styles.nutrientNote}>
-          <div className={styles.title}>
-            <img src={note} alt="" />
-            <p className={styles.titleText}>
-              PH-Note:
-            </p>
+        {isLoading ? (
+          <div className={styles.loadingContainer}>
+            <div className={styles.spinner}></div>
+            <p className={styles.loadingText}>Calculating personalized recommendation...</p>
           </div>
-          <p className={styles.noteText}>
-             PH {PH} : {PHNote}
-          </p>
-        </div>
+        ) : (
+          <>
+            <div className={styles.nutrients}>
+              <NutrientItem context={NContext} icon={N} />
+              <NutrientItem context={PContext} icon={P} />
+              <NutrientItem context={KContext} icon={K} />
+            </div>
+            <div className={styles.nutrientNote}>
+              <div className={styles.title}>
+                <img src={note} alt="" />
+                <p className={styles.titleText}>
+                  PH-Note:
+                </p>
+              </div>
+              <p className={styles.noteText}>
+                 PH {PH} : {PHNote}
+              </p>
+            </div>
+          </>
+        )}
       </div>
     </div>
   )

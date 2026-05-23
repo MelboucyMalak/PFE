@@ -4,8 +4,7 @@ import { DetectedTextures } from "./DetectedTextures/DetectedTextures"
 import cuts from "@/assets/images/fieldRelated/cuts.png"
 import styles from "./FieldHomogeneity.module.css"
 
-export function FieldHomogeneity({texturesContext, handlePersonalizeFert}){
-  const nbr = texturesContext.nbr 
+export function FieldHomogeneity({texturesContext, handlePersonalizeFert, onClose}){
   const winner = texturesContext.winner
   const name = texturesContext.name
   const textures = Object.entries(texturesContext.textures).map(([key, value]) => ({
@@ -13,9 +12,10 @@ export function FieldHomogeneity({texturesContext, handlePersonalizeFert}){
     coverage: value.coverage,
     score: value.score
   })); 
+  const nbr = texturesContext.nbr
   return(
     <div className={styles.fieldHomogeneity}>
-      <FertCardHeader name={name} />
+      <FertCardHeader name={name} onClose={onClose} />
       <div className={styles.cardBody}>
         <div className={styles.cardBck}></div>
         <Homogeneity winner={winner}/>

@@ -1,9 +1,9 @@
 .genericCardHeader {
   display: flex;
   justify-content: space-between;
-  align-items: start;
+  align-items: center;
   background: #232D22;
-  padding: 13px 10px ;
+  padding: 16px 20px ;
   border-top-right-radius: 15px;
   border-top-left-radius: 15px; 
 }
@@ -26,11 +26,11 @@
 }
 
 .regionName{
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .coord{
-  font-size: 13px; 
+  font-size: 14px; 
 }
 
 .regionName, .coord{
@@ -43,21 +43,29 @@
   display: flex;
   justify-content: space-between;
   border-bottom: 0.6px solid rgba(0, 0, 0, 0.436);  
+  margin-left: -35px;
+  margin-right: -35px;
+  padding-left: 35px;
+  padding-right: 35px;
+  background-color: #FFFFFF;
+  position: relative;
+  z-index: 1;
 }
 
 .bodyHeaderBtn{
   border: none;
-  padding: 8px;
+  padding: 10px 14px;
   background-color:#FFFFFF;
   color: #777676;
-  font-size: 14px;
+  font-size: 16px;
   cursor: pointer;
   z-index: 2;
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 
 .bodyHeaderBtn.active{
   color:#8BAF7C ;
-  border-bottom: 1px solid #8BAF7C  ;
+  border-bottom: 2px solid #8BAF7C  ;
 }
  
 .genericCardFooter{
@@ -65,18 +73,41 @@
   justify-content: center;
   align-items: center;
   background: #232D22; 
-  height: 50px;
+  height: 60px;
   border-bottom-right-radius: 15px;
   border-bottom-left-radius: 15px;
 }
 
 .confLocationBtn{
-  border: 1px solid ;
-  font-size: 14px;
+  font-size: 15px;
   color: white;
   border: 1px solid #6F826D;
   border-radius: 10px; 
   background-color: #69815040;
-  padding: 4px ;
+  padding: 6px 14px ;
   cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.confLocationBtn:hover {
+  background-color: white;
+  color: #232D22;
+  border-color: white;
+}
+
+.cardCross {
+  height: 18px;
+  width: auto;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+  margin-left: auto;
+  align-self: center;
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
+}
+
+.cardCross:hover {
+  transform: scale(1.15);
+  opacity: 1;
 }

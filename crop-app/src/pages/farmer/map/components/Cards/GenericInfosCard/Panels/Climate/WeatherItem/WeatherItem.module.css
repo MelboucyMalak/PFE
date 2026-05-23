@@ -4,14 +4,21 @@
   flex-direction: column;
   justify-content: space-around; 
   align-items: center;
-  height: 70px; 
+  height: 85px; 
   border-radius: 12px;
-  padding: 4px 0px; 
+  padding: 8px 4px; 
   z-index: 1;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+.weatherItem:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.15);
 }
 
 .weatherItem img{
-  height: 25px;
+  height: 30px;
   width: auto; 
 }
 
@@ -27,5 +34,5 @@
 }
 
 .weatherItemValue, .weatherItemLabel{
-  font-size: 10px;
+  font-size: 11px;
 }

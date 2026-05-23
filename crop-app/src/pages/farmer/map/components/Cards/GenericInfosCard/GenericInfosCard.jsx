@@ -8,7 +8,7 @@ import { SoilPanel } from "./Panels/Soil/SoilPanel"
 import styles from "./GenericInfos.module.css"
 import { ClimatePanel } from "./Panels/Climate/ClimatePanel"
 
-export function GenericInfosCard({handleConfirmLocation}) {
+export function GenericInfosCard({handleConfirmLocation, closeCard, position, placeName, liveWeather, sessionInfo, soilContext, climContext}) {
  
   const [locationIsOn, setLocation] = useState(true)
   const [soilIsOn, setSoil] = useState(false)
@@ -17,18 +17,18 @@ export function GenericInfosCard({handleConfirmLocation}) {
   return (
     <div className={styles.genericInfosCard}
     >
-      <GenericCardHeader />
+      <GenericCardHeader closeCard={closeCard} />
 
       <div className={styles.cardBody}>
         <div className={styles.cardBck}>
         </div>
         <GenericCardBodyHeader locationIsOn={locationIsOn} soilIsOn={soilIsOn} climateIsOn={climateIsOn} setLocation={setLocation} setSoil={setSoil} setClimate={setClimate} />
  
-        {locationIsOn && <LocationPanel/> }
+        {locationIsOn && <LocationPanel position={position} placeName={placeName} sessionInfo={sessionInfo} /> }
 
-        {soilIsOn && <SoilPanel/> }
+        {soilIsOn && <SoilPanel soilContext={soilContext} /> }
 
-        {climateIsOn && <ClimatePanel/>}
+        {climateIsOn && <ClimatePanel placeName={placeName} liveWeather={liveWeather} climContext={climContext} />}
       </div>
       <GenericCardFooter handleConfirmLocation={handleConfirmLocation}/>
     </div>

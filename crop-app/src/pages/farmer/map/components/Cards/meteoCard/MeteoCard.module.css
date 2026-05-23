@@ -6,6 +6,12 @@
   display: flex;
   flex-direction: column;
   width: 320px;  
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-origin: bottom right;
+}
+
+.meteoCard:hover{
+  transform: scale(1.04);
 }
 
 .cardBody{
@@ -94,7 +100,48 @@
   inset: 0;
   opacity: 5%;  
   z-index: 0;
+}
 
+/* Meteo Card Loading Spinner Styles */
+.meteoLoadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px 10px;
+  text-align: center;
+  min-height: 152px;
+  z-index: 1;
+}
+
+.meteoSpinner {
+  width: 32px;
+  height: 32px;
+  border: 3.5px solid rgba(39, 54, 40, 0.12);
+  border-left-color: #273628;
+  border-radius: 50%;
+  animation: meteoSpin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  margin-bottom: 12px;
+}
+
+.meteoLoadingText {
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  color: #706B6B;
+  margin: 0;
+  font-weight: 500;
+  animation: pulseText 1.5s infinite ease-in-out;
+}
+
+@keyframes meteoSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes pulseText {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
 }
 
  

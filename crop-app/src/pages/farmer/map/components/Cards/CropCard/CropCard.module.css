@@ -2,14 +2,14 @@
   z-index: 2000;
   display: flex;
   flex-direction: column; 
-   width: 400px;
-   flex-shrink: 0;
+  width: 590px;
+  flex-shrink: 0;
   border-radius: 15px;
 }
 
 .cardBody{
   position: relative;
-  background-color: #FFFFFF ; 
+  background-color: #FFFFFF; 
   border-bottom-left-radius: 15px;
   border-bottom-right-radius: 15px;
   border: 1.6px solid #2C5A1E;
@@ -17,16 +17,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px; 
-  padding-bottom: 40px;
-  z-index: 1;min-height:300px  ;
+  gap: 28px; 
+  padding-bottom: 50px;
+  z-index: 1;
+  min-height: 520px;
 }
    
- 
 .cardBck{
   position: absolute; 
-  background: url(@/assets/images/cardsBck.png) ; 
-  background-repeat: repeat ; 
+  background: url(@/assets/images/cardsBck.png); 
+  background-repeat: repeat; 
   background-size: 50px 50px;
   inset: 0;
   opacity: 5%;  
@@ -34,12 +34,26 @@
 }
 
 .personalizeBtn{
-  border: none;
+  border: 2px solid #253E2D;
   z-index: 1;
   background-color: #253E2D;
-  font-size: 17px;
-  border-radius: 10px;
-  color: white;
-  padding: 4px; 
+  font-size: 20px;
+  border-radius: 12px;
+  color: #FFFFFF;
+  padding: 12px 28px; 
   cursor: pointer; 
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  font-weight: 500;
+}
+
+.personalizeBtn:hover {
+  background-color: #FFFFFF;
+  color: #253E2D;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.personalizeBtn:active {
+  transform: translateY(0);
 }

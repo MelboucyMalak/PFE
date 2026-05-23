@@ -1,36 +1,56 @@
 .fertPanel{
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 24px;
   z-index: 1;
-   padding: 60px 16px 20px 16px ;
+  padding: 70px 34px 24px 34px;
+  animation: fadeInSlideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes fadeInSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .nutrients{
   display: flex;
-  gap: 10px;
+  gap: 16px;
 }
 
 .nutrientNote {
   display: flex;
-  padding: 8px;
-  border-radius: 10px;
+  padding: 16px 20px;
+  border-radius: 12px;
   flex-direction: column;
   background-color: #FAF7F2;
-  margin: 0px 10px;
-  box-shadow: -2px 0px 0px 0px #1B262C,
+  margin: 0px;
+  box-shadow: -3px 0px 0px 0px #1B262C,
               0px 0px 4px rgba(0, 0, 0, 0.4);
+  gap: 10px;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease;
+  cursor: pointer;
 }
 
-.nutrientNote  
- .title {
+.nutrientNote:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: -3px 0px 0px 0px #1B262C,
+              0px 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+.nutrientNote .title {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 12px;
 }
 
 .title img {
-  height: 12px;
+  height: 18px;
   width: auto;
   border: 1px solid black;
   margin-bottom: 4px;
@@ -38,12 +58,13 @@
 
 .titleText{ 
   font-family: Roboto;
-  font-size: 12px;
+  font-size: 15px;
+  font-weight: bold;
 }
 
 .noteText{
   font-family: Roboto;
-  font-size: 14px;
-  line-height: 15px;
+  font-size: 16px;
+  line-height: 1.45;
   color: #575B5D;
 }

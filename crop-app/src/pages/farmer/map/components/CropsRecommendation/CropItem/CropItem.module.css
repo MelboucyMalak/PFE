@@ -7,6 +7,14 @@
   z-index: 1001;
   border: 1.6px solid black;
   min-height: 100px;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.25s ease, box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+.cropItem:hover {
+  background-color: #FFFFFF !important;
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
 .cropIcon {
@@ -73,12 +81,12 @@
 }
 
 .ratingLabel{
-  font-size: 10px;
-  color:#E8F5DF ;
-  padding: 4px 3px;
-  border-radius: 5px;
+  font-size: 12px;
+  color: #E8F5DF;
+  padding: 5px 8px;
+  border-radius: 6px;
   line-height: 100%;
-  ;
+  font-weight: bold;
 }
  
 .rightContainer{

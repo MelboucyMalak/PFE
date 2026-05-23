@@ -1,38 +1,102 @@
-import { useRef, useImperativeHandle, forwardRef } from 'react';
-import { FeatureGroup } from 'react-leaflet';
+import { useRef, useImperativeHandle, forwardRef, useEffect } from 'react';
+import { FeatureGroup, useMap } from 'react-leaflet';
 import { GeomanControls } from 'react-leaflet-geoman-v2';
 import '@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css';
 
  
 export const Draw = forwardRef(({ setPolygone, setMapBar, setDrawControls }, ref) => {
- 
+  const map = useMap();
   const featureGroupRef = useRef(null);
  
   useImperativeHandle(ref, () => ({
-    // Le parent pourra appeler : drawRef.current.clearMap()
     clearMap: () => {
       if (featureGroupRef.current) {
-        featureGroupRef.current.clearLayers();  
-        setPolygone(null); // Réinitialiser
-        console.log("deleted");
+        try {
+          featureGroupRef.current.clearLayers();
+        } catch (e) {
+          console.warn("FeatureGroup clear layers warning:", e);
+        }
       }
+      if (map && map.pm) {
+        try {
+          const layers = map.pm.getGeomanDrawLayers ? map.pm.getGeomanDrawLayers() : [];
+          if (Array.isArray(layers)) {
+            layers.forEach(layer => {
+              if (map.hasLayer(layer)) {
+                map.removeLayer(layer);
+              }
+            });
+          }
+          if (typeof map.pm.disableDraw === 'function') {
+            map.pm.disableDraw();
+          }
+        } catch (e) {
+          console.warn("Geoman clean layers warning:", e);
+        }
+      }
+      setPolygone(null);
     }
   }));
 
+  useEffect(() => {
+    if (map && map.pm) {
+      map.pm.setGlobalOptions({
+        templineStyle: {
+          color: '#FFFFFF',
+          weight: 3,
+        },
+        hintlineStyle: {
+          color: '#FFFFFF',
+          dashArray: [5, 5],
+          weight: 2,
+        },
+        pathOptions: {
+          color: '#FFFFFF',
+          fillColor: '#FFFFFF',
+          fillOpacity: 0.25,
+          weight: 3,
+        },
+      });
+    }
+  }, [map]);
+
   const handleCreated = (e) => {
     const layer = e.layer;
-    let points = {}; 
-    if (layer.getLatLngs) {
-      const latLngs = layer.getLatLngs();
-      points = latLngs[0].map(p => ({
-        lat: p.lat,
-        lng: p.lng
-      }));
+    if (layer && layer.setStyle) {
+      layer.setStyle({
+        color: '#FFFFFF',
+        fillColor: '#FFFFFF',
+        fillOpacity: 0.25,
+        weight: 3,
+      });
+    }
+
+    let points = []; 
+    if (layer && typeof layer.getLatLngs === 'function') {
+      try {
+        const latLngs = layer.getLatLngs();
+        if (Array.isArray(latLngs)) {
+          // Leaflet polygons can be nested arrays. Let's flatten to get the outer boundary.
+          const flatLatLngs = Array.isArray(latLngs[0]) ? latLngs[0] : latLngs;
+          if (Array.isArray(flatLatLngs)) {
+            points = flatLatLngs.map(p => {
+              if (p && typeof p.lat === 'number' && typeof p.lng === 'number') {
+                return { lat: p.lat, lng: p.lng };
+              } else if (Array.isArray(p) && p.length >= 2) {
+                return { lat: p[0], lng: p[1] };
+              }
+              return p;
+            }).filter(p => p && typeof p.lat === 'number' && typeof p.lng === 'number');
+          }
+        }
+      } catch (err) {
+        console.error("Error parsing drawn shape coordinates:", err);
+      }
     }
     
-    setPolygone(points);
-    setDrawControls(true)
-    setMapBar(false)
+    setPolygone(points.length >= 3 ? points : null);
+    setDrawControls(points.length >= 3);
+    setMapBar(false);
   };
 
   return (
@@ -57,4 +121,4 @@ export const Draw = forwardRef(({ setPolygone, setMapBar, setDrawControls }, ref
       />
     </FeatureGroup>
   );
-});
+});

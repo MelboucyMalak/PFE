@@ -3,6 +3,18 @@
   flex-direction: column; 
   gap: 15px;
   z-index: 2; 
+  animation: fadeInSlideUp 0.35s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes fadeInSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .liveWeatherContainer{
@@ -11,9 +23,17 @@
   background-color: #1B262C;
   border-radius: 23px;
   padding: 20px;
-  padding-bottom: 5px;
+  padding-bottom: 12px;
   gap: 15px;
   align-items: center; 
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+.liveWeatherContainer:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
 }
 
 .weatherTitle{
@@ -22,8 +42,11 @@
   gap: 8px ; 
 }
 
-.weatherTitle img{
-  height:6px;
+.weatherTitle .bullet {
+  color: #BBE1FA;
+  font-size: 24px;
+  font-family: Roboto;
+  line-height: 100%;
 }
 
 .weatherTitleText{
@@ -99,12 +122,27 @@
   font-size: 13px;
 }
 
-.weatherItems{
+.weatherItemsContainer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease, margin-top 0.3s ease;
+  overflow: hidden;
+  width: 100%;
+  opacity: 0;
+}
+
+.weatherItemsContainer.expanded {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  margin-top: 5px;
+}
+
+.weatherItems {
+  min-height: 0;
   display: flex;
-  flex:1;
   width: 100%;
   justify-content: space-between; 
-  padding-top: 5px;
+  padding-top: 12px;
   border-top: 1px solid #bbe1fa34;
 }
 
@@ -128,14 +166,22 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  color: #706B6B;
-  font-size: 12px; 
-  line-height: 100%;  
+  margin-bottom: 2px;
 }
 
-.sectionTitle img{
-  height: 6px;
-  width: auto;
+.bullet{
+  font-size: 24px;
+  color: #706B6B;
+  font-family: Roboto;
+  line-height: 100%;
+}
+
+.sectionTitleText{
+  color: #706B6B;
+  font-size: 16px; 
+  line-height: 100%;  
+  font-family: Roboto;
+  font-weight: 500;
 }
 
 .sectionBody{

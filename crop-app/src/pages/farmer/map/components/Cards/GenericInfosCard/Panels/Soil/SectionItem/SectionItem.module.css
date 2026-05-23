@@ -1,17 +1,26 @@
- .nutrientItem, .propertyItem {
+.nutrientItem, .propertyItem {
    display: flex;
    flex-direction: column;
    gap: 10px;
-   padding: 8px;
+   padding: 14px 18px;
    flex: 1;
    z-index: 2;
-   border-radius: 13px; 
+   border-radius: 15px; 
+   transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease;
+   cursor: pointer;
  }
  
+ .nutrientItem:hover, .propertyItem:hover {
+   transform: translateY(-2px) scale(1.03);
+ }
 
  .nutrientItem.blue {
    background-color: #E6F1FB;
    box-shadow: 0px -2.4px 0px #378ADD;
+ }
+
+ .nutrientItem.blue:hover {
+   box-shadow: 0px -2.4px 0px #378ADD, 0 8px 16px rgba(0, 0, 0, 0.15);
  }
 
  .nutrientItem.blue .itemTitleText {
@@ -23,13 +32,21 @@
    box-shadow: 0px -2.4px 0px #0F6E56;
  }
 
+ .nutrientItem.green:hover {
+   box-shadow: 0px -2.4px 0px #0F6E56, 0 8px 16px rgba(0, 0, 0, 0.15);
+ }
+
  .nutrientItem.green .itemTitleText {
    color: #0F6E56;
  }
 
  .nutrientItem.orange {
    background-color: #FAEEDA;
-   box-shadow: 0px -2.4px 0px #BA7517
+   box-shadow: 0px -2.4px 0px #BA7517;
+ }
+
+ .nutrientItem.orange:hover {
+   box-shadow: 0px -2.4px 0px #BA7517, 0 8px 16px rgba(0, 0, 0, 0.15);
  }
 
  .nutrientItem.orange .itemTitleText {
@@ -41,6 +58,10 @@
   background-color: #FAF7F2;
  }
 
+ .propertyItem:hover {
+   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+ }
+
  .itemTitle {
    display: flex;
    align-items: center;
@@ -48,22 +69,22 @@
  }
 
  .itemTitle img {
-   height: 14px;
+   height: 16px;
    width: auto;
  }
 
  .itemTitleText{
   font-family: Roboto;
-  font-size: 12px;
+  font-size: 13px;
  }
 
  .itemValue{
   font-family: Roboto;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 300;
   margin-left: 5px; 
  }
 
  .propertyItem .itemValue{
   font-weight: 400;
- }  
+ }

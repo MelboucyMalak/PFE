@@ -1,27 +1,35 @@
 .climItem{
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  background-color: #27374D ;
-  border-radius: 13px; 
+  gap: 14px;
+  background-color: #27374D;
+  border-radius: 14px; 
   flex: 1;
-  padding: 8px;  
+  padding: 14px 18px;  
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+.climItem:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
 }
 
 .bodyTitle{
   display: flex;
-  gap: 8px;
+  gap: 11px;
   align-items: center;
 }
 
 .bodyTitle img{
-  height: 18px;
+  height: 24px;
   width: auto; 
 }
  
 .labelText{
   color: white;
-  font-size: 14px ;
+  font-size: 16px;
   font-family: Roboto;
   line-height: 100%;
 }
@@ -30,6 +38,6 @@
   margin-left: 5px;
   font-family: Roboto;
   color: white;
+  font-size: 18px;
+  font-weight: bold;
 }
-
- 

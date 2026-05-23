@@ -26,7 +26,7 @@ export function GeneralPanel({cropContext}){
             <div className={styles.itemTitle}>
               Duration:
             </div>
-            <p className={styles.itemText}>{durationDays}</p>
+            <p className={styles.itemText}>{durationDays} days</p>
           </div>
          </div>
          <div className={styles.generalItem}>
@@ -35,7 +35,7 @@ export function GeneralPanel({cropContext}){
             <div className={styles.itemTitle}>
               Root Depth:
             </div>
-            <p className={styles.itemText}>40-60</p>
+            <p className={styles.itemText}>40-60 cm</p>
           </div>
          </div>
        </div>

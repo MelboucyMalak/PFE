@@ -1,21 +1,30 @@
 .wrapper{
+  width: 540px;
   height: 600px; 
-  overflow-y: auto;  
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+
+.stickyHeader {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1010;
+  background-color: #E5E2E2;
+  border-bottom: 1.5px solid #C4C1C1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .cropsListNav{
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
- 
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 8px 10px;
-  background-color: #E5E2E2;
-  z-index: 1;
-  border: 1px solid rgba(0, 0, 0, 0.467);
+  padding: 12px 15px;
+  background-color: #D6D2D2;
+  border-bottom: 1.2px solid #B0ADAD;
 }
 
 .cropsList{ 
@@ -25,20 +34,48 @@
   gap: 16px;
   margin-bottom: 0;
   z-index: 1000;  
-  padding: 50px 15px;
+  padding: 15px;
   background-color: #E5E2E2; 
+  flex: 1;
+  overflow-y: auto;
   
+  /* Firefox Support */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(39, 54, 40, 0.25) transparent;
 }
 
+/* Chrome, Safari, Edge custom scrollbar styles for CropsList container */
+.cropsList::-webkit-scrollbar {
+  width: 6px;
+}
 
+.cropsList::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.cropsList::-webkit-scrollbar-thumb {
+  background-color: rgba(39, 54, 40, 0.25);
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  transition: background-color 0.2s ease;
+}
+
+.cropsList::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(39, 54, 40, 0.45);
+}
 
 .cropsListTitle{
-  color:#455A64 ;
+  color: #273628;
+  font-family: 'Inika', Georgia, serif;
+  font-weight: bold;
+  font-size: 15px;
+  margin: 0;
 }
 
 .toolbar{
   display: flex;
-  gap: 10px;
+  gap: 8px;
 }
 
 .toolbarBtn{
@@ -48,10 +85,27 @@
   border: none;
   background-color: transparent;
   cursor: pointer;
+  border-radius: 50%;
+  padding: 6px;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.toolbarBtn:hover {
+  background-color: rgba(0, 0, 0, 0.06);
+  transform: scale(1.08);
+}
+
+.activeToolbarBtn {
+  background-color: rgba(39, 54, 40, 0.15) !important;
+  transform: scale(1.08);
+}
+
+.activeToolbarBtn img {
+  filter: brightness(0.8) sepia(1) saturate(5) hue-rotate(85deg); /* Tint search/filter icons to a distinct dark green matching layout */
 }
 
 .cropsListNav img{
-  height: 20px;
+  height: 18px;
   width: auto;  
 }
 
@@ -62,4 +116,193 @@
   background-size: 50px 50px;
   inset: 0;
   opacity: 7%;  
-} 
+  pointer-events: none;
+}
+
+/* Search Bar Container Styles */
+.searchBarContainer {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  background-color: #FCFAF7;
+  border-bottom: 1.2px solid #E2DFDF;
+  animation: slideDownFade 0.25s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 8px 36px 8px 12px;
+  border: 1.2px solid #C4C1C1;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: 'Roboto', sans-serif;
+  background-color: #FFFFFF;
+  color: #1E241E;
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.searchInput:focus {
+  border-color: #273628;
+  box-shadow: 0 0 0 3px rgba(39, 54, 40, 0.12);
+}
+
+.clearSearchBtn {
+  position: absolute;
+  right: 25px;
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  color: #8E8A8A;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.clearSearchBtn:hover {
+  color: #1E241E;
+}
+
+/* Filter Panel Styles */
+.filterPanelContainer {
+  padding: 14px 15px 16px 15px;
+  background-color: #FCFAF7;
+  border-bottom: 1.2px solid #E2DFDF;
+  animation: slideDownFade 0.25s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.filterSectionTitle {
+  font-size: 13px;
+  font-family: 'Inika', Georgia, serif;
+  font-weight: bold;
+  color: #273628;
+  margin: 0 0 12px 0;
+  letter-spacing: 0.3px;
+}
+
+.filterOptionsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.filterOptionGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.filterGroupLabel {
+  font-size: 11px;
+  font-family: 'Roboto', sans-serif;
+  color: #666666;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0;
+}
+
+.filterChips {
+  display: flex;
+  gap: 8px;
+}
+
+.filterChip {
+  flex: 1;
+  padding: 7px 12px;
+  border: 1.2px solid #C4C1C1;
+  border-radius: 6px;
+  background-color: #FFFFFF;
+  font-family: 'Roboto', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: #455A64;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.filterChip:hover {
+  background-color: #F0EEEB;
+  border-color: #8E8A8A;
+}
+
+.activeChip {
+  background-color: #273628;
+  border-color: #273628;
+  color: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(39, 54, 40, 0.2);
+}
+
+/* Zero State Styles */
+.zeroState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.zeroStateTitle {
+  font-family: 'Inika', Georgia, serif;
+  font-size: 18px;
+  font-weight: bold;
+  color: #273628;
+  margin: 0 0 8px 0;
+}
+
+.zeroStateText {
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  color: #666666;
+  margin: 0;
+}
+
+@keyframes slideDownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Loading Spinner Styles */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.loadingSpinner {
+  width: 48px;
+  height: 48px;
+  border: 4.5px solid rgba(39, 54, 40, 0.12);
+  border-left-color: #273628;
+  border-radius: 50%;
+  animation: spin 1s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 10px rgba(39, 54, 40, 0.05);
+}
+
+.loadingText {
+  font-family: 'Inika', Georgia, serif;
+  font-size: 16px;
+  color: #273628;
+  margin: 0;
+  font-weight: bold;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+ 

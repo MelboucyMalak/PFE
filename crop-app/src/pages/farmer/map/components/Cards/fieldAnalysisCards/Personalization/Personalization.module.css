@@ -2,7 +2,7 @@
   z-index: 2000;
   display: flex;
   flex-direction: column;
-  width: 400px;
+  width: 500px;
   flex-shrink: 0;
   border-radius: 15px;
 }
@@ -17,8 +17,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 15px;
-  padding-bottom: 40px;
+  gap: 28px;
+  padding-bottom: 50px;
   z-index: 1;
 }
 
@@ -36,26 +36,38 @@
   margin-top: 30px;
   display: flex;
   flex-direction: column;
-  height: 150px;
-  width: 300px;  
+  height: 165px;
+  width: 420px;  
   align-items: center;
   background-color: #FAF7F2;
   border: 1px solid rgba(0, 0, 0, 0.4);
-  border-radius: 10px;
+  border-radius: 14px;
   z-index: 1;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+.patternContainer:hover {
+  transform: translateY(-2px) scale(1.03);
 }
 
 .patternContainer .header{
   display: flex;
   justify-content: center;
-  padding: 4px 0px;
+  padding: 6px 0px;
   gap: 8px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.4);
   width: 100%;
 }
 
 .patternContainer .header img{
-  height: 20px;
+  height: 22px;
+}
+
+.patternContainer .header p{
+  font-size: 16px;
+  font-weight: 500;
+  color: #333;
 }
 
 .patternContainer .pattern  {
@@ -70,7 +82,7 @@
 }
 
 .soil{
-  width: 300px;
+  width: 420px;
   display: flex;
   justify-content: space-between;
   gap: 10px;
@@ -82,11 +94,17 @@
   flex-direction: column;
   gap: 10px;
   background-color: #FAF7F2 ;
-  border-radius: 13px; 
+  border-radius: 14px; 
   border: 1px solid rgba(0, 0, 0, 0.4);
   z-index: 1;
   flex: 1;
-  padding: 8px;  
+  padding: 10px 14px;  
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+.soil .item:hover {
+  transform: translateY(-2px) scale(1.03);
 }
 
 .bodyTitle{
@@ -96,57 +114,77 @@
 }
 
 .bodyTitle img{
-  height: 14px;
+  height: 16px;
   width: auto; 
 }
  
 .labelText{ 
-  font-size: 14px ;
+  font-size: 15px ;
   font-family: Roboto;
   line-height: 100%;
+  font-weight: 500;
 }
 
 .itemValue{ 
-  margin-left: 5px;
+  margin-left: 6px;
   font-family: Roboto; 
+  font-size: 17px;
+  font-weight: bold;
+  color: #232D22;
 }
 
 /******************/
 
 .guide{
-  width: 300px;
-  padding: 8px;
+  width: 420px;
+  padding: 10px 16px;
   display: flex;
   align-items: center;
   gap: 8px;
   flex-direction: column;
   border: 1px solid #6D894D ;
-  border-radius: 10px;
+  border-radius: 14px;
   background-color: #fff;
   z-index: 1;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+.guide:hover {
+  transform: translateY(-2px) scale(1.03);
 }
 
 .guide .firstLine{
   display: flex; 
   justify-content: center;
-  gap:5px;
+  align-items: center;
+  gap: 8px;
 }
 
 .firstLine img{
-  height: 20px;
+  height: 22px;
   width: auto;
 }
 
+.firstLine p{
+  font-size: 16px;
+  font-weight: bold;
+  color: #6D894D;
+}
+
 .guide .secondLine{
-  font-size: 13px;
+  font-size: 14px;
+  color: #555;
 }
 
 /********************/
 
 .formLabel{
   color: #666;
-  font-size: 16px;
+  font-size: 17px;
   line-height: 100%; 
+  font-weight: 500;
+  margin-top: 6px;
 }
 
  
@@ -154,25 +192,31 @@
   display: grid;
   grid-template-columns: 1fr 1fr;  
   gap: 15px;  
-  width:300px; 
-  height: 150px; 
+  width: 420px; 
+  height: 180px; 
 }
 
 /* Style de base pour chaque carte */
 .nutrientItem {
   display: flex;
   flex-direction: column;
-  padding: 10px 8px 10px 8px;
-  border-radius: 8px;
+  padding: 12px 14px;
+  border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   box-shadow: 0 2px 4px rgba(0,0,0,0.05);
   z-index: 1;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease;
+  cursor: pointer;
+}
+
+.nutrientItem:hover {
+  transform: translateY(-2px) scale(1.03);
 }
 
 /* Style du Label */
 .nutrientItem p {
   font-weight: bold;
-  font-size: 12px;
+  font-size: 14px;
   margin-bottom: 8px;
   color: #333;
 }
@@ -181,15 +225,15 @@
   display: flex;
   align-items: center;
   background-color: white;
-  border-radius: 10px;
-  padding: 0 5px;
+  border-radius: 12px;
+  padding: 2px 8px;
 }
   
 .inputGroup input {
   border: none;
   outline: none;
   padding: 4px; 
-  font-size: 14px;
+  font-size: 16px;
   width: 100%;
   background: transparent;
 }
@@ -220,4 +264,4 @@
 .itemRed {
   background-color: #FFEBEE; /* Rouge très clair */
   border-top: 4px solid #EF5350; /* Barre rouge gauche */
-}
+}

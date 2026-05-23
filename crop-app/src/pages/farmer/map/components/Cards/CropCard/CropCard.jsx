@@ -7,32 +7,23 @@ import { FertPanel } from "./Panels/Fert/FertPanel"
 import styles from "./CropCard.module.css"
 import { useState } from "react"
 
-export function CropCard({ cropContext, soilContext, climContext, fertContext, handlePersonalizeReco }) {
-  const [generalOn, setGeneral] = useState(true)
-  const [cropSoilOn, setCropSoil] = useState(false)
-  const [cropClimateOn, setCropClimate] = useState(false)
-  const [fertilizationOn, setFertilization] = useState(false)
+export function CropCard({ cropContext, soilContext, climContext, fertContext, handlePersonalizeReco, onClose }) {
+  const [activeTab, setActiveTab] = useState('general')
   return (
     <div className={styles.cropCard}>
-      <CropCardHeader cropContext={cropContext} />
+      <CropCardHeader cropContext={cropContext} onClose={onClose} />
 
 
       <div className={styles.cardBody}>
         <div className={styles.cardBck}> </div>
 
         <CropCardBodyHeader
-          generalOn={generalOn}
-          cropSoilOn={cropSoilOn}
-          cropClimateOn={cropClimateOn}
-          fertilizationOn={fertilizationOn}
-          setGeneral={setGeneral}
-          setCropSoil={setCropSoil}
-          setCropClimate={setCropClimate}
-          setFertilization={setFertilization} />
-        {generalOn && <GeneralPanel cropContext={cropContext} />}
-        {cropSoilOn && <SoilPanel soilContext={soilContext} />}
-        {cropClimateOn && <ClimatePanel climContext={climContext} />}
-        {fertilizationOn && <FertPanel fertContext={fertContext} />}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab} />
+        {activeTab === 'general' && <GeneralPanel cropContext={cropContext} />}
+        {activeTab === 'soil' && <SoilPanel soilContext={soilContext} cropContext={cropContext} />}
+        {activeTab === 'climate' && <ClimatePanel climContext={climContext} cropContext={cropContext} />}
+        {activeTab === 'fertilization' && <FertPanel fertContext={fertContext} />}
         <button className={styles.personalizeBtn}
           onClick={handlePersonalizeReco}>Personalize Recommendation
         </button>

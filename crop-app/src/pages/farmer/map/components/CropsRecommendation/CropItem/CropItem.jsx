@@ -4,15 +4,52 @@ import calendar from "@/assets/images/cropsRelated/calendar.png"
 
 import styles from "./CropItem.module.css"
 
-export function CropItem({ name, cropMonths, durationDays,  rating,  handleCropChoice, setCropContext  }) {
+const getCropImageUrl = (name) => {
+  if (!name) return '/crops/Wheat.png';
+  
+  const lowerName = name.toLowerCase().trim();
+  if (lowerName === 'chow chow' || lowerName === 'chow-chow' || lowerName === 'chowchow') {
+    return '/crops/Chayote.png';
+  }
+  if (lowerName === 'chili' || lowerName === 'chilli' || lowerName === 'chillies') {
+    return '/crops/Chilie.png';
+  }
+
+  const formattedName = name.trim().replace(/[-\s]+/g, '_');
+  const parts = formattedName.split('_');
+  const capitalized = parts.map((word, index) => {
+    if (index === 0) {
+      return word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+    } else {
+      return word.toLowerCase();
+    }
+  }).join('_');
+
+  return `/crops/${capitalized}.png`;
+};
+
+export function CropItem({ id, name, cropMonths, durationDays,  rating,  handleCropChoice, setCropContext, rawItem  }) {
   const scoreDisplay = getScoreDisplay(Number(rating)) 
      const rank = scoreDisplay.rank
      const colorClass = scoreDisplay.color 
      const compatibility = scoreDisplay.compatibility
   return (
-    <div className={`${styles.cropItem} ${styles[colorClass]}`}>
+    <div 
+      className={`${styles.cropItem} ${styles[colorClass]}`}
+      onClick={() => { 
+        handleCropChoice()
+        setCropContext({ id, name, cropMonths, durationDays, rating, rank, colorClass, compatibility, rawItem })
+      }}
+    >
       <div className={styles.cropIcon}>
-        <img src={`/crops/${name}.png`} alt="" />
+        <img 
+          src={getCropImageUrl(name)} 
+          alt={name} 
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = '/crops/Wheat.png';
+          }}
+        />
       </div>
       <div className={styles.cropMeta}>
         <p className={styles.cropName}>
@@ -46,13 +83,9 @@ export function CropItem({ name, cropMonths, durationDays,  rating,  handleCropC
           </div>
           <img src={`/ratingIcons/mood${rank}.png`} alt="" />
         </div>
-        <button className={styles.arrowBtn} 
-          onClick={()=> { 
-            handleCropChoice()
-            setCropContext({ name, cropMonths, durationDays, rating, rank, colorClass, compatibility })
-          }}>
+        <div className={styles.arrowBtn}>
           <img src={`/ratingIcons/arrow${rank}.png`} alt="" />
-        </button>
+        </div>
       </div>
     </div>
 

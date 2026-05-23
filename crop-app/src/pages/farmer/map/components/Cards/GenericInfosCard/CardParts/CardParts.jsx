@@ -1,7 +1,8 @@
- import marker from "@/assets/images/soilWeatherRelated/marker.png"  
+import marker from "@/assets/images/soilWeatherRelated/marker.png"  
+import cardCross from "@/assets/images/cross.png"
 import styles from "./CardParts.module.css" 
 
-export function GenericCardHeader(){ 
+export function GenericCardHeader({ closeCard }){ 
   return(
     <div className={
       styles.genericCardHeader
@@ -12,8 +13,10 @@ export function GenericCardHeader(){
           <p className={styles.regionName}>Sétif Region</p>
           <p className={styles.coord}>Lat:36.1°N, Long:5.4°E </p>
         </div>
-        
       </div> 
+      {closeCard && (
+        <img className={styles.cardCross} src={cardCross} alt="Close" onClick={closeCard} />
+      )}
     </div>
   )
 }

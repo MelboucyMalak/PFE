@@ -90,12 +90,110 @@
 }
 
 .showLocationBtn{
-  border: 1px solid ;
   font-size: 14px;
   color: white;
   border: 1px solid #6F826D;
   border-radius: 10px; 
   background-color: #69815040;
-  padding: 4px ;
+  padding: 4px 8px;
   cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.showLocationBtn:hover{
+  background-color: white;
+  color: #232D22;
+  border-color: white;
+}
+
+.btnLoadingWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btnSpinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-left-color: #ffffff;
+  border-radius: 50%;
+  animation: btnSpin 0.8s linear infinite;
+  display: inline-block;
+}
+
+@keyframes btnSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Premium Skeleton Pulse Animations */
+@keyframes skeletonPulse {
+  0% {
+    background-color: rgba(43, 57, 42, 0.6);
+  }
+  50% {
+    background-color: rgba(63, 82, 62, 0.8);
+  }
+  100% {
+    background-color: rgba(43, 57, 42, 0.6);
+  }
+}
+
+.skeletonMarker {
+  width: 16px;
+  height: 20px;
+  background-color: rgba(43, 57, 42, 0.6);
+  border-radius: 4px;
+  animation: skeletonPulse 1.5s infinite ease-in-out;
+}
+
+.skeletonTextRegion {
+  width: 120px;
+  height: 18px;
+  background-color: rgba(43, 57, 42, 0.6);
+  border-radius: 4px;
+  animation: skeletonPulse 1.5s infinite ease-in-out;
+}
+
+.skeletonTextDate {
+  width: 90px;
+  height: 12px;
+  background-color: rgba(43, 57, 42, 0.6);
+  border-radius: 4px;
+  margin-top: 4px;
+  animation: skeletonPulse 1.5s infinite ease-in-out;
+}
+
+.skeletonTemp {
+  width: 50px;
+  height: 24px;
+  background-color: rgba(43, 57, 42, 0.6);
+  border-radius: 4px;
+  animation: skeletonPulse 1.5s infinite ease-in-out;
+}
+
+.skeletonWeatherText {
+  width: 65px;
+  height: 12px;
+  background-color: rgba(43, 57, 42, 0.6);
+  border-radius: 4px;
+  animation: skeletonPulse 1.5s infinite ease-in-out;
+}
+
+.skeletonWeatherIcon {
+  width: 20px;
+  height: 20px;
+  background-color: rgba(43, 57, 42, 0.6);
+  border-radius: 50%;
+  animation: skeletonPulse 1.5s infinite ease-in-out;
+}
+
+.disabledBtn {
+  background-color: rgba(105, 129, 80, 0.15) !important;
+  color: rgba(255, 255, 255, 0.4) !important;
+  border-color: rgba(111, 130, 109, 0.3) !important;
+  cursor: not-allowed !important;
+  pointer-events: none;
 }
