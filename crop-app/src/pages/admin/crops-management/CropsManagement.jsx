@@ -627,28 +627,34 @@ export default function CropsManagement() {
       );
 
       // If user also changed the image, upload it separately via PATCH + FormData
+      // Update local list with the server-returned crop object
+      const serverCrop = unpackCropResponse(response.data, payload, selectedCrop);
+      let displayCrop = {
+        ...serverCrop,
+        sowing_month_start: parseMonthVal(serverCrop.sowing_month_start),
+        sowing_month_end: parseMonthVal(serverCrop.sowing_month_end),
+      };
+
       if (imageFile) {
         const imgForm = new FormData();
         imgForm.append('image', imageFile);
         try {
-          await axios.patch(
+          const patchRes = await axios.patch(
             `https://torbati.onrender.com/api/admin/crops/${formData.id}`,
             imgForm,
             { headers: { Authorization: `Token ${token}` } }
           );
+          // Merge the server-returned image URL so the card updates immediately
+          const patchData = patchRes.data?.crop || patchRes.data || {};
+          const uploadedUrl = patchData.image || patchData.crop_image || null;
+          if (uploadedUrl) displayCrop = { ...displayCrop, image: uploadedUrl };
         } catch (imgErr) {
           console.warn('Image upload failed (crop data saved):', imgErr.response?.data);
         }
       }
 
-      // Update local list with the server-returned crop object
-      const serverCrop = unpackCropResponse(response.data, payload, selectedCrop);
-      const displayCrop = {
-        ...serverCrop,
-        sowing_month_start: parseMonthVal(serverCrop.sowing_month_start),
-        sowing_month_end: parseMonthVal(serverCrop.sowing_month_end),
-      };
       setCrops(prev => prev.map(c => c.id === formData.id ? displayCrop : c));
+
 
       setModalBannerMessage('Crop edited successfully!');
       setTimeout(() => {
@@ -749,26 +755,31 @@ export default function CropsManagement() {
       const serverCrop = unpackCropResponse(response.data, payload, {});
       const newId = serverCrop.id;
 
+      let displayCrop = {
+        ...serverCrop,
+        sowing_month_start: parseMonthVal(serverCrop.sowing_month_start),
+        sowing_month_end: parseMonthVal(serverCrop.sowing_month_end),
+      };
+
       // If user selected an image, upload it separately now that we have the crop ID
       if (imageFile && newId) {
         const imgForm = new FormData();
         imgForm.append('image', imageFile);
         try {
-          await axios.patch(
+          const patchRes = await axios.patch(
             `https://torbati.onrender.com/api/admin/crops/${newId}`,
             imgForm,
             { headers: { Authorization: `Token ${token}` } }
           );
+          // Merge the server-returned image URL into the local crop card
+          const patchData = patchRes.data?.crop || patchRes.data || {};
+          const uploadedUrl = patchData.image || patchData.crop_image || null;
+          if (uploadedUrl) displayCrop = { ...displayCrop, image: uploadedUrl };
         } catch (imgErr) {
           console.warn('Image upload failed (crop was created):', imgErr.response?.data);
         }
       }
 
-      const displayCrop = {
-        ...serverCrop,
-        sowing_month_start: parseMonthVal(serverCrop.sowing_month_start),
-        sowing_month_end: parseMonthVal(serverCrop.sowing_month_end),
-      };
       setCrops(prev => [displayCrop, ...prev]);
       setIsSuccessPopupOpen(true);
     } catch (err) {
