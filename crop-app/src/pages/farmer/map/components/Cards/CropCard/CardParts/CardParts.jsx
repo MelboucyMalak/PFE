@@ -3,7 +3,7 @@ import calendar from "@/assets/images/cropsRelated/calendar.png"
 import styles from "./CardParts.module.css"
 
 const getCropImageUrl = (name) => {
-  if (!name) return '/crops/Wheat.png';
+  if (!name) return '/placeholder-crop.png';
   
   const lowerName = name.toLowerCase().trim();
   if (lowerName === 'chow chow' || lowerName === 'chow-chow' || lowerName === 'chowchow') {
@@ -37,7 +37,7 @@ export function CropCardHeader({ cropContext, onClose }) {
           alt={name} 
           onError={(e) => {
             e.target.onerror = null;
-            e.target.src = '/crops/Wheat.png';
+            e.target.src = '/placeholder-crop.png';
           }}
         />
       </div>

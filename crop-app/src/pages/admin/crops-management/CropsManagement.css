@@ -1,0 +1,1269 @@
+.admin-crops-page-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #F3EFE9; /* Warm earthy beige sand */
+  position: relative;
+  z-index: 1;
+}
+
+.admin-crops-page-container::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url('../../../assets/images/background.png');
+  background-size: auto;
+  background-position: top left;
+  background-repeat: repeat;
+  opacity: 0.08; /* contours */
+  z-index: -1;
+  pointer-events: none;
+}
+
+.admin-crops-content-layout {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+  padding: 100px 40px 30px 40px; /* offset top to prevent header overlap */
+  box-sizing: border-box;
+  max-width: 1300px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Header styling */
+.admin-crops-header {
+  background-color: #273628;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.admin-crops-back-btn {
+  position: absolute;
+  left: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+
+.admin-crops-back-btn:hover {
+  transform: scale(1.12);
+}
+
+.admin-crops-back-arrow {
+  height: 28px;
+  width: auto;
+  filter: brightness(0) invert(1); /* Ensure it's white */
+}
+
+.admin-crops-header-title-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-crops-header-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.admin-crops-header-title {
+  color: white;
+  font-size: 24px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Filters & Controls Header Bar */
+.admin-catalog-filters-bar {
+  background-color: #ffffff;
+  border: 1px solid #E6E1DA;
+  border-radius: 20px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  box-shadow: 0 8px 24px rgba(39, 54, 40, 0.03);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 24px;
+  width: 100%;
+  flex-wrap: wrap;
+}
+
+.admin-search-bar-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 250px;
+}
+
+.admin-search-input-box {
+  width: 100%;
+  padding: 12px 48px 12px 20px;
+  background-color: #F8F6F2;
+  border: 1px solid #E6E1DA;
+  border-radius: 30px;
+  font-family: 'Inika', Georgia, serif;
+  font-size: 15px;
+  color: #273628;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+  box-sizing: border-box;
+}
+
+.admin-search-input-box:focus {
+  border-color: #5D8B6C;
+  background-color: #ffffff;
+  box-shadow: 0 4px 15px rgba(93, 139, 108, 0.1);
+}
+
+.admin-search-icon-img {
+  position: absolute;
+  right: 18px;
+  width: 18px;
+  height: 18px;
+  opacity: 0.65;
+  pointer-events: none;
+}
+
+/* Season filter buttons */
+.admin-season-filter-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-season-label {
+  font-family: 'Inika', Georgia, serif;
+  font-size: 15px;
+  color: #7A8E7E;
+}
+
+.admin-season-pills-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.admin-season-pill-btn {
+  background-color: transparent;
+  border: 1px solid #E6E1DA;
+  color: #7A8E7E;
+  padding: 8px 18px;
+  font-family: 'Inika', Georgia, serif;
+  font-size: 13px;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.admin-season-pill-btn:hover {
+  border-color: #5D8B6C;
+  color: #273628;
+}
+
+.admin-season-pill-btn.active {
+  background-color: #ffffff;
+  border-color: #273628;
+  color: #273628;
+  box-shadow: 0 3px 8px rgba(39, 54, 40, 0.05);
+}
+
+/* Sorting Dropdown select container */
+.admin-sort-filter-section {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  min-width: 140px;
+}
+
+.admin-sort-icon-img {
+  width: 18px;
+  height: 18px;
+  opacity: 0.65;
+}
+
+.admin-sort-dropdown-select {
+  padding: 12px 32px 12px 0px;
+  background-color: transparent;
+  border: none;
+  font-family: 'Inika', Georgia, serif;
+  font-size: 15px;
+  color: #273628;
+  outline: none;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23273628' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 6px center;
+  background-size: 14px;
+  font-weight: normal;
+  width: 100%;
+}
+
+/* 4x2 Cards Grid Viewport */
+.admin-crops-grid-viewport {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+/* Crop Card Layout with Admin Buttons */
+.crop-card-admin-controls {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.crop-card-row-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.crop-card-btn-view {
+  flex: 1;
+  background-color: transparent;
+  color: #273628;
+  border: 1.5px solid #273628;
+  padding: 8px 0;
+  font-family: 'Inika', Georgia, serif;
+  font-size: 14px;
+  border-radius: 30px;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.crop-card-btn-view:hover {
+  background-color: #273628;
+  color: #ffffff;
+}
+
+.crop-card-btn-view:active {
+  transform: scale(0.98);
+}
+
+.view-crop-arrow-icon {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.crop-card-btn-view:hover .view-crop-arrow-icon {
+  transform: translateX(4px);
+  filter: brightness(0) invert(1);
+}
+
+.crop-admin-btn.delete-btn {
+  cursor: pointer;
+  height: 38px;                 /* Exact same height as the View Crop button */
+  width: 48px;                  /* Proportional width matching the mockup aspect ratio */
+  border-radius: 12px;          /* Clean rounded corner matching the mockup */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: all 0.2s ease;
+  position: relative;
+  flex-shrink: 0;
+  box-sizing: border-box;
+
+  /* Default Non-Hover State */
+  background-color: #FF3D3D;    /* Solid red background */
+  border: 1.5px solid #FF3D3D;  /* Solid red border */
+}
+
+.crop-admin-btn.delete-btn img {
+  width: 18px;                  /* Compact icon size inside the button */
+  height: 18px;
+  object-fit: contain;
+  transition: opacity 0.2s ease;
+}
+
+.crop-admin-btn.delete-btn .icon-hover {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 18px;
+  height: 18px;
+  opacity: 0;
+}
+
+/* Hover State */
+.crop-admin-btn.delete-btn:hover {
+  background-color: #ffffff;    /* White background on hover */
+  border: 1.5px solid #FF3D3D;  /* Red border on hover */
+  transform: scale(1.05);       /* Subtle premium hover lift */
+}
+
+.crop-admin-btn.delete-btn:hover .icon-normal {
+  opacity: 0;
+}
+
+.crop-admin-btn.delete-btn:hover .icon-hover {
+  opacity: 1;
+}
+
+.crop-card-btn-edit {
+  width: 100%;
+  padding: 8px 0;
+  font-family: 'Inika', Georgia, serif;
+  font-size: 14px;
+  border-radius: 30px;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  /* Default State: Green Background, White Text */
+  background-color: #273628;
+  color: white;
+  border: 1.5px solid #273628;
+}
+
+.crop-card-btn-edit:hover {
+  background-color: #ffffff;    /* White background on hover */
+  color: #273628;               /* Green text on hover */
+  border-color: #273628;
+  transform: translateY(-1px);
+}
+
+.crop-card-btn-edit:active {
+  transform: scale(0.98);
+}
+
+.edit-crop-pen-icon {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.crop-card-btn-edit .icon-normal {
+  filter: brightness(0) invert(1); /* Inverts icon to white on green background */
+}
+
+.crop-card-btn-edit .icon-hover {
+  display: none !important;
+}
+
+.crop-card-btn-edit:hover .icon-normal {
+  display: none !important;
+}
+
+.crop-card-btn-edit:hover .icon-hover {
+  display: inline-block !important;
+}
+
+.crop-card-btn-edit:hover .edit-crop-pen-icon {
+  transform: rotate(-10deg);
+  filter: none !important;      /* Shows standard colored icon on hover */
+}
+
+/* Add Crop Section below grid and page selection */
+.add-crop-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+.btn-add-crop {
+  background-color: #273628;
+  color: white;
+  border: 1.5px solid #273628;
+  border-radius: 30px;
+  padding: 12px 32px;
+  font-family: 'Inika', Georgia, serif;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 4px 10px rgba(39, 54, 40, 0.15);
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.btn-add-crop:hover {
+  background-color: white;
+  color: #273628;
+  border-color: #273628;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(39, 54, 40, 0.25);
+}
+
+.btn-add-crop img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+}
+
+.btn-add-crop .add-icon-hover {
+  display: none;
+}
+
+.btn-add-crop:hover .add-icon-normal {
+  display: none;
+}
+
+.btn-add-crop:hover .add-icon-hover {
+  display: block;
+}
+
+/* Catalog loading and zero state styles */
+.admin-loading-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px 0;
+  width: 100%;
+}
+
+.admin-catalog-spinner {
+  border: 4px solid rgba(93, 139, 108, 0.15);
+  border-left-color: #273628;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: admin-catalog-spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes admin-catalog-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.admin-loading-screen p {
+  font-family: 'Inika', Georgia, serif;
+  font-size: 16px;
+  color: #5D8B6C;
+}
+
+.admin-no-crops-found-box {
+  background-color: #ffffff;
+  border: 1px dashed #E6E1DA;
+  border-radius: 20px;
+  padding: 60px 40px;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.admin-no-crops-found-box p {
+  font-family: 'Inika', Georgia, serif;
+  font-size: 16px;
+  color: #7A8E7E;
+  margin: 0;
+}
+
+/* Modals for Edit and Add */
+.crop-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(39, 54, 40, 0.4);
+  backdrop-filter: blur(6px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: modalBackdropFadeIn 0.3s ease-out;
+}
+
+@keyframes modalBackdropFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.crop-modal-container {
+  background-color: white;
+  border-radius: 24px;
+  width: 90%;
+  max-width: 600px;
+  max-height: 85vh;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modalWindowPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: 1px solid #C4BDB3;
+}
+
+@keyframes modalWindowPop {
+  from { transform: scale(0.9) translateY(20px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.crop-modal-header {
+  background-color: #273628;
+  color: white;
+  padding: 18px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.crop-modal-header h3 {
+  font-family: 'Inika', Georgia, serif;
+  font-size: 22px;
+  margin: 0;
+  font-weight: normal;
+}
+
+.crop-modal-close-btn {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+.crop-modal-body {
+  padding: 24px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.crop-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.form-grid-full-width {
+  grid-column: span 2;
+}
+
+.crop-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.crop-form-group label {
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  color: #5D8B6C;
+  font-weight: 500;
+}
+
+.crop-form-input,
+.crop-form-select {
+  padding: 10px 14px;
+  border: 1.5px solid #C4BDB3;
+  border-radius: 8px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+  color: #273628;
+  background-color: #FAF8F5;
+  outline: none;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.crop-form-input:focus,
+.crop-form-select:focus {
+  border-color: #273628;
+  background-color: white;
+}
+
+.crop-modal-footer {
+  padding: 18px 24px;
+  border-top: 1px solid #E6E1DA;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  background-color: #FAF8F5;
+}
+
+.btn-modal-cancel {
+  background-color: white;
+  color: #273628;
+  border: 1.5px solid #273628;
+  padding: 10px 24px;
+  border-radius: 30px;
+  font-family: 'Inika', Georgia, serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-modal-cancel:hover {
+  background-color: #F3EFE9;
+}
+
+.btn-modal-submit {
+  background-color: #273628;
+  color: white;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 30px;
+  font-family: 'Inika', Georgia, serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 8px rgba(39, 54, 40, 0.1);
+}
+
+.btn-modal-submit:hover {
+  background-color: #1a241b;
+  transform: translateY(-1px);
+}
+
+.btn-modal-submit:disabled {
+  background-color: #C0C8BC;
+  color: #8A9286;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Success notification banner inside modal */
+.crop-modal-banner {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 5px;
+  background-color: #E2F3E7;
+  color: #2E7D32;
+  border: 1.5px solid #A5D6A7;
+  animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Confirm Delete Modal specific styling */
+.delete-confirm-box {
+  max-width: 420px;
+}
+
+.delete-confirm-body {
+  padding: 30px 24px;
+  text-align: center;
+}
+
+.delete-confirm-body p {
+  font-family: 'Inika', Georgia, serif;
+  font-size: 16px;
+  color: #273628;
+  margin: 0 0 8px 0;
+}
+
+.delete-confirm-body span {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  color: #7A8E7E;
+}
+
+.btn-modal-delete {
+  background-color: #FF3D3D;
+  color: white;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 30px;
+  font-family: 'Inika', Georgia, serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 8px rgba(255, 61, 61, 0.15);
+}
+
+.btn-modal-delete:hover {
+  background-color: #e03232;
+  transform: translateY(-1px);
+}
+
+/* Responsive grid layouts */
+@media (max-width: 1024px) {
+  .admin-crops-grid-viewport {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .admin-crops-content-layout {
+    padding: 100px 20px 40px 20px;
+  }
+  .admin-catalog-filters-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding: 20px;
+  }
+  .admin-search-bar-inner {
+    max-width: none;
+  }
+  .admin-season-filter-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .admin-sort-filter-section {
+    border-top: 1px solid #E6E1DA;
+    padding-top: 12px;
+  }
+  .admin-crops-grid-viewport {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .crop-form-grid {
+    grid-template-columns: 1fr;
+  }
+  .form-grid-full-width {
+    grid-column: span 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-crops-grid-viewport {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Dynamic Progress Bar Floating Card at Viewport Top */
+.admin-progress-bar-card {
+  position: fixed;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: white;
+  border-radius: 40px;
+  padding: 12px 30px;
+  box-shadow: 0 10px 30px rgba(39, 54, 40, 0.08);
+  border: 1.5px solid #E6E1DA;
+  z-index: 10000; /* Float above the modal overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 650px;
+  width: 90%;
+  animation: slideDownProgressBar 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes slideDownProgressBar {
+  from { transform: translate(-50%, -40px); opacity: 0; }
+  to { transform: translate(-50%, 0); opacity: 1; }
+}
+
+.progress-steps-container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.progress-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+}
+
+.step-circle {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: #FAF8F5;
+  color: #7A8E7E;
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  border: 2px solid #E6E1DA;
+}
+
+.step-check-icon {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+}
+
+.step-label {
+  font-family: 'Roboto', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  color: #7A8E7E;
+  transition: all 0.3s ease;
+}
+
+/* Active Step state */
+.progress-step.active .step-circle {
+  background-color: #273628;
+  border-color: #273628;
+  color: white;
+}
+
+.progress-step.active .step-label {
+  color: #273628;
+  font-weight: bold;
+}
+
+/* Completed Step state */
+.progress-step.completed .step-circle {
+  background-color: #ffffff;
+  border-color: #5D8B6C;
+  color: #5D8B6C;
+}
+
+.progress-step.completed .step-label {
+  color: #5D8B6C;
+}
+
+/* Progress connecting lines */
+.progress-line {
+  flex: 1;
+  height: 2px;
+  background-color: #E6E1DA;
+  margin: 0 8px;
+  margin-bottom: 18px; /* Center with the circles */
+  transition: background-color 0.3s ease;
+}
+
+.progress-line.completed {
+  background-color: #5D8B6C;
+}
+
+/* Upload Photo Block (Step 1) */
+.crop-upload-photo-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.crop-photo-circle-preview {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  background-image: radial-gradient(circle, #f0f0f0 10%, transparent 10.1%),
+                    radial-gradient(circle, #f0f0f0 10%, transparent 10.1%);
+  background-size: 10px 10px;
+  background-position: 0 0, 5px 5px;
+  background-color: #fafafa;
+  border: 1px dashed #C4BDB3;
+  margin-bottom: 12px;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.02);
+}
+
+.btn-crop-upload-photo {
+  background-color: white;
+  color: #273628;
+  border: 1.5px solid #E6E1DA;
+  border-radius: 12px;
+  padding: 10px 24px;
+  font-family: 'Inika', Georgia, serif;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
+}
+
+.btn-crop-upload-photo:hover {
+  background-color: #FAF8F5;
+  border-color: #273628;
+  transform: translateY(-1px);
+}
+
+.upload-photo-subtitle {
+  font-family: 'Roboto', sans-serif;
+  font-size: 11px;
+  color: #7A8E7E;
+}
+
+/* Close Icon inside Header */
+.crop-modal-close-icon {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+
+.crop-modal-close-icon:hover {
+  opacity: 1;
+}
+
+/* Cancel Crop Addition Modal specific styling */
+.cancel-popup-box {
+  max-width: 440px;
+  border-radius: 28px;
+}
+
+.cancel-popup-body {
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.cancel-popup-status-icon {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 24px;
+}
+
+.cancel-popup-title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: #000000;
+  margin: 0 0 10px 0;
+}
+
+.cancel-popup-text {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  color: #7A8E7E;
+  margin: 0 0 30px 0;
+  line-height: 1.45;
+  max-width: 280px;
+}
+
+.btn-cancel-popup-goback {
+  background-color: #273628;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 48px;
+  font-family: 'Inika', Georgia, serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 14px;
+  width: 100%;
+  max-width: 240px;
+  box-shadow: 0 4px 10px rgba(39, 54, 40, 0.15);
+}
+
+.btn-cancel-popup-goback:hover {
+  background-color: #1a241b;
+  transform: translateY(-1px);
+}
+
+.btn-cancel-popup-confirm {
+  background-color: transparent;
+  color: #FF3D3D;
+  border: none;
+  font-family: 'Inika', Georgia, serif;
+  font-size: 14px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  text-decoration: underline;
+}
+
+.btn-cancel-popup-confirm:hover {
+  color: #cc3333;
+}
+
+/* Success Popup specific styling */
+.success-popup-box {
+  max-width: 440px;
+  border-radius: 28px;
+}
+
+.success-popup-body {
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.success-popup-status-icon {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  margin-bottom: 24px;
+}
+
+.success-popup-title {
+  font-family: 'Roboto', sans-serif;
+  font-size: 24px;
+  font-weight: 500;
+  color: #2E7D32;
+  margin: 0 0 24px 0;
+}
+
+.success-popup-details {
+  background-color: #FAF8F5;
+  border: 1.5px solid #E6E1DA;
+  border-radius: 18px;
+  padding: 18px 24px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 32px;
+  text-align: left;
+}
+
+.success-detail-row {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Roboto', sans-serif;
+  font-size: 15px;
+}
+
+.success-detail-row strong {
+  color: #7A8E7E;
+  font-weight: 500;
+}
+
+.success-detail-row span {
+  color: #273628;
+  font-weight: 600;
+}
+
+.btn-success-popup-goback {
+  background-color: #273628;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 48px;
+  font-family: 'Inika', Georgia, serif;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  max-width: 260px;
+  box-shadow: 0 4px 10px rgba(39, 54, 40, 0.15);
+}
+
+.btn-success-popup-goback:hover {
+  background-color: #1a241b;
+  transform: translateY(-1px);
+}
+
+/* Bullet list headers on steps */
+.crop-step-subheading {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  color: #273628;
+  font-weight: 500;
+  margin: 0 0 4px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.crop-step-subheading::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: #7A8E7E;
+}
+
+/* Scrollable tags list style inside wizard steps */
+.crop-wizard-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 150px;
+  overflow-y: auto;
+  border: 1.5px solid #E6E1DA;
+  border-radius: 12px;
+  padding: 12px;
+  background-color: #FAF8F5;
+  margin-top: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.crop-wizard-list-empty {
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  color: #7A8E7E;
+  text-align: center;
+  padding: 20px 0;
+  margin: 0;
+}
+
+.crop-wizard-item-tag {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  border: 1px solid #E6E1DA;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  color: #273628;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.01);
+}
+
+.crop-wizard-item-tag-details {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.crop-wizard-item-tag-details h5 {
+  margin: 0;
+  font-weight: 600;
+  color: #273628;
+}
+
+.crop-wizard-item-tag-details p {
+  margin: 0;
+  font-size: 11px;
+  color: #7A8E7E;
+  line-height: 1.25;
+}
+
+.btn-crop-wizard-remove-tag {
+  background: transparent;
+  border: none;
+  color: #FF3D3D;
+  font-size: 16px;
+  cursor: pointer;
+  line-height: 1;
+}
+
+/* Button sub-actions inside grids */
+.btn-crop-wizard-add-tag {
+  background-color: white;
+  color: #273628;
+  border: 1.5px solid #273628;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-family: 'Inika', Georgia, serif;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  align-self: flex-end;
+  height: 40px;
+  box-sizing: border-box;
+}
+
+.btn-crop-wizard-add-tag:hover {
+  background-color: #FAF8F5;
+  transform: translateY(-1px);
+}
+
+/* Premium Map-Style Exit Button Hover Rules */
+.crop-modal-close-btn-wrapper {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.crop-modal-close-btn-wrapper img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  filter: none !important;      /* Prevents grayscale/inverts, keeping colored details */
+  opacity: 1 !important;
+  display: block;
+}
+
+.crop-modal-close-btn-wrapper .hover-exit {
+  display: none !important;
+}
+
+.crop-modal-close-btn-wrapper:hover .default-exit {
+  display: none !important;
+}
+
+.crop-modal-close-btn-wrapper:hover .hover-exit {
+  display: block !important;
+}
+
+.crop-modal-close-btn-wrapper:hover {
+  transform: scale(1.12);
+}
+
+.crop-modal-close-btn-wrapper:active {
+  transform: scale(0.95);
+}
+
+/* Premium Error Notification Banner */
+.crop-modal-error-banner {
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  background-color: #FDECEA;
+  color: #D32F2F;
+  border: 1.5px solid #EF9A9A;
+  animation: modalFadeIn 0.3s ease;
+}
+

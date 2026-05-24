@@ -4,8 +4,19 @@ import durationIcon from '../icons/Duration-icon.png';
 import rightArrowIcon from '../icons/Right-arrow.png';
 import './CropCard.css';
 
+const PREBUILT_CROPS = new Set([
+  'ash_gourd', 'beetroot', 'begalgram', 'bengalgram', 'bhendi', 'bitter_gourd', 'blackgram', 'bottle_gourd', 'brinjal',
+  'cabbage', 'capsicum', 'carrot', 'castor', 'cauliflower', 'chayote', 'chilie', 'cluster_bean', 'cotton',
+  'cowpea', 'cucumber', 'elephant_foot_yam', 'finger_millet', 'foxtail_millet', 'french_bean', 'groundnut',
+  'horsegram', 'kodo_millet', 'maize', 'melon', 'moringa', 'mung_beans', 'onion', 'pearl_millet', 'peas',
+  'pigeon_pea', 'proso_millet', 'pumpkin', 'radish', 'ribbed_gourd', 'rice', 'round_gourd', 'sesame',
+  'small_onion', 'snake_gourd', 'sorghum', 'soyabean', 'sugarbeet', 'sugarcane', 'sunflower', 'sweet_potato',
+  'tomato', 'watermelon', 'wheat'
+]);
+
 export const normalizeCropImagePath = (imagePath) => {
   if (!imagePath) return '/placeholder-crop.png';
+  if (imagePath.startsWith('data:')) return imagePath;
 
   let decodedPath = imagePath;
   try {
@@ -14,22 +25,31 @@ export const normalizeCropImagePath = (imagePath) => {
     console.error("URI decoding failed for path:", imagePath, e);
   }
 
-  let filenameWithExt = '';
-  const cropsIndex = decodedPath.indexOf('/crops/');
+  // Detect media path vs local path
   const mediaIndex = decodedPath.indexOf('/media/crops/');
+  
+  if (mediaIndex !== -1) {
+    // It's a custom uploaded/edited image on the server, so we ALWAYS load from remote URL!
+    return decodedPath.startsWith('http') ? decodedPath : `https://torbati.onrender.com${decodedPath}`;
+  }
+
+  // Strip query string for local file mapping
+  const questionMarkIndex = decodedPath.indexOf('?');
+  const pathWithoutQuery = questionMarkIndex !== -1 ? decodedPath.substring(0, questionMarkIndex) : decodedPath;
+
+  let filenameWithExt = '';
+  const cropsIndex = pathWithoutQuery.indexOf('/crops/');
 
   if (cropsIndex !== -1) {
-    filenameWithExt = decodedPath.substring(cropsIndex + 7);
-  } else if (mediaIndex !== -1) {
-    filenameWithExt = decodedPath.substring(mediaIndex + 13);
-  } else if (decodedPath.includes('/')) {
-    const segments = decodedPath.split('/');
+    filenameWithExt = pathWithoutQuery.substring(cropsIndex + 7);
+  } else if (pathWithoutQuery.includes('/')) {
+    const segments = pathWithoutQuery.split('/');
     const lastSegment = segments[segments.length - 1];
     if (lastSegment && (lastSegment.toLowerCase().endsWith('.png') || lastSegment.toLowerCase().endsWith('.jpg') || lastSegment.toLowerCase().endsWith('.jpeg'))) {
       filenameWithExt = lastSegment;
     }
   } else {
-    filenameWithExt = decodedPath;
+    filenameWithExt = pathWithoutQuery;
   }
 
   if (!filenameWithExt) {
@@ -60,7 +80,12 @@ export const normalizeCropImagePath = (imagePath) => {
     }
   }).join('_');
 
-  return `/crops/${capitalized}${ext}`;
+  const lowerCapitalized = capitalized.toLowerCase();
+  if (PREBUILT_CROPS.has(lowerCapitalized)) {
+    return `/crops/${capitalized}${ext}`;
+  }
+
+  return decodedPath.startsWith('http') ? decodedPath : `https://torbati.onrender.com${decodedPath}`;
 };
 
 export function CropCard({ crop, onViewClick }) {

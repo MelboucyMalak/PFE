@@ -30,6 +30,26 @@ const CLIMATE_NAME_MAP = {
   'bwh': 'Hot Desert'
 };
 
+const getClimateName = (item) => {
+  if (!item) return '';
+  const val = item.climate !== undefined && item.climate !== null ? item.climate : item.climate_id;
+  if (val === undefined || val === null) return '';
+  
+  const idMap = {
+    1: 'Csa',
+    2: 'BSh',
+    3: 'BSk',
+    4: 'BWh'
+  };
+  
+  let key = String(val).trim();
+  if (idMap[key]) {
+    key = idMap[key];
+  }
+  
+  return CLIMATE_NAME_MAP[key] || key;
+};
+
 export function CropPopup({ crop, onClose }) {
   // Local state to track popup slide view window indices
   const [page, setPage] = useState(1);
@@ -139,7 +159,7 @@ export function CropPopup({ crop, onClose }) {
               <div className="dynamic-ratings-scroll-list">
                 {crop.crop_climates?.map((item, index) => (
                   <div className="rating-card-row" key={index}>
-                    <div className="climate-badge-zone">{CLIMATE_NAME_MAP[item.climate] || item.climate}</div>
+                    <div className="climate-badge-zone">{getClimateName(item)}</div>
                     <div className="rating-card-details">
                       <h5>Climate Rating: {item.rating}</h5>
                       <p>{item.note}</p>
