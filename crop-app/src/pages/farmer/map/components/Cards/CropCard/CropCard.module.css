@@ -57,3 +57,36 @@
 .personalizeBtn:active {
   transform: translateY(0);
 }
+
+.disabledBtn {
+  background-color: #D3D8D0 !important;
+  border-color: #C0C8BC !important;
+  color: #8A9286 !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+  transform: none !important;
+}
+
+.disabledBtn:hover {
+  background-color: #D3D8D0 !important;
+  border-color: #C0C8BC !important;
+  color: #8A9286 !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.loaderSpinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(138, 146, 134, 0.3);
+  border-radius: 50%;
+  border-top-color: #8A9286;
+  animation: spin 0.8s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

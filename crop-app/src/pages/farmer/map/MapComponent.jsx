@@ -605,7 +605,8 @@ export default function MapComponent() {
       const res = await axios.post('https://torbati.onrender.com/api/field/analysis/', payload, { headers });
       if (res.data) {
         const data = res.data;
-        setFieldAnalysisId(data.id || data.field_analysis_id);
+        const faId = data.id || data.field_analysis_id || data.fieldAnalysisId || data.field_analysis?.id || data.field_analysis;
+        setFieldAnalysisId(faId);
 
         let texturesData = {
           "sandy loam": { coverage: 55, score: 30 },
@@ -717,17 +718,17 @@ export default function MapComponent() {
         const scoreP = Math.round(coverageP);
         const scoreK = Math.round(coverageK);
 
-        const availableN = data.available_in_soil_kg_ha?.N !== undefined
-          ? Math.round(data.available_in_soil_kg_ha.N)
-          : (data.N?.available !== undefined ? Math.round(data.N.available) : Math.round((scoreN / 100) * needN));
+        const availableN = scoreN < 100 
+          ? Math.round((scoreN / 100) * needN) 
+          : Math.round(userInputs.n * 2.24);
 
-        const availableP = data.available_in_soil_kg_ha?.P !== undefined
-          ? Math.round(data.available_in_soil_kg_ha.P)
-          : (data.P?.available !== undefined ? Math.round(data.P.available) : Math.round((scoreP / 100) * needP));
+        const availableP = scoreP < 100 
+          ? Math.round((scoreP / 100) * needP) 
+          : Math.round(userInputs.p * 2.24);
 
-        const availableK = data.available_in_soil_kg_ha?.K !== undefined
-          ? Math.round(data.available_in_soil_kg_ha.K)
-          : (data.K?.available !== undefined ? Math.round(data.K.available) : Math.round((scoreK / 100) * needK));
+        const availableK = scoreK < 100 
+          ? Math.round((scoreK / 100) * needK) 
+          : Math.round(userInputs.k * 2.24);
 
         const surfaceAreaM2 = data.surface_ha || 1200;
 
@@ -805,6 +806,7 @@ export default function MapComponent() {
     setPersonalization(false)
     setFinalResult(false)
     setSessionFavorited(false)
+    enableMapInteractions(map, setViewOn)
   }
 
   const handleFavoriteSession = async () => {
@@ -867,7 +869,15 @@ export default function MapComponent() {
 
 
 
-          {viewIsOn &&
+          {viewIsOn && 
+           !starterIsVisible && 
+           !guideIsVisible && 
+           !cropsListIsVisible && 
+           !cropRecoIsVisible && 
+           !fieldHomoIsVisible && 
+           !personalizationIsVisible && 
+           !finalResultIsVisible && 
+           !drawBarIsVisible && 
             <SetViewOnClick setPosition={setPosition} />}
           <SetPositionOnMove
             setDisplayPosition={setDisplayPosition} />
@@ -912,7 +922,16 @@ export default function MapComponent() {
             onMouseEnter={() =>
               disableMapInteractions(map, setViewOn)}
             onMouseLeave={() => {
-              if (!guideIsVisible && !starterIsVisible && !exitPopupOpen) {
+              if (
+                !guideIsVisible && 
+                !starterIsVisible && 
+                !exitPopupOpen &&
+                !cropRecoIsVisible &&
+                !fieldHomoIsVisible &&
+                !personalizationIsVisible &&
+                !finalResultIsVisible &&
+                !cropsListIsVisible
+              ) {
                 enableMapInteractions(map, setViewOn)
               }
             }}

@@ -89,6 +89,7 @@
 }
 
 /*****************/
+
 .soil .item{
   display: flex;
   flex-direction: column;
@@ -187,7 +188,6 @@
   margin-top: 6px;
 }
 
- 
 .nutrientsForm {
   display: grid;
   grid-template-columns: 1fr 1fr;  
@@ -220,7 +220,7 @@
   margin-bottom: 8px;
   color: #333;
 }
- 
+
 .inputGroup {
   display: flex;
   align-items: center;
@@ -264,4 +264,4 @@
 .itemRed {
   background-color: #FFEBEE; /* Rouge très clair */
   border-top: 4px solid #EF5350; /* Barre rouge gauche */
-}
+}

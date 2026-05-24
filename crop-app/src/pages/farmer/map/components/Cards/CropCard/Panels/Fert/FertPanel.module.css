@@ -1,4 +1,4 @@
-.fertPanel{
+.fertPanel {
   display: flex;
   flex-direction: column;
   gap: 24px;
@@ -12,13 +12,14 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
   }
 }
 
-.nutrients{
+.nutrients {
   display: flex;
   gap: 16px;
 }
@@ -31,7 +32,7 @@
   background-color: #FAF7F2;
   margin: 0px;
   box-shadow: -3px 0px 0px 0px #1B262C,
-              0px 0px 4px rgba(0, 0, 0, 0.4);
+    0px 0px 4px rgba(0, 0, 0, 0.4);
   gap: 10px;
   transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.25s ease;
   cursor: pointer;
@@ -40,7 +41,7 @@
 .nutrientNote:hover {
   transform: translateY(-2px) scale(1.03);
   box-shadow: -3px 0px 0px 0px #1B262C,
-              0px 8px 20px rgba(0, 0, 0, 0.3);
+    0px 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .nutrientNote .title {
@@ -56,15 +57,140 @@
   margin-bottom: 4px;
 }
 
-.titleText{ 
+.titleText {
   font-family: Roboto;
   font-size: 15px;
   font-weight: bold;
 }
 
-.noteText{
+.noteText {
   font-family: Roboto;
   font-size: 16px;
   line-height: 1.45;
   color: #575B5D;
+}
+
+/* History Styles */
+.historySectionTitle {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  color: #253020;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-bottom: 1.6px solid #e0e0e0;
+  padding-bottom: 6px;
+}
+
+.timelineList {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  padding-left: 20px;
+  border-left: 2px dashed #a2b09c;
+  margin-left: 10px;
+  gap: 20px;
+}
+
+.timelineItem {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timelineDot {
+  position: absolute;
+  left: -27px;
+  top: 4px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #3C552D;
+  border: 2px solid white;
+  box-shadow: 0 0 0 2px #3C552D;
+}
+
+.timelinePersonalizedDot {
+  background-color: #8a1010;
+  box-shadow: 0 0 0 2px #8a1010;
+}
+
+.timelineHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.timelineTitle {
+  font-size: 14px;
+  font-weight: bold;
+  color: #1a2315;
+  font-family: 'Roboto', sans-serif;
+}
+
+.timelineDate {
+  font-size: 12px;
+  color: #666;
+  font-family: 'Roboto', sans-serif;
+}
+
+.timelineCard {
+  background: white;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 12px 14px;
+  font-size: 13px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  font-family: 'Roboto', sans-serif;
+}
+
+.timelineParamRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  color: #555;
+  font-family: 'Roboto', sans-serif;
+}
+
+.timelineParamVal {
+  font-weight: bold;
+  color: #222;
+  font-family: 'Roboto', sans-serif;
+}
+
+.timelinePillContainer {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+  flex-wrap: wrap;
+}
+
+.timelinePill {
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 10px;
+  background-color: #f0f0f0;
+  color: #333;
+  font-family: 'Roboto', sans-serif;
+}
+
+.npill { background-color: rgba(37, 48, 32, 0.1); color: #253020; }
+.ppill { background-color: rgba(184, 48, 32, 0.1); color: #b83020; }
+.kpill { background-color: rgba(184, 138, 16, 0.1); color: #b07a10; }
+
+.timelinePhNote {
+  font-size: 12px;
+  font-style: italic;
+  color: #666;
+  margin-top: 6px;
+  font-family: 'Roboto', sans-serif;
+}
+
+.timelinePhText {
+  color: #253020;
+  font-weight: 500;
 }

@@ -13,9 +13,9 @@ export function FertPanel({ fertContext }) {
   return (
     <div className={styles.fertPanel}>
       <div className={styles.nutrients}>
-        <NutrientItem context={NContext} icon={N}/>
-        <NutrientItem context={PContext} icon={P}/>
-        <NutrientItem context={KContext} icon={K}/>
+        <NutrientItem context={NContext} icon={N} />
+        <NutrientItem context={PContext} icon={P} />
+        <NutrientItem context={KContext} icon={K} />
       </div>
       <div className={styles.nutrientNote}>
         <div className={styles.title}>
@@ -24,7 +24,7 @@ export function FertPanel({ fertContext }) {
             Note:
           </p>
         </div>
-        <p className={styles.noteText}> 
+        <p className={styles.noteText}>
           These are generic doses per hectare based on your location data. Personalize for precise doses based on your actual parcel.
         </p>
       </div>
