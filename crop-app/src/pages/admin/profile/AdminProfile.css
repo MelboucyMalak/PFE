@@ -1,0 +1,410 @@
+.admin-profile-page-container {
+  min-height: 100vh;
+  background-color: #F3EFE9;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+}
+
+.admin-profile-page-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('../../../assets/images/background.png');
+  background-size: auto;
+  background-position: top left;
+  background-repeat: repeat;
+  opacity: 0.08;
+  z-index: -1;
+}
+
+/* Header Bar Matching the Mockup Theme */
+.admin-profile-top-header {
+  background-color: #273628;
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  width: 100%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.admin-profile-back-btn {
+  position: absolute;
+  left: 20px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+
+.admin-profile-back-btn:hover {
+  transform: scale(1.12);
+}
+
+.admin-profile-back-arrow {
+  height: 28px;
+  width: auto;
+  filter: brightness(0) invert(1); /* Ensure it's white */
+}
+
+.admin-profile-header-title-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.admin-profile-header-user-icon {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.admin-profile-header-title {
+  color: white;
+  font-size: 24px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  margin: 0;
+}
+
+/* Page Title below the header */
+.admin-profile-page-title {
+  text-align: center;
+  font-size: 26px;
+  color: #000000;
+  margin: 40px 0 10px 0;
+  font-family: "Roboto", Georgia, serif;
+  font-weight: 500;
+}
+
+.admin-profile-main-content {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 10px 40px 40px 40px;
+}
+
+.admin-profile-grid {
+  display: flex;
+  gap: 25px;
+  max-width: 900px;
+  width: 100%;
+  justify-content: center;
+  align-items: flex-start;
+  margin-top: 20px;
+}
+
+/* Left Card: Summary - Prefixed to prevent collision, matching AdminDashboard's admin-profile-card precisely */
+.adm-profile-summary-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 30px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  border: 1px solid #E0E0E0;
+  flex-shrink: 0;
+}
+
+.adm-profile-avatar-container {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.adm-profile-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.adm-profile-name {
+  font-size: 26px;
+  margin: 0 0 10px 0;
+  color: #000000;
+  font-family: "Roboto", Times, serif;
+  text-align: center;
+  font-weight: normal;
+}
+
+.adm-profile-role {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 30px;
+}
+
+.adm-role-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.adm-profile-role span {
+  color: #5D8B6C;
+  font-size: 14px;
+  font-family: "Roboto", Times, serif;
+  font-weight: normal;
+}
+
+.adm-profile-actions {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.adm-btn-log-out {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  font-family: "Roboto", Times, serif;
+  background-color: white;
+  color: #273628;
+  border: 1px solid #273628;
+  transition: all 0.2s ease;
+  font-weight: normal;
+}
+
+.adm-btn-log-out:hover {
+  background-color: #FF3D3D;
+  color: white;
+  border-color: #FF3D3D;
+}
+
+/* Right Card: Account info (Standard / Edit) */
+.admin-profile-info-card {
+  background-color: white;
+  border-radius: 18px;
+  width: 440px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #C4BDB3;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.adm-info-card-header {
+  background-color: #273628;
+  color: white;
+  padding: 14px 20px;
+  text-align: center;
+}
+
+.adm-info-card-title {
+  font-size: 20px;
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.adm-info-card-body {
+  padding: 30px 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.adm-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.adm-form-label {
+  font-size: 13px;
+  color: #8A9286;
+  font-weight: 500;
+  font-family: "Roboto", sans-serif;
+}
+
+.adm-form-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid #8A9286;
+  border-radius: 10px;
+  font-size: 18px;
+  font-family: "Roboto", sans-serif;
+  color: #000000;
+  background-color: white;
+  transition: border-color 0.2s;
+}
+
+.adm-form-input:focus {
+  border-color: #273628;
+  outline: none;
+}
+
+.adm-form-input[readonly] {
+  background-color: #FAF8F5;
+  border-color: #C4BDB3;
+  color: #666666;
+  cursor: not-allowed;
+}
+
+/* Footer for standard View */
+.adm-info-card-footer {
+  padding: 20px 25px 25px 25px;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid #EAE5DD;
+}
+
+.adm-btn-change-settings {
+  background-color: #273628;
+  color: white;
+  border: none;
+  padding: 10px 28px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 500;
+  font-family: "Roboto", sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.adm-btn-change-settings:hover {
+  background-color: #1a241b;
+  transform: scale(1.02);
+}
+
+/* Footer for Edit View */
+.adm-edit-card-footer {
+  padding: 20px 25px 25px 25px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  border-top: 1px solid #EAE5DD;
+}
+
+.adm-btn-edit-cancel {
+  background-color: white;
+  color: #273628;
+  border: 1.5px solid #273628;
+  padding: 10px 32px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 500;
+  font-family: "Roboto", sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.adm-btn-edit-cancel:hover {
+  background-color: #FAF8F5;
+  transform: scale(1.02);
+}
+
+.adm-btn-edit-save {
+  background-color: white;
+  color: #273628;
+  border: 1.5px solid #273628;
+  padding: 10px 32px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 500;
+  font-family: "Roboto", sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.adm-btn-edit-save:hover {
+  background-color: #273628;
+  color: white;
+  transform: scale(1.02);
+}
+
+.adm-btn-edit-save:disabled {
+  background-color: #C0C8BC;
+  color: #8A9286;
+  border-color: #C0C8BC;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Spinner and banners */
+.adm-btnSpinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(39, 54, 40, 0.3);
+  border-radius: 50%;
+  border-top-color: #273628;
+  animation: adm-profile-spin 0.8s linear infinite;
+}
+
+.adm-btn-edit-save:hover .adm-btnSpinner {
+  border-color: rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+}
+
+@keyframes adm-profile-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.adm-banner {
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  animation: adm-fadeIn 0.3s ease;
+  margin-bottom: 5px;
+}
+
+.adm-banner-success {
+  background-color: #E2F3E7;
+  color: #2E7D32;
+  border: 1.5px solid #A5D6A7;
+}
+
+.adm-banner-error {
+  background-color: #FDE8E8;
+  color: #C62828;
+  border: 1.5px solid #F8B4B4;
+}
+
+@keyframes adm-fadeIn {
+  from { opacity: 0; transform: translateY(-5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 800px) {
+  .admin-profile-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+  .adm-profile-summary-card, .admin-profile-info-card {
+    width: 100%;
+    max-width: 440px;
+  }
+}
