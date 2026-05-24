@@ -1,5 +1,5 @@
 
-import logo from '../../../assets/images/logo.png';
+import logo from '../../../assets/images/New-logo.png';
 import exit from '../images/exit.png'
 import styles from './AuthNavbar.module.css'
 import { useNavigate } from 'react-router-dom'

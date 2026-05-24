@@ -1,14 +1,11 @@
- 
-
-.hero { 
+.hero {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 70px; 
+  gap: 70px;
   flex-wrap: wrap;
   transition: flex-wrap 1s;
   width: 100%;
-
 }
 
 .heroContent {
@@ -18,42 +15,107 @@
   width: 440px;
   height: 400px;
   flex-shrink: 1;
-  gap: 17px; 
+  gap: 17px;
 }
 
-.heroTitle { 
+.heroTitle {
   font-size: 48px;
 }
 
 .heroDescription {
   font-family: 'Roboto', sans-serif;
   font-weight: 300;
-  font-size: 30px; 
+  font-size: 30px;
 }
 
-.heroDescription span{
+.heroDescription span {
   color: #8BAE66;
   font-family: 'Roboto', sans-serif;
 }
 
+/* ── Button ─────────────────────────────────────────────── */
 .heroButton {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 22px;
   font-size: 22px;
-  display: flex;
-  align-items: center; 
-  padding: 10px;
-  background-color: #1B211A;
-  border-radius: 20px;
+  font-family: inherit;
+  font-weight: 500;
   color: #ffffff;
-
+  background-color: #628141;
+  /* same green as the navbar Sign Up button  */
+  border: 2px solid #628141;
+  border-radius: 20px;
+  cursor: pointer;
+  transition:
+    background-color 0.25s ease,
+    color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
 }
 
-.heroButton div{
-  padding-bottom:  8px;
-  padding-left: 8px; 
+/* Arrow icons inside the button */
+.arrowIcon {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  transition: opacity 0.25s ease;
+  flex-shrink: 0;
 }
- 
+
+/* Default state: white arrow visible, green arrow hidden */
+.arrowDefault {
+  opacity: 1;
+}
+
+.arrowHover {
+  opacity: 0;
+  position: absolute;
+}
+
+/* Hover state ------------------------------------------------ */
+.heroButton:hover {
+  background-color: #ffffff;
+  color: #628141;
+  border-color: #628141;
+  transform: scale(1.06);
+  box-shadow: 0 6px 24px rgba(98, 129, 65, 0.35);
+}
+
+/* Swap arrows on hover */
+.heroButton:hover .arrowDefault {
+  opacity: 0;
+}
+
+.heroButton:hover .arrowHover {
+  opacity: 1;
+}
+
+/* Arrow wrapper so both icons overlap cleanly */
+.heroButton {
+  position: relative;
+  /* anchor for absolute-positioned hover arrow */
+}
+
+.arrowWrapper {
+  position: relative;
+  width: 28px;
+  height: 28px;
+  flex-shrink: 0;
+}
+
+.arrowWrapper .arrowDefault,
+.arrowWrapper .arrowHover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .heroImage {
   width: 400px;
-  height: 400px; 
+  height: 400px;
 }
-
